@@ -357,9 +357,9 @@ plotdata %>%
 plotdata %>%
   ggplot(aes(X, Y)) + 
   geom_point(color = "blue") + 
-  geom_point(aes(167.5, 180.8), color = "orange", size = 5) + 
-  geom_segment(aes(xend = 167.5, yend = Y), color = "orange", lty = 2, alpha = .5) +
-  geom_vline(xintercept = 167.5, color = "orange") + 
+  geom_point(aes(mean(X), mean(Y)), color = "orange", size = 5) + 
+  geom_segment(aes(xend = 168.4041, yend = Y), color = "orange", lty = 2, alpha = .5) +
+  geom_vline(xintercept = 168.4041, color = "orange") + 
   ggtitle(bquote("Univariate" ~X )) + 
   theme_minimal()
 ```
@@ -441,8 +441,8 @@ plotdata %>%
   ggplot(aes(X, Y)) + 
   geom_point(color = "blue") + 
   geom_point(aes(mean(X), mean(Y)), color = "orange", size = 5) +   
-  geom_segment(aes(xend = X, yend = 180.8), color = "orange", lty = 2, alpha = .5) + 
-  geom_hline(yintercept = 180.8, color = "orange") +
+  geom_segment(aes(xend = X, yend = 179.7245), color = "orange", lty = 2, alpha = .5) + 
+  geom_hline(yintercept = 179.7245, color = "orange") +
   ggtitle(bquote("Univariate" ~Y ))
 ```
 
@@ -453,28 +453,48 @@ plotdata %>%
   geom_point(color = "blue") + 
   geom_point(aes(mean(X), mean(Y)), color = "orange", size = 5) + 
   geom_segment(aes(x = X, y = Y, xend = mean(X), yend = mean(Y)), color = "orange", lty = 2, alpha = .5) +
-  ggtitle("Multivariate (X, Y)")
+  ggtitle("Multivariate (X, Y)") + 
+  theme_minimal()
 ```
 
 ## Least squares solution
 ```{r echo=FALSE}
+fit <- plotdata %$%
+  lm(Y~X)
+
 plotdata %>%
-  ggplot(aes(X, Y)) + 
-  geom_point(color = "blue") + 
-  geom_point(aes(mean(X), mean(Y)), color = "orange", size = 5) + 
-  geom_segment(aes(x = X, y = Y, xend = mean(X), yend = mean(Y)), color = "orange", lty = 2, alpha = .5) +
-  geom_smooth(color = "orange", method  = "lm", se = FALSE) + 
-  ggtitle("Multivariate (X, Y)")
+  mutate(predicted = predict(fit),
+          residuals = residuals(fit)) %>%
+  ggplot(aes(X, Y)) +
+  geom_smooth(method = "lm", se = FALSE, color = "orange") +
+  geom_segment(aes(xend = X, yend = predicted), color = "orange", alpha = .5) +
+  geom_point(aes(color = abs(residuals))) + 
+  scale_color_continuous(low = "blue", high = "red") +  
+  guides(color = FALSE) +  
+  geom_point(aes(y = predicted), shape = 1, color = "orange") +
+  ggtitle("Multivariate (X, Y)") + 
+  theme_minimal()
 ```
 
 ## Least squares solution
 ```{r echo=FALSE}
-data.frame(X = rnorm(100, 167.5, 10)) %>%
-  mutate(Y = rnorm(100, 0, 10) - X + 335) %>%
-  ggplot(aes(X, Y)) + 
-  geom_point(color = "blue") + 
-  geom_point(aes(mean(X), mean(Y)), color = "orange", size = 5) + 
-  geom_segment(aes(x = X, y = Y, xend = mean(X), yend = mean(Y)), color = "orange", lty = 2, alpha = .5) +
-  geom_smooth(color = "orange", method  = "lm", se = FALSE) + 
-  ggtitle("Multivariate (X, Y), higher correlation")
+plotdata2 <- data.frame(X = rnorm(100, 167.5, 10)) %>%
+  mutate(Y = rnorm(100, 0, 10) - X + 335)
+
+fit <- plotdata2 %$%
+  lm(Y~X)
+
+ plotdata2 %>%
+   mutate(predicted = predict(fit),
+          residuals = residuals(fit)) %>%
+  ggplot(aes(X, Y)) +
+  geom_smooth(method = "lm", se = FALSE, color = "orange") +
+  geom_segment(aes(xend = X, yend = predicted), color = "orange", alpha = .5) +
+  geom_point(aes(color = abs(residuals))) + 
+  scale_color_continuous(low = "blue", high = "red") +  
+  guides(color = FALSE) +  
+  geom_point(aes(y = predicted), shape = 1, color = "orange") +
+  ggtitle("Multivariate (X, Y), higher correlation") +
+  theme_minimal()
 ```
+
