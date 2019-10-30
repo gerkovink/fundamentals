@@ -222,7 +222,7 @@ If your current software-analysis platform is different from `R`, chances are th
 
 ---
 
-## Useful links 
+# Useful links 
 
 - [`Package haven`](https://haven.tidyverse.org/index.html) for importing/exporting `SPSS`, `SAS` and `STATA` data.
 

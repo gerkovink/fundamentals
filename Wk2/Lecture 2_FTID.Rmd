@@ -1,0 +1,480 @@
+---
+title: "Pipes and least squares estimation"
+author: "Gerko Vink"
+date: "Fundamental Techniques in Data Science with R"
+output:
+  ioslides_presentation:
+    logo: logo.png
+    smaller: yes
+    widescreen: no
+---
+
+# Today 
+
+## This lecture
+
+- Data manipulation
+
+- Basic analysis (correlation & t-test)
+
+- Pipes
+
+## New packages we use
+```{r warning=FALSE, message=FALSE}
+library(MASS)     # for the cats data
+library(dplyr)    # data manipulation
+library(haven)    # in/exporting data
+library(magrittr) # pipes
+```
+
+<img src="pipe.jpg" style="display:block;width:500px;margin-left:auto;margin-right:auto"></img>
+
+## New functions
+
+- `transform()`: changing and adding columns
+- `dplyr::filter()`: row-wise selection (of cases)
+- `table()`: frequency tables
+- `class()`: object class
+- `levels()`: levels of a factor
+- `order()`: data entries in increasing order
+- `haven::read_sav()`: import SPSS data
+- `cor()`: bivariate correlation
+- `sample()`: drawing a sample
+- `t.test()`: t-test 
+
+# Data manipulation
+
+## The cats data
+```{r}
+head(cats)
+```
+
+
+```{r}
+str(cats)
+```
+
+## How to get only Female cats?
+
+```{r}
+fem.cats <- cats[cats$Sex == "F", ]
+dim(fem.cats)
+head(fem.cats)
+```
+
+## How to get only *heavy* cats?
+```{r}
+heavy.cats <- cats[cats$Bwt > 3, ]
+dim(heavy.cats)
+head(heavy.cats)
+```
+
+## How to get only *heavy* cats?
+```{r}
+heavy.cats <- subset(cats, Bwt > 3)
+dim(heavy.cats)
+head(heavy.cats)
+```
+
+## another way: `dplyr`
+```{r}
+filter(cats, Bwt > 2, Bwt < 2.2, Sex == "F")
+```
+
+
+## Working with factors
+```{r}
+class(cats$Sex)
+levels(cats$Sex)
+```
+
+## Working with factors
+```{r}
+levels(cats$Sex) <- c("Female", "Male")
+table(cats$Sex)
+head(cats)
+```
+
+## Sorting 
+
+```{r}
+sorted.cats <- cats[order(cats$Bwt), ]
+head(sorted.cats)
+```
+
+
+## Combining matrices or dataframes
+
+```{r}
+cats.numbers <- cbind(Weight = cats$Bwt, HeartWeight = cats$Hwt)
+head(cats.numbers)
+```
+
+## Combining matrices or dataframes
+```{r}
+rbind(cats[1:3, ], cats[1:5, ])
+```
+
+
+# Basic analysis
+## Correlation
+
+```{r}
+cor(cats[, -1])
+```
+With `[, -1]` we exclude the first column
+
+## Correlation
+
+```{r}
+cor.test(cats$Bwt, cats$Hwt)
+```
+
+What do we conclude?
+
+## Correlation
+
+```{r fig.height=5, fig.width=5, dev.args = list(bg = 'transparent'), fig.align='center'}
+plot(cats$Bwt, cats$Hwt)
+```
+
+## T-test
+Test the null hypothesis that the difference in mean heart weight between male and female cats is 0
+```{r}
+t.test(formula = Hwt ~ Sex, data = cats)
+```
+
+## T-test
+```{r fig.height=5, fig.width=5, dev.args = list(bg = 'transparent'), fig.align='center'}
+plot(formula = Hwt ~ Sex, data = cats)
+```
+
+# Pipes
+
+## This is a pipe:
+
+```{r message=FALSE, eval = FALSE}
+boys <- 
+  read_sav("boys.sav") %>%
+  head()
+```
+
+It effectively replaces `head(read_sav("boys.sav"))`.
+
+
+## Why are pipes useful?
+Let's assume that we want to load data, change a variable, filter cases and select columns. Without a pipe, this would look like
+```{r}
+boys  <- read_sav("boys.sav")
+boys2 <- transform(boys, hgt = hgt / 100)
+boys3 <- filter(boys2, age > 15)
+boys4 <- subset(boys3, select = c(hgt, wgt, bmi))
+```
+
+With the pipe:
+```{r}
+boys <-
+  read_sav("boys.sav") %>%
+  transform(hgt = hgt/100) %>%
+  filter(age > 15) %>%
+  subset(select = c(hgt, wgt, bmi))
+```
+
+Benefit: a single object in memory that is easy to interpret
+
+
+## With pipes
+Your code becomes more readable:
+
+- data operations are structured from left-to-right and not from in-to-out
+- nested function calls are avoided
+- local variables and copied objects are avoided
+- easy to add steps in the sequence
+
+## What do pipes do:
+
+- `f(x)` becomes `x %>% f()`
+```{r}
+rnorm(10) %>% mean()
+```
+- `f(x, y)` becomes `x %>% f(y)` 
+```{r}
+boys %>% cor(use = "pairwise.complete.obs")
+```
+- `h(g(f(x)))` becomes `x %>% f %>% g %>% h` 
+```{r}
+boys %>% subset(select = wgt) %>% na.omit() %>% max()
+```
+
+## Useful: outlier filtering
+```{r}
+nrow(cats)
+
+cats.outl <- 
+  cats %>% 
+  filter(Hwt < mean(Hwt) + 3 * sd(Hwt), 
+         Hwt > mean(Hwt) - 3 * sd(Hwt))
+
+nrow(cats.outl)
+
+cats %>%  
+  filter(Hwt > mean(Hwt) + 3 * sd(Hwt))
+```
+
+# More pipe stuff
+
+## The standard `%>%` pipe
+<center>
+<img src="flow_pipe.png" alt="HTML5 Icon" width = 75%>
+</center>
+
+## The `%$%` pipe
+<center>
+<img src="flow_$_pipe.png" alt="HTML5 Icon" width = 75%>
+</center>
+
+## The `%T>%` pipe
+<center>
+<img src="flow_T_pipe.png" alt="HTML5 Icon" width = 100%>
+</center>
+
+## The role of `.` in a pipe
+In `a %>% b(arg1, arg2, arg3)`, `a` will become `arg1`. With `.` we can change this.
+```{r error=TRUE}
+set.seed(123)
+1:5 %>%
+  mean() %>%
+  rnorm(10)
+```
+VS
+```{r}
+set.seed(123)
+1:5 %>% 
+  mean() %>%
+  rnorm(n = 10, mean = .)
+```
+The `.` can be used as a placeholder in the pipe. 
+
+## Placeholder example
+Remember: `sample()` takes a random sample from a vector
+```{r}
+sample(x = c(1, 1, 2, 3, 5, 8), size = 2)
+```
+
+Sample 3 positions from the alphabet and show the position and the letter
+```{r}
+set.seed(123)
+1:26 %>%
+  sample(3) %>%
+  paste(., LETTERS[.])
+```
+
+## Debugging pipelines
+If you don't know what's going on, run each statement separately!
+```{r}
+set.seed(123)
+1:26
+
+set.seed(123)
+1:26 %>% 
+  sample(3)
+
+set.seed(123)
+1:26 %>%
+  sample(3) %>%
+  paste(., LETTERS[.])
+```
+
+## Performing a t-test in a pipe
+```{r message=FALSE}
+cats %$%
+  t.test(Hwt ~ Sex)
+```
+is the same as 
+```{r eval=FALSE}
+t.test(Hwt ~ Sex, data = cats)
+```
+
+## Storing a t-test from a pipe
+```{r}
+cats.test <- 
+  cats %$%
+  t.test(Bwt ~ Sex)
+
+cats.test
+```
+
+# Squared deviations
+
+## We have already met deviations today
+
+- correlations
+
+$$\rho_{X,Y} = \frac{\mathrm{cov}(X,Y)}{\sigma_X\sigma_Y} = \frac{\mathrm{E}[(X - \mu_X)(Y-\mu_Y)]}{\sigma_X\sigma_Y}.$$
+
+- t-test
+
+$$t = \frac{\bar{X}-\mu}{\hat{\sigma}/\sqrt{n}}.$$
+
+- variance
+
+$$\sigma^2_X = \mathrm{E}[(X - \mu)^2].$$
+
+Can you identify which part of these equations are the deviations?
+
+## Deviations
+
+Deviations tell what the distance is for each value (`observation`) to a comparison value. 
+
+ - often, the mean is chosen as a comparison value.
+ 
+### Why the mean?
+
+The arithmetic mean is a very informative measure:
+
+- it is the average
+- it is the mathematical expectation
+- it is the central value of a set of discrete numbers
+
+## The mean as a center
+```{r echo=FALSE}
+library(ggplot2)
+set.seed(123)
+plotdata <- data.frame(X = rnorm(100, 167.5, 10),
+           Y = rnorm(100, 180.8, 10)) 
+plotdata %>%
+  ggplot(aes(X, Y)) + 
+  geom_point(color = "blue") + 
+  geom_point(aes(167.5, 180.8), color = "orange", size = 5) + 
+  geom_vline(xintercept = 167.5, color = "orange") + 
+  geom_hline(yintercept = 180.8, color = "orange") + 
+  ggtitle(bquote("Bivariate normal")) + 
+  theme_minimal()
+```
+
+## Deviations from the mean
+```{r echo=FALSE}
+plotdata %>%
+  ggplot(aes(X, Y)) + 
+  geom_point(color = "blue") + 
+  geom_point(aes(167.5, 180.8), color = "orange", size = 5) + 
+  geom_segment(aes(xend = 167.5, yend = Y), color = "orange", lty = 2, alpha = .5) +
+  geom_vline(xintercept = 167.5, color = "orange") + 
+  ggtitle(bquote("Univariate" ~X )) + 
+  theme_minimal()
+```
+
+## Plotting the deviations
+```{r echo=FALSE}
+plotdata %>%
+  mutate(deviation = X-mean(X)) %>%
+  ggplot(aes(deviation)) + 
+  geom_density(color = "blue") + 
+  geom_vline(xintercept = 0, color = "orange") + 
+  ggtitle(expression(X - bar(X))) + xlab("Deviation from the mean X") + 
+  theme_minimal()
+```
+
+## Use of deviations
+Deviations summarize the fit of all the points in the data to a single point
+
+The mean is the mathematical expectation. It represents the observed values best for a normally distributed univariate set.
+ 
+ - The mean yields the lowest set of deviations
+```{r}
+plotdata %>%
+  mutate(deviation = X - mean(X), 
+         deviation2 = X - (mean(X) + 3)) %>%
+  select(deviation, deviation2) %>%
+  colSums %>%
+  round(digits = 3)
+```
+
+The mean minimizes the deviations
+
+## What happens
+```{r echo=FALSE}
+plotdata %>%
+  mutate(deviation = X - mean(X), 
+         deviation2 = X - (mean(X) + 3)) %>%
+  ggplot() + 
+  geom_density(aes(deviation), color = "blue") + 
+  geom_density(aes(deviation2), color = "orange") + 
+  geom_vline(xintercept = -3, color = "orange") +  
+  geom_vline(xintercept = 0, color = "blue") +  
+  ggtitle(expression(paste("Deviations from ", bar(X), " (blue) and ", bar(X) + 3, " (orange)")))+
+  theme_minimal()
+```
+
+## Plotting the standardized deviations
+```{r echo=FALSE}
+plotdata %>%
+  mutate(deviation = (X-mean(X))/sd(X)) %>%
+  ggplot(aes(deviation)) + 
+  geom_density(color = "blue") + 
+  geom_vline(xintercept = 0, color = "orange") + 
+  ggtitle(expression((X - bar(X)) / sigma(X))) + xlab("Standardized deviation from the mean X") + 
+  theme_minimal()
+```
+
+## Plotting the squared deviations
+```{r echo=FALSE}
+plotdata %>%
+  mutate(deviation = (X-mean(X))^2) %>%
+  ggplot(aes(deviation)) + 
+  geom_density(color = "blue") + 
+  geom_vline(xintercept = 0, color = "orange") + 
+  ggtitle(expression((X - bar(X))^2)) + xlab("Squared deviation from the mean X") + 
+  theme_minimal()
+```
+
+## Why squared deviations are useful
+
+Throughout statistics we make extensive use of squaring. 
+$$ $$
+\[\text{WHAT ARE THE USEFUL PROPERTIES OF SQUARING}\]
+\[\text{THAT STATISTICIANS ARE SO FOND OF?}\]
+
+## Deviations from the mean
+```{r echo=FALSE}
+plotdata %>%
+  ggplot(aes(X, Y)) + 
+  geom_point(color = "blue") + 
+  geom_point(aes(mean(X), mean(Y)), color = "orange", size = 5) +   
+  geom_segment(aes(xend = X, yend = 180.8), color = "orange", lty = 2, alpha = .5) + 
+  geom_hline(yintercept = 180.8, color = "orange") +
+  ggtitle(bquote("Univariate" ~Y ))
+```
+
+## Deviations from the mean
+```{r echo=FALSE}
+plotdata %>%
+  ggplot(aes(X, Y)) + 
+  geom_point(color = "blue") + 
+  geom_point(aes(mean(X), mean(Y)), color = "orange", size = 5) + 
+  geom_segment(aes(x = X, y = Y, xend = mean(X), yend = mean(Y)), color = "orange", lty = 2, alpha = .5) +
+  ggtitle("Multivariate (X, Y)")
+```
+
+## Least squares solution
+```{r echo=FALSE}
+plotdata %>%
+  ggplot(aes(X, Y)) + 
+  geom_point(color = "blue") + 
+  geom_point(aes(mean(X), mean(Y)), color = "orange", size = 5) + 
+  geom_segment(aes(x = X, y = Y, xend = mean(X), yend = mean(Y)), color = "orange", lty = 2, alpha = .5) +
+  geom_smooth(color = "orange", method  = "lm", se = FALSE) + 
+  ggtitle("Multivariate (X, Y)")
+```
+
+## Least squares solution
+```{r echo=FALSE}
+data.frame(X = rnorm(100, 167.5, 10)) %>%
+  mutate(Y = rnorm(100, 0, 10) - X + 335) %>%
+  ggplot(aes(X, Y)) + 
+  geom_point(color = "blue") + 
+  geom_point(aes(mean(X), mean(Y)), color = "orange", size = 5) + 
+  geom_segment(aes(x = X, y = Y, xend = mean(X), yend = mean(Y)), color = "orange", lty = 2, alpha = .5) +
+  geom_smooth(color = "orange", method  = "lm", se = FALSE) + 
+  ggtitle("Multivariate (X, Y), higher correlation")
+```

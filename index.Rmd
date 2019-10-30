@@ -195,7 +195,7 @@ You can find the [slides here](Wk1/Lecture_1_FTID.html)
 
 Make sure that you attend all workgroup meetings: However today's meeting is vital. We will form groups and I will tell you all about the assignments and management of expectations. 
 
-**Please do not forget to complete [Exercise 1]() before the workgroup meeting!**
+**Please do not forget to complete [Exercise 1](Wk1/Exercise/Exercise_1_walkthrough.html) before the workgroup meeting!**
 
 All the best, 
 
@@ -208,11 +208,11 @@ This week's `R` exercise is threefold. We need to cover a lot of ground this wee
 
 - Make [Exercise 1](Wk1/Exercise/Exercise_1_walkthrough.html) before Thursday's workgroup. This exercise will get you started with `R` and `RStudio`.
 - Make [Exercise 2](Wk1/Exercise/Exercise_2_walkthrough.html) during Thursday's workgroup, where Justin will be available to help you.
-- Make [Exercise 3](Wk1/Exercise/Exercise_3_walkthrough.html) before the next lecture.
+- Complete and hand in [Exercise 3](Wk1/Exercise/Exercise_3_walkthrough.html) before the next lecture.
 
 A video discussion of the exercises will be available from this window after the second lecture.  
 
-Hand in the `R-script` and the `RData` file for exercise 3 to the [SurfDrive](https://surfdrive.surf.nl/files/index.php/s/yx5SsHz3haHLhqK) drop folder. Do this ***before the next lecture on Monday***. 
+Hand in a markdown compiled `html` file for exercise 3 to the [SurfDrive](https://surfdrive.surf.nl/files/index.php/s/yx5SsHz3haHLhqK) drop folder. Do this ***before the next lecture on Monday***. 
 
 ### Useful Information and links
 - [The tidyverse style guide](https://style.tidyverse.org)
@@ -225,6 +225,12 @@ The above links are useful references that connect to this week's materials.
 ## Column 1
 
 ### Lecture (Monday)
+Today's lecture has two parts:
+
+1. Let's explore pipes: a more efficient way of organizing our `R` code that forces you to think about the analytical process while being more memory efficient. 
+2. We look at squared deviations and see how useful these calculations can be. From there we leap to least-squares estimation and start with simple linear regression. 
+
+You can find the [slides here](Wk2/Lecture_2_FTID.html)
 
 ### Workgroup (Thursday)
 **Today's workgroup is in [BOL](https://www.uu.nl/bolognalaan-101) 1.055 from 9am - 10.45am**
@@ -233,8 +239,18 @@ The above links are useful references that connect to this week's materials.
 ## Column 2
 
 ### `R` exercise
+This week's `R` exercise is about getting familiar with pipes and exploring the simple linear model. 
 
-### Useful Information and links
+- Make [Exercise 4](Wk2/Exercise/Exercise_4_walkthrough.html) before Thursday's workgroup.
+
+Hand in a markdown compiled `html` file for Exercise 4 to the [SurfDrive](https://surfdrive.surf.nl/files/index.php/s/yx5SsHz3haHLhqK) drop folder. Do this ***before the next lecture on Monday***. 
+
+### Useful References
+
+- [`magrittr`](https://magrittr.tidyverse.org)
+- [`R` for Data Science](http://r4ds.had.co.nz) - [Chapter 18 on pipes](http://r4ds.had.co.nz/pipes.html)
+
+The above links are useful references that connect to this week's materials. 
 
 # Week 3
 
