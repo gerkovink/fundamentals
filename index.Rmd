@@ -187,11 +187,15 @@ Naturally, you will need internet access for these services to be accessed.
 ### Lecture (Monday)
 Today's lecture is about the elemental building blocks of `R`. We discuss what the object-oriented programming language `R` is, why we use `RStudio`, how to 'speak' `S`, the scripting language that is used in `R` and how to work with objects and elements. 
 
+You can find the [slides here](Wk1/Lecture_1_FTID.html)
+
 ### Workgroup (Thursday)
 
 **Today's workgroup is in [BOL](https://www.uu.nl/bolognalaan-101) 1.075 from 9am - 10.45am**
 
 Make sure that you attend all workgroup meetings: However today's meeting is vital. We will form groups and I will tell you all about the assignments and management of expectations. 
+
+**Please do not forget to complete [Exercise 1]() before the workgroup meeting!**
 
 All the best, 
 
@@ -200,24 +204,21 @@ Gerko
 ## Column 2
 
 ### `R` exercise
-This week's `R` exercise can be found [here](nolinkyet)
+This week's `R` exercise is threefold. We need to cover a lot of ground this week to get you started for the rest of the course.
 
-Make the exercise and submit the resulted exercise file to the [SurfDrive](https://surfdrive.surf.nl/files/index.php/s/yx5SsHz3haHLhqK) drop folder. Do this ***before the next lecture on Monday***. 
+- Make [Exercise 1](Wk1/Exercise/Exercise_1_walkthrough.html) before Thursday's workgroup. This exercise will get you started with `R` and `RStudio`.
+- Make [Exercise 2](Wk1/Exercise/Exercise_2_walkthrough.html) during Thursday's workgroup, where Justin will be available to help you.
+- Make [Exercise 3](Wk1/Exercise/Exercise_3_walkthrough.html) before the next lecture.
+
+A video discussion of the exercises will be available from this window after the second lecture.  
+
+Hand in the `R-script` and the `RData` file for exercise 3 to the [SurfDrive](https://surfdrive.surf.nl/files/index.php/s/yx5SsHz3haHLhqK) drop folder. Do this ***before the next lecture on Monday***. 
 
 ### Useful Information and links
 - [The tidyverse style guide](https://style.tidyverse.org)
 - [R for Data Science](https://r4ds.had.co.nz): a wonderful book that details a usefull toolset for current and aspiring data scientists. 
 
-The above links are useful references that connect to today's materials. 
-
-### About `rmarkdown`
-<center>
-<iframe src="https://player.vimeo.com/video/178485416?color=428bca&title=0&byline=0&portrait=0" width="500" height="315" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-<p><a href="https://vimeo.com/178485416">What is R Markdown?</a> from <a href="https://vimeo.com/rstudioinc">RStudio, Inc.</a> on <a href="https://vimeo.com">Vimeo</a>.</p>
-</center>
-
-See also [this `rmarkdown` cheat sheet](Contents/Material/Part A - Introduction/rmarkdown-reference_sheet.pdf). 
-
+The above links are useful references that connect to this week's materials. 
 
 # Week 2
 
