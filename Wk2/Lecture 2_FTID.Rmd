@@ -336,6 +336,10 @@ The arithmetic mean is a very informative measure:
 - it is the mathematical expectation
 - it is the central value of a set of discrete numbers
 
+$$ $$
+\[\text{The mean itself is a model: observations are}\]
+\[\text{merely  a deviation from that model}\]
+
 ## The mean as a center
 ```{r echo=FALSE}
 library(ggplot2)
@@ -497,4 +501,10 @@ fit <- plotdata2 %$%
   ggtitle("Multivariate (X, Y), higher correlation") +
   theme_minimal()
 ```
+
+## What's next
+
+During the practical this week we will learn to calculate and explore squared deviations. During the exercises you'll lear to minimize the deviations. 
+
+Next week we'll jump to regression. We'll see how deviations still play a role in that framework, both during estimation and in terms of leftovers from the model. 
 
