@@ -172,7 +172,20 @@ We can see that there is indeed a literal T-junction. Naturally, we can expand t
 
 ---
 
-In the following simulation experiment we investigate least-squares estimation of the mean.
+```{r echo=FALSE}
+set.seed(32083)
+x <- rnorm(100, mean=3, sd=7)
+save(x, file = "Exercise4_data.RData")
+```
+
+
+In the following experiment we investigate least-squares estimation of the mean. The data for this experiment can be found in the workspace [`Exercise4_data.RData`](Exercise4_data.RData). Either download this workspace and manually `load()` it into `R`, or run the below connection:
+
+```{r eval=FALSE}
+con <- url("https://www.gerkovink.com/fundamentals/Wk2/Exercise/Exercise4_data.RData")
+load(con)
+```
+
 
 ---
 
