@@ -143,7 +143,7 @@ boys %>%
 
 ---
 
-## Exercise 6-6
+## Exercise 6-8
 
 ---
 
@@ -175,6 +175,7 @@ We can see that there is indeed a literal T-junction. Naturally, we can expand t
 ```{r echo=FALSE}
 set.seed(32083)
 x <- rnorm(100, mean=3, sd=7)
+y <- c(rnorm(50, mean = 2, sd = 3), rnorm(50, mean = 9, sd = 2))
 save(x, file = "Exercise4_data.RData")
 ```
 
@@ -186,124 +187,143 @@ con <- url("https://www.gerkovink.com/fundamentals/Wk2/Exercise/Exercise4_data.R
 load(con)
 ```
 
+The workspace contains a single vector, named `x` and a vector named y
 
 ---
 
-7. **Start by drawing a 100 values from a normal distribution with $\mu = 3$ and $\sigma = 7$. Use seed value `32083`.**
-
-
-```{r}
-set.seed(32083)
-
-x <- rnorm(100, mean=3, sd=7)
-```
-
----
-
-8. **Next, confirm that the sample mean of the values in x is near 4.166.**
+7. **Obtain the sample mean of the values in `x`.**
 ```{r}
 mean(x)
 ```
 
 ---
 
-9. **Calculate the sample mean's sum of squared deviations from $\mu$. The sum of squared deviations from mu is defined as: **
-$$ \sum_{i=1}^{100} (x_i - \mu)^2,$$
+The values in `x` have drawn from a population with mean $\mu = 3$ and standard deviation $\sigma = 7$. 
+
+---
+
+8. **Calculate the sample mean's sum of squared deviations from $\mu$. The sum of squared deviations from mu is defined as: **
+$$ \text{ssd} = \sum_{i=1}^{100} (x_i - \mu)^2.$$
 There is a slow way
 ```{r}
 mu = 3
-summed <- x-mu
-sum.sq <- sum(summed^2)
+deviations <- x - mu
+ssd <- sum(deviations^2)
 ```
 
-And a fast way
+And a fast way with function apply, where a function is applied over the margin (1 = rows, 2 = columns) of some data. 
 ```{r}
-sum.sq2 <- apply(outer(x, mu, "-")^2, 2, sum)
+ssd2 <- apply(X = outer(x, mu, FUN = "-")^2, 
+              MARGIN = 2, 
+              FUN = sum)
 ```
+Here `X = outer(x, mu, FUN = "-")^2` provides the data to apply. Remember that we have defined `x` and `mu` in the global environment. With the `outer()` function, we can quickly determine the outer product of some vectors. In this case we simply use subtraction `-` as our function to obtain for the column margin (`MARGIN = 2`) - which in this case is just the vector of squared deviations - and sum (`FUN = sum`) all these values into a single sum. The result is the sum of squared deviations. 
+
 Both solutions are identical
 ```{r}
-identical(sum.sq, sum.sq2)
+identical(ssd, ssd2)
+```
+
+To see them, we can simply congatenate the two values:
+```{r}
+c(ssd, ssd2)
 ```
 
 ---
 
-10. **Now create a function that automates the calculation of the sum of squares for any given $\mu$. Call the function `lsfun` because we are going to identify the least squares estimate in exercise 8.**
+# Functions in `R`
 
+The apply class of functions is very flexible and lightning fast, when compared to manual operations that could easily be defined in terms of functions. The only caveat is that you need a function to apply. Many such functions are already available in `R`, such as `mean()`, `mode()`, `sum()`, `cor()`, and so on. 
+
+However, if you need to perform more than a simple calculation, it is often necessary to create your own function. In `R` functions take the following form
+
+```{r}
+myfunction <- function(arguments){
+  hereyourfunctioncode
+}
+```
+
+For example, 
+```{r}
+mean.sd <- function(argument1, argument2){
+  mean1 <- mean(argument1) 
+  mean2 <- mean(argument2)
+  sd1 <- sd(argument1)
+  sd2 <- sd(argument2)
+  result <- data.frame(mean = c(mean1, mean2),
+                       sd = c(sd1, sd2), 
+                       row.names = c("first", "second"))
+  return(result)
+}
+```
+The above function calculates the means and standard deviations for two sources of input, then combines these statistics in a simple data frame and returns the data frame. The sources of input are defined in the function arguments `argument1` and `argument2`. The reason why we have to specify these arguments is simple:
+
+\[\text{EVERYTHING THAT HAPPENS IN A FUNCTION COMES FROM THE}\] 
+\[\text{FUNCTION AND STAYS IN THE FUNCTION!}\]
+
+This is because a function opens a seperate environment that only exists for as long as the function operates. This means:
+
+1. To get information from the global environment to the function's environment, we need arguments.
+2. To properly return information to the global environment, we should use `return()`. In general, using `return()` makes it explicit what your function's return is. For complicated functions this is proper coding procedure, but for simple functions it is not strictly necessary. 
+
+To put this example function to the test:
+```{r}
+mean.sd(argument1 = 1:10,
+        argument2 = 3:8)
+```
+
+---
+
+## Exercises 9-10
+9. **Now create a function that automates the calculation of the sum of squares for any given $\mu$. Call the function `lsfun` because we are going to identify the least squares estimate and coding is fun!**
+
+We can use the 
 ```{r eval=printAnswers}
 lsfun <- function(meanest) apply(outer(x, meanest, "-")^2, 2, sum)
 ```
 
 or, 100% equivalently, but easier to spot as a function:
 ```{r}
-lsfun <- function(meanest){
-  apply(outer(x, meanest, "-")^2, 2, sum)
+lsfun2 <- function(meanest){
+  apply(outer(x, meanest, "-")^2, 
+        MARGIN =  2, 
+        FUN = sum)
+}
+```
+
+or, with a pipe
+```{r}
+lsfun3 <- function(meanest){
+  outer(x, meanest, "-")^2 %>%
+    apply(MARGIN = 2, FUN = sum)
 }
 ```
 
 ---
 
-11. **Plot the curve of your least square function such that you can identify the minimum of the curve (i.e. the location for $x$ where the sum of the squared deviations are the lowest).**
+10. **Plot the curve of your least square function such that you can identify the minimum of the curve (i.e. the location for $x$ where the sum of the squared deviations are the lowest).**
+```{r}
+curve(lsfun, from = 1, to = 8, ylab = "Sum of the squared deviations")
+```
+
+We can see that the minimum lies somewhere above, but near the value 4. We already know from exercise 7 that the mean is equal to `r mean(x)`, and that is the `x` coordinate for the abscissa. To verify this, we can change the range of the plotted curve to zoom in on `r mean(x)`:
+
 ```{r}
 curve(lsfun, from = 4.16, to = 4.17)
 ```
 
+
 ---
 
 
-12. **Repeat the experiment from 10 with the following $X \sim \mathcal{N}(\mu, \sigma^2)$ normal samples of length $n=100$, but now use the sample mean $\bar{x}$ in your function `lsfun()`. Let the function plot the curve and print the location where the minimum of the sum of the squares is located each time. Fix the seed to `set.seed(123)`:**
+11. **Repeat the experiment from 10 on object `y` from `Exercise4_data.RData`.**
 
-- $x \sim \mathcal{N}(3, 7)$
-- $x \sim \mathcal{N}(15, 12)$
-- $x \sim \mathcal{N}(0, 2)$
-- $\sqrt{x} \sim \mathcal{N}(0, 2)$, i.e. you need to square $x$
+but now use the sample mean $\bar{x}$ in your function `lsfun()`. Let the function plot the curve and print the location where the minimum of the sum of the squares is located each time. Fix the seed to `set.seed(123)`:**
 
-Hint: use the sample mean $\bar{x}$ as the center of your graph and add/subtract e.g. `.5` from this value to plot a range.
-
-First, we fix the random seed
 ```{r}
-set.seed(123)
-```
-
-Code-wise it is efficient to write a function that does the repetitive experimentation. That way we have to write some lines of code only once. 
-```{r}
-plotfun <- function(x, meanest, plot = TRUE){
-  xbar <- mean(x)
-  lsfun <- function(meanest){ apply(outer(xbar, meanest, "-")^2, 2, sum)}
-  # lsfun <- function(mu, xbar) {
-  #   summed <- x-mu
-  #   sum.sq <- sum(summed^2)
-  #   return(sum.sq)
-  # }
-  if (plot) {
-    curve(lsfun, from = xbar - .5, to = xbar + .5, 
-          ylab=expression(paste(Sigma," ",e^2))) #nicer y-axis label
-  }
-  return(cat("The mean is:", xbar, "\n"))
-}
-```
-
-- For $x \sim \mathcal{N}(3, 7)$:
-```{r eval=printAnswers, echo=printAnswers}
-rnorm(100, mean=3, sd=sqrt(7)) %>%
-  plotfun(meanest = 3, plot = TRUE)
-```
-
-- For $x \sim \mathcal{N}(15, 12)$
-```{r eval=printAnswers, echo=printAnswers}
-rnorm(100, mean=15, sd=sqrt(12)) %>%
-  plotfun(meanest = 15, plot = TRUE)
-```
-
-- For $x \sim \mathcal{N}(0, 2)$:
-```{r eval=printAnswers, echo=printAnswers}
-rnorm(100, mean=0, sd=2) %>%
-  plotfun(meanest = 0, plot = TRUE)
-```
-
-- For $\sqrt{x} \sim \mathcal{N}(0, 2)$:
-```{r eval=printAnswers, echo=printAnswers}
-rnorm(100, mean=0, sd=2)^2 %>%
-  plotfun(meanest = 0, plot = TRUE)
+hist(y)
+lsfun <- function(meanest) apply(outer(y, meanest, "-")^2, 2, sum)
+curve(lsfun, from = 1, to = 12)
 ```
 
 
@@ -314,7 +334,7 @@ End of practical.
  
 ---
 
-#### Useful References
+# Useful References
 
 - [`magrittr`](https://magrittr.tidyverse.org)
 - [`R` for Data Science](http://r4ds.had.co.nz) - [Chapter 18 on pipes](http://r4ds.had.co.nz/pipes.html)
