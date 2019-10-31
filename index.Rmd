@@ -257,6 +257,12 @@ The above links are useful references that connect to this week's materials.
 ## Column 1
 
 ### Lecture (Monday)
+Today's lecture has two parts:
+
+1. Let's explore pipes: a more efficient way of organizing our `R` code that forces you to think about the analytical process while being more memory efficient. 
+2. We look at squared deviations and see how useful these calculations can be. From there we leap to least-squares estimation and start with simple linear regression. 
+
+You can find the [slides here](Wk2/Lecture_2_FTID.html)
 
 ### Workgroup (Thursday)
 **Today's workgroup is in [BOL](https://www.uu.nl/bolognalaan-101) 1.055 from 9am - 10.45am**
@@ -265,8 +271,18 @@ The above links are useful references that connect to this week's materials.
 ## Column 2
 
 ### `R` exercise
+This week's `R` exercise is about getting familiar with pipes and exploring the simple linear model. 
+
+- Make [Exercise 4](Wk2/Exercise/Exercise_4_walkthrough.html) before Thursday's workgroup.
+
+Hand in a markdown compiled `html` file for Exercise 4 to the [SurfDrive](https://surfdrive.surf.nl/files/index.php/s/yx5SsHz3haHLhqK) drop folder. Do this ***before the next lecture on Monday***. 
 
 ### Useful Information and links
+
+- [`R` for Data Science](http://r4ds.had.co.nz) - [Chapter 18 on pipes](http://r4ds.had.co.nz/pipes.html)
+
+The above links are useful references that connect to this week's materials. 
+
 
 # Week 4
 
