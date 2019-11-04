@@ -17,14 +17,14 @@ library(dplyr)
 
 ---
 
-#### Exercises
+# Exercises
 
 
 In the following simulation experiment we investigate least-squares estimation of the mean.
 
 ---
 
-6. **Start by drawing a 100 values from a normal distribution with $\mu = 3$ and $\sigma = 7$. Use seed value `32083`.**
+1. **Start by drawing a 100 values from a normal distribution with $\mu = 3$ and $\sigma = 7$. Use seed value `32083`.**
 
 
 ```{r}
