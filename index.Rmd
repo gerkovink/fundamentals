@@ -8,7 +8,7 @@ output:
 
 # Intro {.sidebar}
 
-This dashboard covers the course materials for the course [***Fundamental Techniques in Data Science with R***](http://https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&cad=rja&uact=8&ved=2ahUKEwjy_qTtrNzkAhUSZVAKHRd3CQQQFjAAegQIARAB&url=https%3A%2F%2Fosiris.uu.nl%2Fosiris_student_uuprd%2FOnderwijsCatalogusSelect.do%3Fselectie%3Dcursus%26cursus%3D201900026%26collegejaar%3D2019%26taal%3Den&usg=AOvVaw3vS8DsBL7G1akrdmpgsOaG)
+This dashboard covers the course materials for the course [***Fundamental Techniques in Data Science with R***](https://osiris.uu.nl/osiris_student_uuprd/OnderwijsCatalogusSelect.do?selectie=cursus&cursus=201900026&collegejaar=2019&taal=en)
 
 ---
 
