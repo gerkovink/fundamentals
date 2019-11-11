@@ -204,20 +204,6 @@ plot(brw ~ species, data = sleepdata3)
 
 ---
 
-## Exercise 11
-
----
-
-11. **Plot the log [use `log()`] of brain weight as a function of short-wave sleep. Use dark red triangles as plotting characters. Name the x-axis `Short-wave sleep` and name the y-axis `Brain weight`. Finally, Give the overall title the name `How sleep type relates to brain weight`.** Hint: have a look at `par` in the help to find information about the plotting parameters.
-```{r}
-plot(log(brw) ~ sws, data = sleepdata2, type = "p", pch = 2, col = "dark red",
-     xlab = "Short-wave sleep",
-     ylab = "Brain weight",
-     main = "How sleep type relates to brain weight")
-```
-
----
-
 If your current software-analysis platform is different from `R`, chances are that you prepare your data in the software of your choice. In `R` there are fantastic facilities for importing and exporting data and I would specifically like to pinpoint you to package [`haven`](https://haven.tidyverse.org/index.html) by [Hadley Wickham](http://hadley.nz). It provides wonderful functions to import and export many data types from software such as Stata, SAS and SPSS.
 
 ---
