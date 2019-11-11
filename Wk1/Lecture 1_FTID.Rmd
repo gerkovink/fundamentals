@@ -9,10 +9,171 @@ output:
     widescreen: no
 ---
 
+```{r setup, include=FALSE}
+library(dplyr)
+library(magrittr)
+library(mice)
+library(ggplot2)
+library(reshape2)
+theme_update(plot.background = element_rect(fill = "transparent", colour = NA))
+knitr::opts_chunk$set(dev.args=list(bg="transparent"), dev = "svg")
+
+```
+
 ## Very useful
 You can access the course materials quickly from
 
 [www.gerkovink.com/fundamentals](https://www.gerkovink.com/fundamentals)
+
+$$\quad$$
+
+You can reach me at [G.Vink@uu.nl](mailto:g.vink@uu.nl)
+
+# Goal of this course
+
+## Real-world Goal
+
+We learn to use regression; a technique that is aimed at figuring out the strength of the relation between an outcome and a set of predictors. 
+
+It is basically one of the following three scenarios:
+```{r echo = FALSE}
+data.frame(x = 1:10) %>%
+  mutate("positive" = x, 
+         "negative" = rev(x), 
+         "no relation" = 5.5) %>%
+  melt(id = "x") %>%
+  mutate("relation" = variable) %>%
+  ggplot(aes(x = x, y = value, color = relation)) + 
+  ylab("Outcome") + 
+  xlab("Predictor") + 
+  geom_point() + 
+  geom_smooth(method = "lm")
+```
+
+
+
+## An example
+```{r echo=FALSE, warning=FALSE}
+set.seed(123)
+data <- mvtnorm::rmvnorm(n = 100, mean = c(20, 5.8), 
+                sigma = matrix(c(1, .8, .8, 1), 
+                nrow = 2, ncol = 2)) %>% as.data.frame()
+colnames(data) <- c("Hours", "Grade")
+
+data %>% 
+  ggplot(aes(x = Hours, y = Grade)) + 
+  geom_point()
+```
+
+In general it holds that the more hours you spend on studying, the higher your grade. But this relation is not 1:1.
+
+## What is the relation?
+```{r echo=FALSE}
+data %>% 
+  ggplot(aes(x = Hours, y = Grade)) + 
+  geom_point() + 
+  geom_smooth(method = "lm", se = FALSE) + 
+  ggtitle("Grade ~ Hours")
+```
+
+We will learn to identify the average conditional relation between outcome and predictors. 
+
+## Who passed?
+```{r echo = FALSE}
+data %>% 
+  mutate(Result = cut(Grade, breaks = c(0, 5.5, Inf), labels = c("passed", "failed"))) %>%
+  ggplot(aes(x = Hours, y = Grade, color = Result)) + 
+  geom_point() + 
+  geom_smooth(method = "lm", se = FALSE) + 
+  ggtitle("Grade ~ Hours + pass/fail")
+```
+
+We will learn to differentiate our investigation between different groups. For example, is there a difference in the relation between `Hours` and `Grade` for different groups?
+
+## Who passed?
+
+```{r echo = FALSE, message=FALSE, }
+data %>% 
+  mutate(Result = cut(Grade, breaks = c(0, 5.5, Inf), labels = c("passed", "failed")), 
+         Prob = predict(glm(Result ~ Hours, family = binomial(link = "logit")), type = "response")) %>%
+  ggplot(aes(x = Hours, y = Prob)) + 
+  geom_line() +
+  ylab("Probability of Passing the Exam") + 
+  geom_point(aes(x = Hours, y = as.numeric(Result)-1, color = Result))
+```
+
+Finally, we will learn how to estimate the probability of `pass` or `fail`, based on the `Hours` studied. In other words, how many `Hours` should you study to pass?
+
+## Real-world Example
+```{r echo=FALSE, warning=FALSE, background="transparent"}
+boys %>% 
+  filter(age > 5) %>% 
+  ggplot(aes(x = age, y = bmi)) + 
+  geom_point() + 
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+What is the relation between `age` and `bmi`
+
+## Real-world Example
+```{r echo=FALSE, warning=FALSE, background="transparent"}
+boys %>% 
+  mutate(class = cut(bmi, breaks = c(0, 18, 25, 30, Inf), labels = c("underweight", "healthy", "overweight", "obese"))) %>%
+  filter(age > 5, !is.na(bmi)) %>% 
+  ggplot(aes(x = age, y = bmi, color = class)) + 
+  geom_point() + 
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+Can we infer the relation between `age` and `bmi`, but now for different levels of `bmi`
+
+## Real-world Example
+```{r echo=FALSE, warning=FALSE, background="transparent"}
+boys %>% 
+  filter(age > 5, !is.na(bmi)) %>%
+  mutate(class = cut(bmi, breaks = c(0, 25, Inf), labels = c("not overweight", "overweight")),
+         Prob = predict(glm(class ~ age, family = binomial(link = "logit")), type = "response")) %>%
+  ggplot(aes(x = age, y = Prob)) + 
+  geom_line() +
+  ylab("Probability of being overweight") + 
+  geom_point(aes(x = age, y = as.numeric(class)-1, color = class))
+```
+
+Finally, if we would develop some intervention campaign; which `age`-group(s) should be targeted?
+
+## What else?
+Learn to keep your *cool*
+
+<center>
+  <img src="figures/state_programming.png" alt="HTML5 Icon" width = 80%>
+</center>
+
+and build the foundation for a succesfull scripting career in predictive and inferential analytics
+ 
+## Formal Goals
+
+1. apply and interpret the basic methodological and statistical concepts that are associated with doing predictive and/or inferential research;
+2. apply and interpret important techniques in linear and logistic regression analysis;
+
+This means that you will learn the ins and outs of inferential and predictive research with linear and logistic models. 
+
+ - what this all covers will become clear during the course
+ - we will learn `R` to perform our data analysis and visualizations
+ - we will learn the math and skills behind these ubiquitous modeling techniques
+ - we will also learn the assumptions of (logistic) regression models
+
+## Workgroups, Assignments, Exercises and Exam
+
+[Course Manual](https://www.gerkovink.com/fundamentals/#course-manual)
+
+- `R`-exercises: every week
+- Workgroup: every Thursday @ 9am
+  - group work
+  - manage your expectations
+- Assignments: 2 in total, graded
+  - If your name is on the assignment; I assume you have contributed. 
+  - If a group omits a name; I expect that you have notified that person. 
+- Exam: just 1, graded
 
 # Overview of this course
 
@@ -34,36 +195,14 @@ You can access the course materials quickly from
 | 7 | Formulating the logistic model and interpreting the parameters; marginal effects | Parameter transformations; scale of the predictor/outcome and prediction and confidence intervals | Test and quantify the effect of the defined model |
 | 8 | Logistic regression model evaluation; cross-validation; multiple regression; interactions | Multiple logistic regression and cross-validating the logistic regression in `R` | Evaluate if the model can be improved; **Prepare assignment B; evaluate the final logistic model on your own data** |
 
-
-# Goal of this course
-
-## Formal Goals
-
-1. apply and interpret the basic methodological and statistical concepts that are associated with doing predictive and/or inferential research;
-2. apply and interpret important techniques in linear and logistic regression analysis;
-
-This means that you will learn the ins and outs of inferential and predictive research with linear and logistic models. 
-
- - what this all covers will become clear during the course
- - we will learn `R` to perform our data analysis and visualizations
- - we will learn the math and skills behind these ubiquitous modeling techniques
- - we will also learn the assumptions of (logistic) regression models
-
-## Real-world Goals
-Learn to keep your *cool*
-
-<center>
-  <img src="figures/state_programming.png" alt="HTML5 Icon" width = 80%>
-</center>
-
-and build the foundation for a succesfull scripting career in predictive and inferential analytics
-
-# What is R?
+# We need R. What is it?
 
 ## Software
 <center>
 <img src="figures/fig1.png" alt="HTML5 Icon" width = 90%>
 </center>
+
+
 
 ## The origin of R
 - R is a language and environment for statistical computing and for graphics
@@ -178,6 +317,10 @@ c <- matrix(a, nrow = 5, ncol = 2)
 c
 ```
 
+```{r}
+matrix(a, nrow = 5, ncol = 2, byrow = TRUE)
+```
+
 ## Calling elements in matrices #1
 - The first row is called by
 ```{r}
@@ -195,7 +338,7 @@ c[, 2]
 c[1, 2]
 ```
 
-In short; square brackets [] are used to call elements, rows, columns (and much more beyond the scope of this course)
+In short; (square) brackets [] are used to call elements, rows and columns.
 
 ## Matrices with mixed numeric / character data
 If we add a character column to matrix `c`; everything becomes a character:
@@ -257,30 +400,7 @@ yield the second column. But we can also use `$` to call variable names in data 
 d$V2
 ```
 
-## Beyond two dimensions
-If you wish to use numerical objects that have more than two dimension, an array would be a suitable object. The following code yields a 3-dimensional array (2 rows, 4 columns and 3 matrices):
-```{r}
-e <- array(1:24, dim = c(2, 4, 3))
-e
-```
-
-## Indexing an array
-The square bracket identification works similarly to the identification of matrices and dataframes, but with the added dimension(s). For example, 
-```{r}
-e[1, 3, 2]
-```
-yields the element in the first row of the third column in the second matrix. This is exactly the downside to an array: it is a series of matrices. 
-
-In other words, characters and numerical elements may not be mixed. 
-
-## Potential problem with array
-If we replace the third matrix in the array by a character version of that matrix, we obtain
-```{r}
-e[, , 3] <- as.character(e[, , 3])
-e
-```
-
-## Solution: a list
+## Beyond two dimensions: a list
 List are just what it says they are: lists. You can have a list of everything mixed with everything. 
 For example, an simple list can be created by
 ```{r}
@@ -361,7 +481,6 @@ c != 3
 c
 ```
 
-
 ## Things that cannot be done
 - Things that have no representation in real number space (at least not without tremendous effort)
     - For example, the following code returns "Not a Number"
@@ -384,7 +503,7 @@ mean(na.omit(c(1, 2, NA, 4, 5)))
 ## Floating point example
 ```{r}
 (3 - 2.9)
-(3 - 2.9) <= 0.1
+(3 - 2.9) == 0.1
 ```
 
 Why does `R` tell us that `3 - 2.9` $\neq$ `0.1`?
@@ -404,37 +523,25 @@ Why does `R` tell us that `3 - 2.9` $\neq$ `0.1`?
 - work with `RStudio` projects
 - if allowed, place your project folders in some cloud-based environment
 
-# The blueprint of `R` 
-
-## Layers in `R`
-There are several 'layers' in `R`. Some layers you are allowed to fiddle around in, some are forbidden. In general there is the following distinction:
-
-- The global environment. 
-- User environments
-- Functions
-- Packages
-- Namespaces
-
-## Environments
-The global environment can be seen as a olympic-size swimming pool. Everything you do has its place there. 
-
-If you'd like, you may create another, separate environment to work in. 
-
-- A user environment would by default not have access to other environments
-
 ## Functions
 
-- If you create a function, it is positioned in the global environment. 
+Functions have parentheses `()`. Names directly followed by parentheses always indicate functions. For example; 
 
-- Everything that happens in a function, stays in a function. Unless you specifically tell the function to share the information with the global environment. 
-
-- See functions as a shampoo bottle in a swimming pool to which you add some water. If you'd like to see the color of the mixture, you'd have to squeeze the bottle for it to come out. 
+ - `matrix()` is a function
+ - `c()` is a function
+ - but `(1 - 2) * 5` is a calculation, not a function
 
 ## Packages
-- Packages have their own space. 
+Packages give additional functionality to `R`. 
 
-    - Everything needed to run the functions in a package is needly contained within its own space
-    - See packages as separate (mini) pools that are connected to the main pool (the global environment)
+By default, some packages are included. These packages allow you to do mainstream statistical analyses and data manipulation. Installing additional packages allow you to perform the state of the art in statistical programming and estimation. 
+
+The cool thing is that these packages are all developed by users. The throughput process is therefore very timely:
+
+  - newly developed functions and software are readily available
+  - this is different from other mainstream software, like SPSS, where new methodology may take years to be implemented. 
+
+A list of available packages can be found on [CRAN](https://cran.r-project.org)
 
 ## Loading packages
 
@@ -447,8 +554,6 @@ and
 require(stats)
 ```
 
-`require()` will produce a warning when a package is not found. In other words, it will not stop as function `library()` does. 
-
 ## Installing packages
 The easiest way to install e.g. package `mice` is to use
 ```{r eval=FALSE}
@@ -459,16 +564,10 @@ Alternatively, you can also do it in `RStudio` through
 
 `Tools --> Install Packages`
 
-## Namespaces
-- Namespaces. These are the deeper layers that feed new water to the surface of the mini pools.    
-    - Packages can have namespaces. 
-    - Functions within packages are executed within the package or namespace and have access to the global environment. 
-    - Objects in the global environment that match objects in the function's namespace are ignored when running functions from packages!
-
 # `R` in depth
 
 ## Workspaces and why you should sometimes save them
-A workspace contains all changes you made to environments, functions and namespaces. 
+A workspace contains all changes you made to `R`. 
 
 A saved workspace contains everything at the time of the state wherein it was saved. 
 
@@ -476,7 +575,7 @@ You do not need to run all the previous code again if you would like to continue
 
 - You can save the workspace and continue exactly where you left. 
 
-Workspaces are compressed and require relatively little memory when stored. The compression is very efficient and beats reloading large datasets from raw text. 
+Workspaces are compressed and require relatively little memory when stored. The compression is very efficient and beats reloading large datasets. 
 
 ## History and why it is useful
 `R` by default saves (part of) the code history and `RStudio` expands this functionality greatly. 
@@ -495,274 +594,36 @@ Most often it may be useful to look back at the code history for various reasons
 - Every project can have its own version control system
 - R-studio projects can relate to Git (or other online) repositories
 
-# Modeling
-
-## Modeling in `R`
-To model objects based on other objects, we use `~` (tilde)
-
-    - For example, to model body mass index (BMI) on weight, we would type
-```{r eval=FALSE}
-BMI ~ weight
-```
-Tilde is used to separate the left- and right-hand sides in a model formula.
-
-For functions (or models), within models we use `I()`
-    - For example, to model body mass index (BMI) on its deterministic function of weight and height, we would type
-```{r eval=FALSE}
-BMI ~ I(weight / height^2)
-```
-
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-require(mice)
-```
-
-## Example
-Remember the `boys` data from package `mice`:
-```{r}
-lm(bmi ~ wgt, data = boys)
-```
-
-## Example continued
-Remember the `boys` data from package `mice`:
-```{r}
-lm(bmi ~ I(wgt / (hgt / 100)^2), data = boys)
-```
-
-## More efficient
-It is 'nicer' to store the output from the function in an object. The convention for regression models is an object called `fit`. 
-```{r}
-fit <- lm(bmi ~ I(wgt / (hgt / 100)^2), data = boys)
-```
-The object `fit` contains a lot more than just the regression weights. To inspect what is inside you can use
-```{r}
-ls(fit)
-```
-
-## Inspecting what is inside `fit`
-Another approach to inspecting the contents of `fit` is the function `attributes()`
-```{r}
-attributes(fit)
-```
-
-The benefit of using `attributes()` is that it directly tells you the class of the object. 
-
-## Classes in R {.smaller}
-```{r}
-class(fit)
-```
-
-Classes are used for an object-oriented style of programming. This means that you can write a specific function that
-- has fixed requirements with respect to the input. 
-- presents output or graphs in a predefined manner. 
-
-When a generic function fun is applied to an object with class attribute `c("first", "second")`, the system searches for a function called `fun.first` and, if it finds it, applies it to the object. 
-
-If no such function is found, a function called `fun.second` is tried. If no class name produces a suitable function, the function fun.default is used (if it exists). If there is no class attribute, the implicit class is tried, then the default method.
-
-## Classes example: plotting without class
-```{r, dev.args = list(bg = 'transparent')}
-plot(bmi ~ wgt, data = boys)
-```
-
-## Classes example: plotting with class
-```{r, dev.args = list(bg = 'transparent')}
-plot(lm(bmi ~ wgt, data = boys), which = 1)
-```
-
-## Classes example: plotting with class
-```{r, dev.args = list(bg = 'transparent')}
-plot(lm(bmi ~ wgt, data = boys), which = 2)
-```
-
-## Classes example: plotting with class
-```{r, dev.args = list(bg = 'transparent')}
-plot(lm(bmi ~ wgt, data = boys), which = 3)
-```
-
-## Classes example: plotting with class
-```{r, dev.args = list(bg = 'transparent')}
-plot(lm(bmi ~ wgt, data = boys), which = 4)
-```
-
-## Classes example: plotting with class
-```{r, dev.args = list(bg = 'transparent')}
-plot(lm(bmi ~ wgt, data = boys), which = 5)
-```
-
-## Classes example: plotting with class
-```{r, dev.args = list(bg = 'transparent')}
-plot(lm(bmi ~ wgt, data = boys), which = 6)
-```
-
-## Why is plot different for class `"lm"`?
-The function `plot()` is called, but not used. Instead, because the linear model has class `"lm"`, `R` searches for the function `plot.lm()`. 
-
-If function `plot.lm()` would not exist, `R` tries to apply function `plot()` (which would have failed in this case because plot requires `x` and `y` as input)
-
-`plot.lm()` is created by John Maindonald and Martin Maechler. They thought it would be useful to have a standard plotting environment for objects with class `"lm"`. 
-
-Since the elements that class `"lm"` returns are known, creating a generic function class is straightforward.  
-
-
-# `R`-coding <br> <br> The Google style guide
-
-# Naming conventions
-
-## File Names
-File names should end in `.R` and, of course, be meaningful. 
-
-GOOD:
-```{r eval=FALSE}
-predict_ad_revenue.R
-```
-
-<font color="red">BAD: </font>
-```{r eval=FALSE}
-foo.R
-```
-
-## Identifiers
-
-Don't use underscores ( _ ) or hyphens ( - ) in identifiers. Identifiers should be named according to the following conventions. 
-
-1. The preferred form for variable names is all lower case letters and words separated with dots (variable.name), but variableName is also accepted; 
-2. function names have initial capital letters and no dots (FunctionName); 
-3. constants are named like functions but with an initial k.
-
-## Identifiers (continued)
-- variable.name is preferred, variableName is accepted \
-  GOOD: `avg.clicks` \
-  OK: `avgClicks` \
-  <font color="red">BAD: `avg_Clicks`</font>
-
-- FunctionName \
-  GOOD: `CalculateAvgClicks` \
-  <font color="red">BAD: `calculate_avg_clicks` , `calculateAvgClicks` </font> \
-- `kConstantName`
-
-# Syntax
-
-## Line Length
-
-The maximum line length is 80 characters.
-
-```{r}
-# This is to demonstrate that at about eighty characters you would move off of the page
-
-# Also, if you have a very wide function
-fit <- lm(age ~ bmi + hgt + wgt + hc + gen + phb + tv + reg + bmi * hgt + wgt * hgt + wgt * hgt * bmi, data = boys)
-
-# it would be nice to pose it as
-fit <- lm(age ~ bmi + hgt + wgt + hc + gen + phb + tv + reg + bmi * hgt 
-          + bmi * wgt + wgt * hgt + wgt * hgt * bmi, data = boys)
-#or
-fit <- lm(age ~ bmi + hgt + wgt + hc + gen + phb + tv + reg 
-          + bmi * hgt 
-          + bmi * wgt
-          + wgt * hgt 
-          + wgt * hgt * bmi, 
-          data = boys)
-```
-
-## Indentation
-
-When indenting your code, use two spaces. `RStudio` does this for you!
-
-Never use tabs or mix tabs and spaces. 
-
-Exception: When a line break occurs inside parentheses, align the wrapped line with the first character inside the parenthesis.
-
-## Spacing
-Place spaces around all binary operators (=, +, -, <-, etc.). 
-
-Exception: Spaces around ='s are optional when passing parameters in a function call.
-```{r eval=FALSE}
-lm(age ~ bmi, data=boys)
-```
-or
-```{r eval=FALSE}
-lm(age ~ bmi, data = boys)
-```
-
-## Spacing (continued)
-Do not place a space before a comma, but always place one after a comma. 
-
-GOOD:
-```{r eval=FALSE}
-tab.prior <- table(df[df$days.from.opt < 0, "campaign.id"])
-total <- sum(x[, 1])
-total <- sum(x[1, ])
-```
-
-
-## Spacing (continued)
-<font color="red">BAD:
-```{r eval=FALSE}
-# Needs spaces around '<'
-tab.prior <- table(df[df$days.from.opt<0, "campaign.id"])  
-# Needs a space after the comma
-tab.prior <- table(df[df$days.from.opt < 0,"campaign.id"])  
-# Needs a space before <-
-tab.prior<- table(df[df$days.from.opt < 0, "campaign.id"]) 
-# Needs spaces around <-
-tab.prior<-table(df[df$days.from.opt < 0, "campaign.id"])  
-# Needs a space after the comma
-total <- sum(x[,1])  
-# Needs a space after the comma, not before 
-total <- sum(x[ ,1])  
-```
-</font>
-
-## Spacing (continued)
-Place a space before left parenthesis, except in a function call.
-
-GOOD: 
-```{r eval=FALSE}
-if (debug)
-```
-
-<font color="red">BAD:</font>
-```{r eval=FALSE}
-if(debug)
-```
-
-## Extra spacing
-Extra spacing (i.e., more than one space in a row) is okay if it improves alignment of equals signs or arrows (<-).
-```{r eval = FALSE}
-plot(x    = x.coord,
-     y    = data.mat[, MakeColName(metric, ptiles[1], "roiOpt")],
-     ylim = ylim,
-     xlab = "dates",
-     ylab = metric,
-     main = (paste(metric, " for 3 samples ", sep = "")))
-
-```
-
-Do not place spaces around code in parentheses or square brackets.
-
-Exception: Always place a space after a comma.
-
-## Extra spacing
-GOOD:
-```{r eval=FALSE}
-if (debug)
-x[1, ]
-```
-
-<font color="red">BAD:</font>
-```{r eval=FALSE}
-if ( debug )  # No spaces around debug
-x[1,]  # Needs a space after the comma 
-```
-
 ## In general...
 - Use common sense and BE CONSISTENT.
 
-- The point of having style guidelines is to have a common vocabulary of coding 
-    - so people can concentrate on what you are saying, rather than on how you are saying it. 
+- Browse through [the tidyverse style guide](https://style.tidyverse.org)
 
-- If code you add to a file looks drastically different from the existing code around it, the discontinuity will throw readers out of their rhythm when they go to read it. Try to avoid this.
+  - The point of having style guidelines is to have a common vocabulary of coding 
+  - so people can concentrate on what you are saying, rather than on how you are saying it. 
 
+- If code you add to a file looks drastically different from the existing code around it, the discontinuity will throw readers and collaborators out of their rhythm when they go to read it. Try to avoid this.
+
+- Intentional spacing makes your code easier to interpret
+
+  - `a<-c(1,2,3,4,5)` vs;
+  - `a <- c(1, 2, 3, 4, 5)`
+ 
+ - at least put a space after every comma!
+
+# To continue
+
+## What to do?
+
+1. Before Thursday: make exercise 1
+2. Thursday: workgroup. 
+3. After the workgroup: make exercise 3
+4. Next week: 
+
+  - R: `dplyr`, `pipes` and linear modeling. 
+  - Statistics: deviations, the use of squares and simple modeling
+  
+# See you next week
 
 
 
