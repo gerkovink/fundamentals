@@ -197,6 +197,12 @@ All the best,
 
 Gerko
 
+### Useful Information and links
+- [The tidyverse style guide](https://style.tidyverse.org)
+- [R for Data Science](https://r4ds.had.co.nz): a wonderful book that details a usefull toolset for current and aspiring data scientists. 
+
+The above links are useful references that connect to this week's materials. 
+
 ## Column 2
 
 ### `R` exercise
@@ -208,13 +214,12 @@ This week's `R` exercise is threefold. We need to cover a lot of ground this wee
 
 A video discussion of the exercises will be available from this window after the second lecture.  
 
-Hand in a markdown compiled `html` file for exercise 3 to the [SurfDrive](https://surfdrive.surf.nl/files/index.php/s/yx5SsHz3haHLhqK) drop folder. Do this ***before the next lecture on Monday***. 
+Hand in a markdown compiled `html` file for exercise 3 to the [SurfDrive](https://surfdrive.surf.nl/files/index.php/s/yx5SsHz3haHLhqK) drop folder. Name the file `Yourname.Rmd`, where `Yourname` is your name. Do this ***before the next lecture on Monday***. 
 
-### Useful Information and links
-- [The tidyverse style guide](https://style.tidyverse.org)
-- [R for Data Science](https://r4ds.had.co.nz): a wonderful book that details a usefull toolset for current and aspiring data scientists. 
+### Exercise discussion
+The videodiscussion for the practical exercises:
 
-The above links are useful references that connect to this week's materials. 
+- [Exercise 1 discussion](https://www.dropbox.com/s/qgxlrrl808klmjq/Exercise1_discussion.mp4?dl=0)
 
 <!-- # Week 2 -->
 
