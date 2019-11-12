@@ -171,9 +171,9 @@ See also [this `rmarkdown` cheat sheet](Contents/Material/Part A - Introduction/
 
 11. **Open the file `markdown.Rmd`. **
 
-You can find [`markdown.Rmd` here](markdown.Rmd).
+You can find a zip containing the [`markdown.Rmd` here](markdown.Rmd.zip).
 
-Have a look at the code in the markdown file and make sure that you understand what is going on. If you do not understand what you are looking at, please ask me (Gerko) during the lecture or [via e-mail](mailto:G.Vink@uu.nl), or ask the workgroup instructor. 
+Have a look at the code in the `markdown.Rmd` file and make sure that you understand what is going on. If you do not understand what you are looking at, please ask me (Gerko) during the lecture or [via e-mail](mailto:G.Vink@uu.nl), or ask the workgroup instructor. 
 
 ---
 
