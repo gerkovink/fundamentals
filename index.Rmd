@@ -213,7 +213,16 @@ This week's `R` exercise is threefold. We need to cover a lot of ground this wee
 
 - Make [Exercise 1](Wk1/Exercise/Exercise_1_walkthrough.html) before Thursday's workgroup. This exercise will get you started with `R` and `RStudio`.
 - Make [Exercise 2](Wk1/Exercise/Exercise_2_walkthrough.html) during Thursday's workgroup, where Justin will be available to help you.
-- Complete and hand in [Exercise 3](Wk1/Exercise/Exercise_3_walkthrough.html) before the next lecture.
+- Complete and hand in [Exercise 3](Wk1/Exercise/Exercise_3_walkthrough.html) before the next lecture. For this week it is sufficient if you present the code to the relevant exercises, e.g.:
+
+
+````markdown
+9. I used the following code to plot the figure:
+
+`r ''` ```{r}
+plot(brw ~ species, data = sleepdata2)
+```
+````
 
 A video discussion of the exercises will be available from this window after the second lecture.  
 
