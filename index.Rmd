@@ -12,7 +12,8 @@ This dashboard covers the course materials for the course [***Fundamental Techni
 
 ---
 
-Instructor: [Gerko Vink](http://www.gerkovink.com) <br>
+Course leader: [Gerko Vink](https://www.gerkovink.com) <br>
+Workgroup instructor: [Justin Kraaijenbrink](https://www.uu.nl/medewerkers/JTKraaijenbrink)
 Study load: 7.5 ECTS <br>
 Assessment: Final Assignment <br>
 [Course SurfDrive folder](https://surfdrive.surf.nl/files/index.php/s/yx5SsHz3haHLhqK)
@@ -188,6 +189,8 @@ You can find the [slides here](Wk1/Lecture_1_FTID.html)
 ### Workgroup (Thursday)
 
 **Today's workgroup is in [BOL](https://www.uu.nl/bolognalaan-101) 1.075 from 9am - 10.45am**
+
+- The workgroup [slides can be found here](Wk1/Workgroup/Workgroup1_FTiD.html)
 
 Make sure that you attend all workgroup meetings: However today's meeting is vital. We will form groups and I will tell you all about the assignments and management of expectations. 
 
