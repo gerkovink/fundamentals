@@ -13,7 +13,7 @@ This dashboard covers the course materials for the course [***Fundamental Techni
 ---
 
 Course leader: [Gerko Vink](https://www.gerkovink.com) <br>
-Workgroup instructor: [Justin Kraaijenbrink](https://www.uu.nl/medewerkers/JTKraaijenbrink)
+Workgroup instructor: [Justin Kraaijenbrink](https://www.uu.nl/medewerkers/JTKraaijenbrink) <br>
 Study load: 7.5 ECTS <br>
 Assessment: Final Assignment <br>
 [Course SurfDrive folder](https://surfdrive.surf.nl/files/index.php/s/yx5SsHz3haHLhqK)
