@@ -217,7 +217,7 @@ This week's `R` exercise is threefold. We need to cover a lot of ground this wee
 
 A video discussion of the exercises will be available below after the second lecture.  
 
-Hand in a markdown compiled `html` file for exercise 3 to the [SurfDrive](https://surfdrive.surf.nl/files/index.php/s/yx5SsHz3haHLhqK) drop folder. Name the file `Yourname.Rmd`, where `Yourname` is your name. Do this ***before the next lecture on Monday***. 
+Hand in a markdown compiled `html` + `Rmd` file for exercise 3 to the [SurfDrive](https://surfdrive.surf.nl/files/index.php/s/yx5SsHz3haHLhqK) drop folder. Name the file `Yourname.Rmd`, where `Yourname` is your name. Do this ***before the next lecture on Monday***. 
 
 ### Exercise discussion
 The videodiscussion for the practical exercises:
@@ -247,7 +247,7 @@ This week's `R` exercise is about getting familiar with pipes and exploring the 
 
 - Make [Exercise 4](Wk2/Exercise/Exercise_4_walkthrough.html) before Thursday's workgroup.
 
-Hand in a markdown compiled `html` file for Exercise 4: Question 11 to the [SurfDrive](https://surfdrive.surf.nl/files/index.php/s/yx5SsHz3haHLhqK) drop folder. Do this ***before the next lecture on Monday***.
+Hand in a markdown compiled `html` + `Rmd` file for Exercise 4: Question 11 to the [SurfDrive](https://surfdrive.surf.nl/files/index.php/s/yx5SsHz3haHLhqK) drop folder. Name the file `Yourname.Rmd/html`, where `Yourname` is your name. Do this ***before the next lecture on Monday***.  
 
 ### Useful References
 
