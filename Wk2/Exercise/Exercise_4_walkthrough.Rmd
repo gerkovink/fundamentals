@@ -310,6 +310,9 @@ curve(lsfun, from = 4.16, to = 4.17)
 
 ---
 
+# Hand-in exercise
+
+---
 
 11. **Repeat the experiment from 10 on object `y` from `Exercise4_data.RData`.**
 
