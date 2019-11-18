@@ -13,11 +13,114 @@ output:
 
 ## This lecture
 
+- Leftover slides from last week
+
 - Data manipulation
 
 - Basic analysis (correlation & t-test)
 
 - Pipes
+
+- Deviations and modeling
+
+## Some programming tips:
+- keep your code tidy
+- use comments (text preceded by `#`) to clarify what you are doing
+    - If you look at your code again, one month from now: you will not know what you did --> unless you use comments 
+
+- when working with functions, use the TAB key to quickly access the help for the function's components
+- work with logically named `R`-scripts
+    - indicate the sequential nature of your work
+- work with `RStudio` projects
+- if allowed, place your project folders in some cloud-based environment
+
+## Functions
+
+Functions have parentheses `()`. Names directly followed by parentheses always indicate functions. For example; 
+
+ - `matrix()` is a function
+ - `c()` is a function
+ - but `(1 - 2) * 5` is a calculation, not a function
+
+## Packages
+Packages give additional functionality to `R`. 
+
+By default, some packages are included. These packages allow you to do mainstream statistical analyses and data manipulation. Installing additional packages allow you to perform the state of the art in statistical programming and estimation. 
+
+The cool thing is that these packages are all developed by users. The throughput process is therefore very timely:
+
+  - newly developed functions and software are readily available
+  - this is different from other mainstream software, like SPSS, where new methodology may take years to be implemented. 
+
+A list of available packages can be found on [CRAN](https://cran.r-project.org)
+
+## Loading packages
+
+There are two ways to load a package in `R`
+```{r}
+library(stats)
+``` 
+and
+```{r}
+require(stats)
+```
+
+## Installing packages
+The easiest way to install e.g. package `mice` is to use
+```{r eval=FALSE}
+install.packages("mice")
+```
+
+Alternatively, you can also do it in `RStudio` through 
+
+`Tools --> Install Packages`
+
+# `R` in depth
+
+## Workspaces and why you should sometimes save them
+A workspace contains all changes you made to `R`. 
+
+A saved workspace contains everything at the time of the state wherein it was saved. 
+
+You do not need to run all the previous code again if you would like to continue working at a later time. 
+
+- You can save the workspace and continue exactly where you left. 
+
+Workspaces are compressed and require relatively little memory when stored. The compression is very efficient and beats reloading large datasets. 
+
+## History and why it is useful
+`R` by default saves (part of) the code history and `RStudio` expands this functionality greatly. 
+
+Most often it may be useful to look back at the code history for various reasons.
+
+- There are multiple ways to access the code history.
+  
+    1. Use arrow up in the console. This allows you to go back in time, one codeline by one. Extremely useful to go back to previous lines for minor alterations to the code.
+    2. Use the history tab in the environment pane. The complete project history can be found here and the history can be searched. This is particularly convenient when you know what code you are looking for. 
+    
+## Working in projects in `RStudio`
+- Every project has its own history
+- Every research project has its own project
+- Every project can have its own folder, which also serves as a research archive
+- Every project can have its own version control system
+- R-studio projects can relate to Git (or other online) repositories
+
+## In general...
+- Use common sense and BE CONSISTENT.
+
+- Browse through [the tidyverse style guide](https://style.tidyverse.org)
+
+  - The point of having style guidelines is to have a common vocabulary of coding 
+  - so people can concentrate on what you are saying, rather than on how you are saying it. 
+
+- If code you add to a file looks drastically different from the existing code around it, the discontinuity will throw readers and collaborators out of their rhythm when they go to read it. Try to avoid this.
+
+- Intentional spacing makes your code easier to interpret
+
+  - `a<-c(1,2,3,4,5)` vs;
+  - `a <- c(1, 2, 3, 4, 5)`
+ 
+ - at least put a space after every comma!
 
 ## New packages we use
 ```{r warning=FALSE, message=FALSE}
@@ -25,6 +128,7 @@ library(MASS)     # for the cats data
 library(dplyr)    # data manipulation
 library(haven)    # in/exporting data
 library(magrittr) # pipes
+library(mice)     # for the nhanes data
 ```
 
 <img src="pipe.jpg" style="display:block;width:500px;margin-left:auto;margin-right:auto"></img>
@@ -241,49 +345,15 @@ cats %>%
 ## The role of `.` in a pipe
 In `a %>% b(arg1, arg2, arg3)`, `a` will become `arg1`. With `.` we can change this.
 ```{r error=TRUE}
-set.seed(123)
-1:5 %>%
-  mean() %>%
-  rnorm(10)
+cats %>%
+  plot(Hwt ~ Bwt, data = .)
 ```
 VS
 ```{r}
-set.seed(123)
-1:5 %>% 
-  mean() %>%
-  rnorm(n = 10, mean = .)
+cats %$%
+  plot(Hwt ~ Bwt)
 ```
 The `.` can be used as a placeholder in the pipe. 
-
-## Placeholder example
-Remember: `sample()` takes a random sample from a vector
-```{r}
-sample(x = c(1, 1, 2, 3, 5, 8), size = 2)
-```
-
-Sample 3 positions from the alphabet and show the position and the letter
-```{r}
-set.seed(123)
-1:26 %>%
-  sample(3) %>%
-  paste(., LETTERS[.])
-```
-
-## Debugging pipelines
-If you don't know what's going on, run each statement separately!
-```{r}
-set.seed(123)
-1:26
-
-set.seed(123)
-1:26 %>% 
-  sample(3)
-
-set.seed(123)
-1:26 %>%
-  sample(3) %>%
-  paste(., LETTERS[.])
-```
 
 ## Performing a t-test in a pipe
 ```{r message=FALSE}
@@ -297,8 +367,7 @@ t.test(Hwt ~ Sex, data = cats)
 
 ## Storing a t-test from a pipe
 ```{r}
-cats.test <- 
-  cats %$%
+cats.test <- cats %$%
   t.test(Bwt ~ Sex)
 
 cats.test
@@ -349,9 +418,9 @@ plotdata <- data.frame(X = rnorm(100, 167.5, 10),
 plotdata %>%
   ggplot(aes(X, Y)) + 
   geom_point(color = "blue") + 
-  geom_point(aes(167.5, 180.8), color = "orange", size = 5) + 
-  geom_vline(xintercept = 167.5, color = "orange") + 
-  geom_hline(yintercept = 180.8, color = "orange") + 
+  geom_point(aes(mean(X), mean(Y)), color = "orange", size = 5) + 
+  geom_vline(xintercept = 168.4041, color = "orange") + 
+  geom_hline(yintercept = 179.7245 , color = "orange") + 
   ggtitle(bquote("Bivariate normal")) + 
   theme_minimal()
 ```
@@ -387,9 +456,9 @@ The mean is the mathematical expectation. It represents the observed values best
  - The mean yields the lowest set of deviations
 ```{r}
 plotdata %>%
-  mutate(deviation = X - mean(X), 
-         deviation2 = X - (mean(X) + 3)) %>%
-  select(deviation, deviation2) %>%
+  mutate("Mean" = X - mean(X), 
+         "Mean + 3" = X - (mean(X) + 3)) %>%
+  select("Mean", "Mean + 3") %>%
   colSums %>%
   round(digits = 3)
 ```
@@ -504,7 +573,10 @@ fit <- plotdata2 %$%
 
 ## What's next
 
-During the practical this week we will learn to calculate and explore squared deviations. During the exercises you'll lear to minimize the deviations. 
+During the practical exercises this week we will learn to calculate and explore squared deviations. During these exercises you'll learn to minimize the deviations. 
 
-Next week we'll jump to regression. We'll see how deviations still play a role in that framework, both during estimation and in terms of leftovers from the model. 
+Next week we'll jump to regression. We'll see how deviations still play a role in that framework:
+
+  - We minimize deviations to infer a linear model
+  - If our model is not perfect, observations will still deviate from the model
 
