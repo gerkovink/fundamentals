@@ -129,7 +129,7 @@ Alternatively, we can use the `%$%` pipe:
 boys %$% 
   cor(hgt, wgt, use = "pairwise.complete.obs")
 ```
-The `%$%` pipe *unfolds* the listed dimensions of the `boys` dataset, such that we can refer to them directly. 
+The exposition `%$%` pipe *exposes* the listed dimensions of the `boys` dataset, such that we can refer to them directly. 
 
 ---
 
@@ -148,28 +148,16 @@ boys %>%
 
 ---
 
-6. **Use a pipe to plot the pair (`hgt`, `wgt`) two times: once for `hgt` in meters and once for `hgt` in centimeters. Make the points in the 'centimeter' plot `red` and in the 'meter' plot `blue`. **
-
-This is best done with the `%T>%` pipe:
+6. **Use pipes to plot the pair (`hgt`, `wgt`) two times: once for `hgt` in meters and once for `hgt` in centimeters. Make the points in the 'centimeter' plot `red` and in the 'meter' plot `blue`. **
 ```{r}
 boys %>%
-  subset(select = c(hgt, wgt)) %T>%
-  plot(col = "red", main = "Height in centimeters") %>%
-  transform(hgt = hgt / 100) %>%
-  plot(col = "blue", main = "Height in meters")
-```
-
-The `%T>%` pipe is very useful, because it creates a literal `T` junction in the pipe. It is perhaps most informative to graphically represent the above pipe as follows:
-```{r eval=FALSE}
+  subset(select = c(hgt, wgt)) %>%
+  plot(col = "red", main = "Height in centimeters") 
 boys %>%
-  subset(select = c(hgt, wgt)) %T>%
-  plot(col = "red", main = "Height in centimeters") %>%
+  subset(select = c(hgt, wgt)) %>%
   transform(hgt = hgt / 100) %>%
   plot(col = "blue", main = "Height in meters")
 ```
-![](flow_t_pipe.png)
-
-We can see that there is indeed a literal T-junction. Naturally, we can expand this process with more `%T>%` pipes. However, once a pipe gets too long or too complicated, it is perhaps more useful to cut the piped problem into smaller, manageble pieces. 
 
 ---
 

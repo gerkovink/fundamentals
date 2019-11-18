@@ -337,11 +337,6 @@ cats %>%
 <img src="flow_$_pipe.png" alt="HTML5 Icon" width = 75%>
 </center>
 
-## The `%T>%` pipe
-<center>
-<img src="flow_T_pipe.png" alt="HTML5 Icon" width = 100%>
-</center>
-
 ## The role of `.` in a pipe
 In `a %>% b(arg1, arg2, arg3)`, `a` will become `arg1`. With `.` we can change this.
 ```{r error=TRUE}
