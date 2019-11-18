@@ -177,7 +177,7 @@ We can see that there is indeed a literal T-junction. Naturally, we can expand t
 set.seed(32083)
 x <- rnorm(100, mean=3, sd=7)
 y <- c(rnorm(50, mean = 2, sd = 3), rnorm(50, mean = 9, sd = 2))
-save(x, file = "Exercise4_data.RData")
+save(x, y, file = "Exercise4_data.RData")
 ```
 
 
