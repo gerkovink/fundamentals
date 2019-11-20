@@ -223,6 +223,8 @@ Hand in a markdown compiled `html` + `Rmd` file for exercise 3 to the [SurfDrive
 The videodiscussion for the practical exercises:
 
 - [Exercise 1 discussion](https://www.dropbox.com/s/qgxlrrl808klmjq/Exercise1_discussion.mp4?dl=0)
+- [Exercise 2 discussion](https://www.dropbox.com/s/7bxqj6gn7occ0yr/Exercise%202_discussion.mp4?dl=0)
+- [Exercise 3 discussion](https://www.dropbox.com/s/dl5jklj4oixfpxd/Exercise3_discussion.mp4?dl=0)
 
 # Week 2
 
