@@ -36,7 +36,7 @@ library(mice)
 
 ## Statistical model
 
-The mathematical formulation of relationship between variables can be written as
+The mathematical formulation of the relationship between variables can be written as
 
 \[
 \mbox{observed}=\mbox{predicted}+\mbox{error}
@@ -47,8 +47,8 @@ or (for the greek people) in notation as
 
 where
 
--   $\mu$ (mean) is the part of $Y$ that is explained by model 
--  $\varepsilon$ (residual) is the part of $Y$ that is not explained by model 
+-  $\mu$ (mean) is the part of the outcome that is explained by model 
+-  $\varepsilon$ (residual) is the part of outcome that is not explained by model 
 
 
 ## A simple example
@@ -62,8 +62,10 @@ Regression model:
 
 where
 
--  $\alpha+\beta{x}_i$ is the mean of `age`, $y$, conditional on `weight`, $x$.
--  $\varepsilon_i$ is random variation 
+- $i$ indicates the individual in $i = 1, \dots, n$
+- $n$ is the sample size
+- $\alpha+\beta{x}_i$ is the mean of `age`, conditional on `weight`
+- $\varepsilon_i$ is random variation 
 
 ## The linear model
 
@@ -159,13 +161,7 @@ Assumptions:
 
 ## The `anscombe` data
 ```{r}
-head(anscombe)
-```
-
-Or, alternatively, 
-```{r}
-anscombe %>%
-  head
+anscombe
 ```
 
 ##  Fitting a line {.smaller}
