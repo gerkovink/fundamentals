@@ -1,0 +1,119 @@
+---
+title: "Exercise 6"
+author: "Gerko Vink"
+date: "Fundamental Techniques in Data Science with R"
+output: 
+   html_document:
+    toc: true
+    toc_depth: 5
+    toc_float: true
+    number_sections: false
+---
+  
+<style type="text/css">
+  
+body{ /* Normal  */
+  font-size: 12px;
+  }
+td {  /* Table  */
+  font-size: 12px;
+}
+h1.title {
+  font-size: 18px;
+  color: DarkBlue;
+}
+h1 { /* Header 1 */
+  font-size: 18px;
+}
+h2 { /* Header 2 */
+  font-size: 18px;
+}
+h3 { /* Header 3 */
+  font-size: 18px;
+}
+code.r{ /* Code block */
+  font-size: 12px;
+}
+pre { /* Code block - determines code spacing between lines */
+  font-size: 14px;
+}
+</style>
+  
+---
+  
+```{r echo=FALSE}
+printAnswers <- FALSE
+```
+
+# Assumptions
+
+---
+
+## Inspect `fit1`
+
+---
+
+8. **Inspect the assumptions for the first model. What do you think?**
+
+HINT: use `plot()` and use the plots you've created in exercises 5-7.
+
+```{r}
+plot(fit1)
+```
+
+- The data follows a linear trend, although the loess curve shows some deviations from linearity. All in all, there are only 11 points, so this slight deviations is not something that would worry me. 
+- Taking into account that there are only a few observations, I would argue that the residuals seem normally distributed from the `Normal Q-Q` plot. 
+- The residual variance seems constant over the level of the fitted values (i.e. homoscedastic residual variance) as seen in `Residuals vs. Fitted` plot and the `Scale-Location` plot. Again, the dip in the `Scale-Location` plot can easily be explained by the small sample size and the deviation should be taken with a grain of salt. 
+- No special remarks with respect to leverage and cook's distance, although case #3 would need to be at least investigated. 
+
+---
+
+## Inspect `fit2`
+
+---
+
+9. **Inspect the assumptions for the model `fit2`. What do you think?**
+
+```{r echo=printAnswers, eval = printAnswers}
+#- The data does not follow a linear trend, the deviation would definitely worry me. 
+#- The residuals seem non-normally distributed, especially in the tails from the `Normal Q-Q` plot. 
+#- I could not still argue that the residual variance seems more-or-less constant over the level of the fitted values. The residual variance is heteroscedastic.  
+#- Case 8 has quite some leverage and a large residual. It's cook's distance is greater than `.5`. 
+
+plot(fit2)
+```
+
+---
+
+## Inspect `fit3`
+
+---
+
+10. **Inspect the assumptions for the model `fit3`. What do you think?**
+
+```{r echo=printAnswers, eval = printAnswers}
+#- The data follows a perfect linear trend, except for case #3 
+#- The residuals seem normally distributed, except for case #3
+#- I could not still argue that the residual variance seems more-or-less constant over the level of the fitted values. The residual variance is heteroscedastic. However, if case #3 were omitted, there are no residuals: every point falls perfectly on the regression line. 
+#- Case 3 has quite some leverage, but not as large as other cases. Case #3 has the largest residual. It's cook's distance is greater than `1`. 
+
+plot(fit3)
+```
+
+---
+
+## Inspect `fit4`
+
+---
+
+11. **Inspect the assumptions for the model `fit4`. What do you think?**
+
+```{r echo=printAnswers, eval = printAnswers}
+#- The data follows no trend. You'd be an idiot to perform linear regression on this set. 
+#- The residuals seem normally distributed
+#- I could not still argue that the residual variance seems more-or-less constant over the level of the fitted values. The residual variance does not exist for fitted values other than 7!
+#- Case 8 has a leverage of 1; hence it is omitted from most of the plots. The plot over the remaining points is redundant.  
+
+plot(fit4)
+```
+
