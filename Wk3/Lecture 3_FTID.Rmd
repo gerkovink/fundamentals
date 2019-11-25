@@ -460,3 +460,10 @@ fit %>% plot(which = c(4, 5))
 
 There are no cases with $|e_z|>2$, so no outliers (right plot). There are no cases with Cook's Distance $>1$, but case 3 stands out 
 
+## Next week
+
+- Inferential modeling
+  - drawing conclusions from data
+  - confidence intervals
+
+- What if assumptions are violated?
