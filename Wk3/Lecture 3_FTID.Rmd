@@ -11,21 +11,25 @@ output:
 
 ## Last week
 
-A review of last week's contents
+- pipes with package `magrittr`
+  - `%>%`
+  - `%$%`
 
+- deviations
+  - from the mean
+  - standardized
+  - squared
+  
 ## Today
 - the linear model
 - assumptions associated with the linear model
 
 ##  We use the following packages
 ```{r message=FALSE}
-library(MASS)
 library(dplyr)
 library(magrittr)
 library(ggplot2)
 library(mice)
-library(DAAG)
-library(car)
 ```
 
 # Statistical models
@@ -77,63 +81,68 @@ If we want to know what these arguments do we can ask R:
 
 This will open a help page on the `lm()` function.
 
+## The `boys` data from `mice`
+```{r}
+head(boys, n = 20)
+```
+
 ## Continuous predictors {.smaller}
 To obtain a linear model with a main effects for `wgt`, we formulate $age\sim wgt$ 
 ```{r warning=FALSE, message = FALSE}
-library(mice)
-fit <- with(boys, lm(age ~ wgt))
-fit
+boys %$% 
+  lm(age ~ wgt)
 ```
 
 ## Continuous predictors: more detail {.smaller}
 ```{r}
-summary(fit)
+boys %$% lm(age ~ wgt) %>% summary()
 ```
 
 ## Continuous predictors
 To obtain a linear model with just main effects for `wgt` and `hgt`, we formulate $age\sim wgt + hgt$ 
 ```{r}
-require(mice)
-fit <- with(boys, lm(age ~ wgt + hgt))
-fit
+boys %$% 
+  lm(age ~ wgt + hgt)
 ```
 
 ## Continuous predictors: more detail {.smaller}
 ```{r}
-summary(fit)
+boys %$% 
+  lm(age ~ wgt + hgt) %>%
+  summary
 ```
 
 ## Continuous predictors: interaction effects
 To predict $age$ from $wgt$, $hgt$ and the interaction $wgt*hgt$ we formulate $age\sim wgt * hgt$
 ```{r}
-fit <- with(boys, lm(age ~ wgt * hgt))
-fit
-```
-
-##  and with more detail {.smaller}
-```{r}
-summary(fit)
+boys %$% lm(age ~ wgt * hgt) %>% summary
 ```
 
 ## Categorical predictors in the linear model
 If a categorical variable is entered into function `lm()`, it is automatically converted to a dummy set in `R`. The first level is always taken as the reference category. If we want another reference category we can use the function `relevel()` to change this.
 
 ```{r}
-fit <- with(boys, lm(age ~ reg))
+fit <- boys %$% 
+  lm(age ~ reg)
+fit
+```
+
+## What are dummies?
+```{r}
+fit %>% model.matrix() %>% tail(n = 20)
 ```
 
 ##  and again with more detail {.smaller}
 ```{r}
-summary(fit)
+fit %>% summary
 ```
 
 ## Components of the linear model {.smaller}
 ```{r}
-names(fit) # the names of the list with output objects
+fit %>% names() # the names of the list with output objects
 fit$coef  # show the estimated coefficients
-coef(fit) # alternative
+fit %>% coef # alternative
 ```
-
 
 # Fitting a line to data
 
@@ -159,8 +168,7 @@ anscombe %>%
   head
 ```
 
-## Fitting a line {.smaller}
-
+##  Fitting a line {.smaller}
 ```{r eval = FALSE, message = FALSE}
 anscombe %>%
   ggplot(aes(y1, x1)) + 
@@ -177,6 +185,104 @@ anscombe %>%
   geom_smooth(method = "lm")
 ```
 
+# Data visualization with `ggplot2`
+
+## Why visualise?
+
+- We can process a lot of information quickly with our eyes
+- Plots give us information about
+    - Distribution / shape
+    - Irregularities
+    - Assumptions
+    - Intuitions
+- Summary statistics, correlations, parameters, model tests, *p*-values do not tell the whole story
+
+### ALWAYS plot your data!
+
+
+## Why visualise?
+
+<img src="anscombe.svg" style="display:block;width:90%;margin:0 auto;"></img>
+<p style="text-align:center;font-style:italic;font-size:0.5em;">Source: Anscombe, F. J. (1973). "Graphs in Statistical Analysis". American Statistician. 27 (1): 17–21.</p>
+
+
+## Why visualise?
+
+<img src="datasaurus.gif" style="display:block;width:90%;margin:0 auto;"></img>
+
+## What is `ggplot2`?
+Layered plotting based on the book **The Grammer of Graphics** by Leland Wilkinsons.
+
+With `ggplot2` you
+
+1. provide the _data_
+2. define how to map variables to _aesthetics_
+3. state which _geometric object_ to display
+4. (optional) edit the overall _theme_ of the plot
+
+`ggplot2` then takes care of the details
+
+## An example: scatterplot
+
+1: Provide the data
+```{r, eval=FALSE}
+boys %>%
+  ggplot()
+```
+
+2: map variable to aesthetics
+```{r, eval=FALSE}
+boys %>%
+  ggplot(aes(x = age, y = bmi))
+```
+
+3: state which geometric object to display
+```{r, eval=FALSE}
+boys %>%
+  ggplot(aes(x = age, y = bmi)) +
+  geom_point()
+```
+
+## An example: scatterplot
+```{r, echo=FALSE, fig.align='center'}
+boys %>%
+  ggplot(aes(x = age, y = bmi)) +
+  geom_point(na.rm = TRUE)
+```
+
+## Why this syntax?
+
+Create the plot
+```{r, fig.align='center', dev.args=list(bg="transparent"), warning=FALSE, message=FALSE}
+gg <- 
+  boys %>%
+  ggplot(aes(x = age, y = bmi)) +
+  geom_point(col = "dark green")
+```
+
+Add another layer (smooth fit line)
+```{r, warning=FALSE, message=FALSE, fig.align='center', dev.args=list(bg="transparent")}
+gg <- gg + 
+  geom_smooth(col = "dark blue")
+```
+
+Give it some labels and a nice look
+```{r, fig.align='center', dev.args=list(bg="transparent")}
+gg <- gg + 
+  labs(x = "Age", y = "BMI", title = "BMI trend for boys") +
+  theme_minimal()
+```
+
+## Why this syntax?
+```{r, warning=FALSE, message=FALSE, fig.align='center', dev.args=list(bg="transparent")}
+plot(gg)
+```
+
+## Why this syntax?
+<img src="ggani.gif" style="display:block;width:90%;margin:0 auto;"></img>
+
+# Back to `lm`
+
 ##  Fitting a line {.smaller}
 The linear model would take the following form:
 ```{r eval=FALSE}
@@ -184,7 +290,8 @@ fit <-
   yourdata %>%
   lm(youroutcome ~ yourpredictors)
 
-summary(fit)
+fit %>% summary() # pipe
+summary(fit) # base R
 ```
 Output:
 
@@ -200,7 +307,7 @@ Output:
 fit <- anscombe %$%
   lm(y1 ~ x1)
 
-summary(fit)
+fit %>% summary
 ```
 
 ## Checking assumptions
