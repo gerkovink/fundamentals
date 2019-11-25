@@ -258,6 +258,11 @@ Hand in a markdown compiled `html` + `Rmd` file for Exercise 4: Question 11 to t
 
 The above links are useful references that connect to this week's materials.
 
+### Exercise answers
+The answers to the fourth practical exercises:
+
+- [Exercise 4 answers](Wk2/Exercise/Exercise_4_answers.html)
+
 # Week 3
 
 ## Column 1
