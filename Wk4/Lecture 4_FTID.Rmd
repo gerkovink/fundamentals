@@ -14,20 +14,17 @@ output:
 A review of last week's contents
 
 ## Today
-
+- Assumptions
 - Generating data
 - Statistical inference
-
-# Generating data
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(dev.args=list(bg="transparent"))
-```
-
 
 ## Packages and functions that we use
 ```{r message=FALSE, warning=FALSE}
 library(mvtnorm)  # Multivariate Normal tools
+library(dplyr)
+library(magrittr)
+library(ggplot2)
+library(mice)
 ```
 - `table()`: Build a contingency table out of counts
 - `hist()`: Draw a histogram
@@ -37,6 +34,359 @@ library(mvtnorm)  # Multivariate Normal tools
 - `rpois()`: Probabilistic sampling from a poisson distribution
 - `set.seed(123)`: Fixing the Random Number Generator seed
 
+# Assumptions
+
+## The key assumptions
+There are four key assumptions about the use of linear regression models. 
+
+In short, we assume 
+
+- The outcome to have a **linear relation** with the predictors and the predictor relations to be **additive**. 
+  - the expected value for the outcome is a straight-line function of each predictor, given that the others are fixed. 
+  - the slope of each line does not depend on the values of the other predictors
+  - the effects of the predictors on the expected value are additive
+  
+  $$ y = \alpha + \beta_1X_1 + beta_2X_2 + beta_3X_3 + \epsilon$$
+
+- The residuals are statistically independent
+- The residual variance is constant
+  - accross the expected values
+  - across any of the predictors
+- The residuals are normally distributed with mean $\mu_\epsilon = 0$
+
+## A simple example
+$$y = \alpha + \beta X + \epsilon$$ and $$\hat{y} = \alpha + \beta X$$
+The components in linear modeling
+
+- outcome $y$
+- predicted outcome $\hat{y}$
+- predictor $X$
+- residual $\epsilon$
+
+## As a data set
+As a data set, this would be the result for `lm(y1 ~ x1, data = anscombe)`
+```{r echo=FALSE}
+library(DT)
+fit <- anscombe %$%
+  lm(y1 ~ x1)
+data.frame(y1 = anscombe$y1, 
+           y1.hat = fit$fitted.values,
+           residuals = fit$residuals,
+           x1 = anscombe$x1) %>% datatable
+```
+
+## Least squares solution
+```{r echo=FALSE}
+set.seed(123)
+plotdata2 <- data.frame(X = rnorm(100, 167.5, 10)) %>%
+  mutate(Y = rnorm(100, 0, 10) - X + 335)
+
+fit <- plotdata2 %$%
+  lm(Y~X)
+
+ plotdata2 %>%
+   mutate(predicted = predict(fit),
+          residuals = residuals(fit)) %>%
+  ggplot(aes(X, Y)) +
+  geom_smooth(method = "lm", se = FALSE, color = "orange") +
+  #geom_hline(yintercept = 167.5, color = "purple") + 
+  #geom_abline(intercept = 310, slope = -1.045, color = "purple") + 
+  geom_segment(aes(xend = X, yend = predicted), color = "orange", alpha = .5) +
+  geom_point(aes(color = abs(residuals))) + 
+  scale_color_continuous(low = "blue", high = "red") +  
+  guides(color = FALSE) +  
+  geom_point(aes(y = predicted), shape = 1, color = "orange") +
+  theme_minimal()
+```
+
+## Residual variance
+```{r echo=FALSE, warning = FALSE, message=FALSE}
+fit$residuals %>% as.data.frame %>% ggplot(aes(x = .)) + geom_histogram(aes(y=..density..)) + geom_density() + xlab("Residuals")
+```
+
+## Violated assumptions #1
+```{r echo=FALSE, warning = FALSE}
+set.seed(123)
+plotdata2 <- data.frame(X = rnorm(100, 167.5, 10)) %>%
+  mutate(Y = rnorm(100, 0, 10) - X + 335)
+
+fit <- plotdata2 %$%
+  lm(Y~X)
+
+ plotdata2 %>%
+   mutate(predicted = predict(fit),
+          residuals = residuals(fit)) %>%
+  ggplot(aes(X, Y)) +
+  #geom_smooth(method = "lm", se = FALSE, color = "orange") +
+  geom_hline(yintercept = 167.5, color = "orange", lwd = 2) + 
+  #geom_abline(intercept = 310, slope = -1.045, color = "purple") + 
+  geom_segment(aes(xend = X, yend = 167.5), color = "orange", alpha = .5) +
+  geom_point(aes(color = abs(residuals))) + 
+  scale_color_continuous(low = "blue", high = "red") +  
+  guides(color = FALSE) +  
+  #geom_point(aes(y = predicted), shape = 1, color = "orange") +
+  theme_minimal()
+```
+
+Here the residuals are not independent, and the residual variance is not constant! 
+
+## Residual variance
+```{r echo=FALSE, warning = FALSE, message=FALSE}
+(167.5 - plotdata2$Y) %>% as.data.frame %>% ggplot(aes(x = .)) + geom_histogram(aes(y=..density..)) + geom_density() + xlab("Residuals")
+```
+
+## Violated assumptions #2
+```{r echo=FALSE, warning = FALSE}
+set.seed(123)
+plotdata2 <- data.frame(X = rnorm(100, 167.5, 10)) %>%
+  mutate(Y = rnorm(100, 0, 10) - X + 335)
+
+fit <- plotdata2 %$%
+  lm(Y~X)
+
+ plotdata2 %>%
+   mutate(predicted = predict(fit),
+          residuals = residuals(fit)) %>%
+  ggplot(aes(X, Y)) +
+  #geom_smooth(method = "lm", se = FALSE, color = "orange") +
+  #geom_hline(yintercept = 167.5, shape = 1, color = "orange") + 
+  geom_abline(intercept = 310, slope = -1.045, color = "orange", lwd = 2) + 
+  geom_segment(aes(xend = X, yend = I(310 - 1.045*X)), color = "orange", alpha = .5) +
+  geom_point(aes(color = abs(residuals))) + 
+  scale_color_continuous(low = "blue", high = "red") +  
+  guides(color = FALSE) +  
+  #geom_point(aes(y = predicted), shape = 1, color = "orange") +
+  theme_minimal()
+```
+
+Here the residuals do not have mean zero. 
+
+## Residual variance
+```{r echo=FALSE, warning = FALSE, message=FALSE}
+((310 - 1.045 * plotdata2$X) - plotdata2$Y) %>% as.data.frame %>% ggplot(aes(x = .)) + geom_histogram(aes(y=..density..)) + geom_density() + xlab("Residuals")
+```
+
+## Violated assumptions #3
+```{r echo=FALSE, warning = FALSE}
+set.seed(123)
+plotdata2 <- data.frame(X = rnorm(100, 0, 1)) %>%
+  mutate(Y = X^2)
+
+fit <- plotdata2 %$%
+  lm(Y~X)
+
+ plotdata2 %>%
+   mutate(predicted = predict(fit),
+          residuals = residuals(fit)) %>%
+  ggplot(aes(X, Y)) +
+  geom_smooth(method = "lm", se = FALSE, color = "orange") +
+  #geom_hline(yintercept = 167.5, color = "orange", lwd = 2) + 
+  #geom_abline(intercept = 310, slope = -1.045, color = "purple") + 
+  geom_segment(aes(xend = X, yend = predicted), color = "orange", alpha = .5) +
+  geom_point(aes(color = abs(residuals))) + 
+  scale_color_continuous(low = "blue", high = "red") +  
+  guides(color = FALSE) +  
+  geom_point(aes(y = predicted), shape = 1, color = "orange") +
+  theme_minimal()
+```
+
+Here the residual variance is not constant, the residuals are not normally distributed and the relation between $Y$ and $X$ is not linear!
+
+## Residual variance
+```{r echo=FALSE, warning = FALSE, message=FALSE}
+fit$residuals %>% as.data.frame %>% ggplot(aes(x = .)) + geom_histogram(aes(y=..density..)) + geom_density() + xlab("Residuals")
+```
+
+# Checking assumptions
+
+##  `anscombe` example {.smaller}
+```{r message=FALSE, warning = FALSE}
+fit <- anscombe %$%
+  lm(y1 ~ x1)
+
+fit %>% summary
+```
+
+## Checking assumptions
+
+1. linearity
+    - scatterplot $y$ and $x$ 
+    - include loess curve when in doubt
+    - does a squared term improve fit?
+    - plot predicted against observed
+2. normality residuals
+    -  normal probability plots `qqnorm()`
+    -  if sample is small; `qqnorm` with simulated errors cf. `rnorm(n, 0, s)` 
+3. constant error variance 
+    -  residual plot
+    -  scale-location plot
+
+## Linearity {.smaller}
+```{r eval = FALSE, message = FALSE}
+anscombe %>%
+  ggplot(aes(x1, y1)) + 
+  geom_point() + 
+  geom_smooth(method = "loess", col = "blue") + 
+  geom_smooth(method = "lm", col = "orange")
+```
+
+## Linearity {.smaller}
+```{r echo=FALSE, message = FALSE}
+anscombe %>%
+  ggplot(aes(x1, y1)) + 
+  geom_point() + 
+  geom_smooth(method = "loess", col = "blue") + 
+  geom_smooth(method = "lm", col = "orange")
+```
+
+The loess curve suggests slight non-linearity
+
+## Linearity {.smaller}
+Does adding a squared term improve fit?
+```{r message=FALSE, warning = FALSE}
+anscombe %$%
+  lm(y1 ~ x1 + I(x1^2)) %>%
+  summary()
+```
+
+## Linearity {.smaller}
+```{r fig.height=3, dev.args = list(bg = 'transparent')}
+data.frame(y = anscombe$y1, x = predict(fit)) %>%
+  ggplot(aes(x=x, y=y)) + geom_point() + geom_abline(intercept = 0, slope = 1)
+```
+
+Plot predicted `y1`  against observed `y1`.
+
+## Violation of linearity {.smaller}
+```{r fig.height=3, dev.args = list(bg = 'transparent')}
+data.frame(y = anscombe$y2, x = predict(fit)) %>%
+  ggplot(aes(x=x, y=y)) + geom_point() + geom_abline(intercept = 0, slope = 1)
+```
+
+When we substitute observed `y1` with observed `y2`, it is apparent that the relation `(y2, x1)` is not linear.
+
+## Plots in class `lm`
+```{r, fig.height=4, dev.args = list(bg = 'transparent')}
+par(mfrow = c(2, 3))
+fit %>%
+  plot(which = c(1:6), cex = .6)
+```
+
+## Constant error variance? {.smaller}
+```{r, fig.height=4, dev.args = list(bg = 'transparent')}
+par(mfrow = c(1, 2))
+fit %>%
+  plot(which = c(1, 3), cex = .6)
+```
+
+## No constant error variance! {.smaller}
+```{r, fig.height=4, dev.args = list(bg = 'transparent')}
+par(mfrow = c(1, 2))
+boys %$%
+  lm(bmi ~ age) %>%
+  plot(which = c(1, 3), cex = .6)
+```
+
+## Normality of errors {.smaller}
+```{r, fig.height=4, dev.args = list(bg = 'transparent')}
+fit %>%
+  plot(which = 2, cex = .6)
+```
+
+The QQplot shows some divergence from normality at the tails
+
+# Outliers, influence and robust regression
+
+## Outliers and influential cases {.smaller}
+
+Leverage: see the fit line as a lever. 
+  
+  - some points pull/push harder; they have more leverage
+  
+Standardized residuals:
+
+  - The values that have more leverage tend to be closer to the line
+  - The line is fit so as to be closer to them
+  - The residual standard deviation can differ at different points on $X$ - even if the error standard deviation is constant. 
+  - Therefore we standardize the residuals so that they have constant variance (assuming homoscedasticity). 
+
+Cook's distance: how far the predicted values would move if your model were fit without the data point in question. 
+
+  - it is a function of the leverage and standardized residual  associated with each data point
+
+```{r echo = FALSE}
+set.seed(20)
+
+pred1 = rnorm(20, mean=20, sd=3)
+outcome1 = 5 + .5*pred1 + rnorm(20)
+
+pred2 = c(pred1, 30);        outcome2 = c(outcome1, 20.8)
+pred3 = c(pred1, 19.44);     outcome3 = c(outcome1, 20.8)
+pred4 = c(pred1, 30);        outcome4 = c(outcome1, 10)
+```
+
+## Fine
+```{r echo=FALSE}
+par(mfrow = c(1,2))
+plot(outcome1 ~ pred1, ylim = c(9, 25), xlim = c(10, 30))
+abline(lm(outcome1 ~ pred1))
+plot(lm(outcome1 ~ pred1), which = 5)
+```
+
+## High leverage, low residual
+```{r echo=FALSE}
+par(mfrow = c(1,2))
+plot(outcome2 ~ pred2, ylim = c(9, 25), xlim = c(10, 30))
+points(30, 20.8, col = "red")
+abline(lm(outcome2 ~ pred2))
+plot(lm(outcome2 ~ pred2), which = 5)
+```
+
+## Low leverage, high residual
+```{r echo=FALSE}
+par(mfrow = c(1,2))
+plot(outcome3 ~ pred3, ylim = c(9, 25), xlim = c(10, 30))
+abline(lm(outcome3 ~ pred3))
+points(19.44, 20.8, col = "red")
+plot(lm(outcome3 ~ pred3), which = 5)
+```
+
+## High leverage, high residual
+```{r echo=FALSE}
+par(mfrow = c(1,2))
+plot(outcome4 ~ pred4, ylim = c(9, 25), xlim = c(10, 30))
+points(30, 10, col = "red")
+abline(lm(outcome4 ~ pred4))
+plot(lm(outcome4 ~ pred4), which = 5)
+```
+
+## Outliers and influential cases
+Outliers are cases with large $e_z$  (standardized residuals).
+
+If the model is ***correct***  we expect:
+  
+  -  5\% of standardized residuals $|e_z|>1.96$ 
+  -  1\% of standardized residuals $|e_z|>2.58$
+  -  0\% of standardized residuals $|e_z|>3.3$ 
+
+Influential cases are cases with large influence on parameter estimates
+  
+  -  cases with Cook's Distance $> 1$, or 
+  -  cases with Cook's Distance much larger than the rest
+
+## Outliers and influential cases
+```{r, fig.height= 3, dev.args = list(bg = 'transparent')}
+par(mfrow = c(1, 2), cex = .6)
+fit %>% plot(which = c(4, 5))
+```
+
+There are no cases with $|e_z|>2$, so no outliers (right plot). There are no cases with Cook's Distance $>1$, but case 3 stands out 
+
+# Generating data
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(dev.args=list(bg="transparent"))
+```
 
 ## Creating our own data
 We saw that we could create vectors
@@ -162,94 +512,6 @@ hist(rnorm(1000, mean = 50, sd = 15))
 ```{r}
 hist(rnorm(100000, mean = 50, sd = 15))
 ```
-
-## Drawing data: other distribution
-$X^2$-distribution with $df = 1$ degrees of freedom
-```{r}
-hist(rchisq(500, df = 1))
-```
-
-## Drawing data: other distribution
-$X^2$-distribution with $df = 100$ degrees of freedom
-```{r}
-hist(rchisq(500, df = 100))
-```
-
-## Drawing data: other distribution
-Poisson distribution with mean $\lambda = 1$ 
-```{r}
-hist(rpois(5000, lambda = 1))
-```
-
-## Drawing data: other distribution
-Poisson distribution with mean $\lambda = 10$ 
-```{r}
-hist(rpois(5000, lambda = 100))
-```
-
-## Drawing data: other distribution
-Binomial distribution: 1000 draws of 1 trial with $P(\text{success}=.75)$
-```{r fig.height=2}
-run <- rbinom(1000, size = 1, prob = .75) 
-table(run)
-```
-```{r fig.height=3, echo=FALSE}
-hist(run)
-```
-
-## Drawing data: other distribution
-Binomial distribution: 10.000 draws of 60 trials with $P(\text{success}=.75)$
-```{r fig.height=2}
-run <- rbinom(10000, size = 60, prob = .75)
-table(run)
-```
-```{r fig.height=3, echo=FALSE}
-hist(run)
-```
-
-## Drawing multivariate distributions
-```{r}
-sigma <- matrix(c(30, 15, 15, 30), 2, 2)
-sigma
-means <- c(97, 63)
-data <- rmvnorm(n = 1000, mean = means, sigma = sigma)
-colMeans(data)
-var(data)
-```
-
-## Bivariate normal
-```{r}
-plot(data)
-```
-
-## Drawing multivariate distributions
-```{r}
-sigma <- matrix(c(1, 0, 0, 1), 2, 2)
-sigma
-means <- c(0, 0)
-data <- rmvnorm(n = 1000, mean = means, sigma = sigma)
-colMeans(data)
-var(data)
-```
-
-## Bivariate normal
-```{r fig.height=5, fig.width=5}
-plot(data)
-```
-
-## Histograms
-```{r}
-par(mfrow = c(1, 2))
-hist(data[, 1])
-hist(data[, 2])
-```
-
-## To conclude
-<center> 
-<img src="going_out_for_a_byte.png" alt="HTML5 Icon" width = 50%>
-</center>
-[source](https://www.reddit.com/r/ProgrammerHumor/comments/8za9b6/hello_i_am_your_server_for_today/)
-
 
 # A review of inference concepts
 
@@ -419,3 +681,40 @@ Confidence intervals are frequently misunderstood, even well-established researc
 2. A 95% confidence interval does not mean that 95% of the sample data lie within the interval.
 3. A confidence interval is not a range of plausible values for the sample mean, though it may be understood as an estimate of plausible values for the population parameter.
 4. A particular confidence interval of 95% calculated from an experiment does not mean that there is a 95% probability of a sample mean from a repeat of the experiment falling within this interval.
+
+## Confidence intervals
+```{r fig.height = 4, echo=FALSE, message=FALSE}
+set.seed(1234)
+library(plyr)
+samples <- rlply(100, rnorm(5000, mean = 0, sd = 1))
+info <- function(x){ 
+  M <- mean(x)
+  DF <- length(x) - 1
+  SE <- 1 / sqrt(length(x))
+  INT <- qt(.975, DF) * SE
+  return(c(M, M - 0, SE, M - INT, M + INT))
+}
+format <- c("Mean" = 0, "Bias" = 0, "Std.Err" = 0, "Lower" = 0, "Upper" = 0)
+require("magrittr")
+results <- samples %>%
+  vapply(., info, format) %>%
+  t()
+results <- results %>%
+  as.data.frame() %>%
+  mutate(Covered = Lower < 0 & 0 < Upper)
+require(ggplot2)
+limits <- aes(ymax = results$Upper, ymin = results$Lower)
+ggplot(results, aes(y=Mean, x=1:100, colour = Covered)) + 
+  geom_hline(aes(yintercept = 0), color = "dark grey", size = 2) + 
+  geom_pointrange(limits) + 
+  xlab("Simulations 1-100") +
+  ylab("Means and 95% Confidence Intervals")
+```
+
+100 simulated samples from a population with $\mu = 0$ and $\sigma^2=1$. Out of 100 samples, only 5 samples have confidence intervals that do not cover the population mean.
+
+## To conclude
+<center> 
+<img src="going_out_for_a_byte.png" alt="HTML5 Icon" width = 50%>
+</center>
+[source](https://www.reddit.com/r/ProgrammerHumor/comments/8za9b6/hello_i_am_your_server_for_today/)
