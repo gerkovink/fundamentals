@@ -40,22 +40,24 @@ In short, we assume
   - the slope of each line does not depend on the values of the other predictors
   - the effects of the predictors on the expected value are additive
   
-  $$ y = \alpha + \beta_1X_1 + beta_2X_2 + beta_3X_3 + \epsilon$$
+  $$ y = \alpha + \beta_1X_1 + \beta_2X_2 + \beta_3X_3 + \epsilon$$
 
-- The residuals are statistically independent
-- The residual variance is constant
+- The residuals are statistically **independent**
+- The residual **variance is constant**
   - accross the expected values
   - across any of the predictors
-- The residuals are normally distributed with mean $\mu_\epsilon = 0$
+- The residuals are **normally distributed** with mean $\mu_\epsilon = 0$
 
 ## A simple example
 $$y = \alpha + \beta X + \epsilon$$ and $$\hat{y} = \alpha + \beta X$$
-The components in linear modeling
+As a result, the following components in  linear modeling
 
 - outcome $y$
 - predicted outcome $\hat{y}$
 - predictor $X$
 - residual $\epsilon$
+
+can also be seen as columns in a data set. 
 
 ## As a data set
 As a data set, this would be the result for `lm(y1 ~ x1, data = anscombe)`
