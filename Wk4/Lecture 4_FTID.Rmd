@@ -1,5 +1,5 @@
 ---
-title: "Generating data and statistical inference"
+title: "Assumptions and inference"
 author: "Gerko Vink"
 date: "Fundamental Techniques in Data Science with R"
 output:
@@ -11,7 +11,7 @@ output:
 
 ## Last week
 
-A review of last week's contents
+Last week we started with linear modeling, but time did not permit us to finish the lecture. Today we start with the leftover part of last-week's lecture. 
 
 ## Today
 - Assumptions
@@ -26,13 +26,7 @@ library(magrittr)
 library(ggplot2)
 library(mice)
 ```
-- `table()`: Build a contingency table out of counts
-- `hist()`: Draw a histogram
-- `mvtnorm::rmvnorm()`: Drawing values from a multivariate normal distribution
-- `sample()`: Probabilistic sampling with or without replacement
-- `rchisq()`: Probabilistic sampling from a $X2$ distribution
-- `rpois()`: Probabilistic sampling from a poisson distribution
-- `set.seed(123)`: Fixing the Random Number Generator seed
+- `set.seed()`: Fixing the Random Number Generator seed
 
 # Assumptions
 
@@ -75,7 +69,7 @@ data.frame(y1 = anscombe$y1,
            x1 = anscombe$x1) %>% datatable
 ```
 
-## Least squares solution
+## An example
 ```{r echo=FALSE}
 set.seed(123)
 plotdata2 <- data.frame(X = rnorm(100, 167.5, 10)) %>%
@@ -124,6 +118,7 @@ fit <- plotdata2 %$%
   geom_point(aes(color = abs(residuals))) + 
   scale_color_continuous(low = "blue", high = "red") +  
   guides(color = FALSE) +  
+  ggtitle("Not a linear model at all, but still") + 
   #geom_point(aes(y = predicted), shape = 1, color = "orange") +
   theme_minimal()
 ```
@@ -155,6 +150,7 @@ fit <- plotdata2 %$%
   geom_point(aes(color = abs(residuals))) + 
   scale_color_continuous(low = "blue", high = "red") +  
   guides(color = FALSE) +  
+   ggtitle("The same model with a different intercept") + 
   #geom_point(aes(y = predicted), shape = 1, color = "orange") +
   theme_minimal()
 ```
@@ -186,6 +182,7 @@ fit <- plotdata2 %$%
   geom_point(aes(color = abs(residuals))) + 
   scale_color_continuous(low = "blue", high = "red") +  
   guides(color = FALSE) +  
+   ggtitle("A quadratic data set") + 
   geom_point(aes(y = predicted), shape = 1, color = "orange") +
   theme_minimal()
 ```
@@ -251,16 +248,16 @@ anscombe %$%
 
 ## Linearity {.smaller}
 ```{r fig.height=3, dev.args = list(bg = 'transparent')}
-data.frame(y = anscombe$y1, x = predict(fit)) %>%
-  ggplot(aes(x=x, y=y)) + geom_point() + geom_abline(intercept = 0, slope = 1)
+data.frame(y1 = anscombe$y1, y1.hat = predict(fit)) %>%
+  ggplot(aes(x=y1.hat, y=y1)) + geom_point() + geom_abline(intercept = 0, slope = 1)
 ```
 
-Plot predicted `y1`  against observed `y1`.
+Plot predicted `y1`  against observed `y1`. This is a useful technique to investigate linearity for models with multiple predictors.
 
 ## Violation of linearity {.smaller}
 ```{r fig.height=3, dev.args = list(bg = 'transparent')}
-data.frame(y = anscombe$y2, x = predict(fit)) %>%
-  ggplot(aes(x=x, y=y)) + geom_point() + geom_abline(intercept = 0, slope = 1)
+data.frame(y2 = anscombe$y2, y1.hat = predict(fit)) %>%
+  ggplot(aes(x=y1.hat, y=y2)) + geom_point() + geom_abline(intercept = 0, slope = 1)
 ```
 
 When we substitute observed `y1` with observed `y2`, it is apparent that the relation `(y2, x1)` is not linear.
@@ -558,8 +555,6 @@ H_0:\mu=\mu_0
 \[
 t_{(df)}=\frac{\bar{x}-\mu_0}{SEM}
 \]
-
-
 
 ## $t$-distribution
 The $t$-distribution has larger variance than the normal distribution (more uncertainty). 
