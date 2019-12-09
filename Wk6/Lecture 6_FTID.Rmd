@@ -301,6 +301,10 @@ invlogit %>% head()
 plot(0:1000, invlogit, xlab = "x", ylab = "log(odds)", type = "l")
 ```
 
+AANPASSEN: Niet p en x verwisselen. Uitleggen + as omdraaien. 
+Symmetrisch voorbeeld gebruiken. 
+
+
 # Logistic regression
 
 ## Logistic regression
@@ -331,7 +335,7 @@ Simple substitution brings us at
 
 $$p_i = \frac{\text{exp}(\eta)}{1+\text{exp}(\eta)} = \frac{\text{exp}(\beta_0 + \beta_1x_{1,i} + \dots + \beta_nx_{n,i})}{1+\text{exp}(\beta_0 + \beta_1x_{1,i} + \dots + \beta_nx_{n,i})}$$
 
-# Fittin a logistic regression
+# Fitting a logistic regression
 
 ## The `anesthetic` data
 ```{r, message = FALSE}
@@ -451,6 +455,8 @@ titanic %>% ggplot(aes(x = Age, y = Survived)) + geom_point() +
     se = FALSE) + xlim(-1, 100)
 ```
 
+Aanpassen: In bins van 5 of 10 jaar. 
+
 ## Inspecting the data
 ```{r}
 titanic %$% table(Pclass, Survived)
@@ -534,6 +540,12 @@ titanic %$% glm(Survived ~ Age + Sex + Pclass, family = binomial(link="logit")) 
 ```{r}
 titanic %$% glm(Survived ~ Age * Sex * Pclass, family = binomial(link="logit")) %>%
   summary
+```
+
+## Model comparison
+```{r}
+fit4 <- titanic %$% glm(Survived ~ Age + Sex + Pclass, family = binomial(link="logit"))
+anova(fit1, fit4) 
 ```
 
 ## Logistic multiple regression
