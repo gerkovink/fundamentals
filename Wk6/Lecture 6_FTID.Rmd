@@ -542,11 +542,15 @@ titanic %$% glm(Survived ~ Age * Sex * Pclass, family = binomial(link="logit")) 
   summary
 ```
 
+## Slide over interpretatie interacties
+
+
 ## Model comparison
 ```{r}
 fit4 <- titanic %$% glm(Survived ~ Age + Sex + Pclass, family = binomial(link="logit"))
 anova(fit1, fit4) 
 ```
+
 
 ## Logistic multiple regression
 Always try to make the relation as linear as possible 

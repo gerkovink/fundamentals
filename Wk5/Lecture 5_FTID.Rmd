@@ -193,10 +193,10 @@ boys.fit5 <-
   lm(age ~ hgt + wgt)
 ```
 Let's revisit the comparison
-```{r cache = TRUE}
+```{r}
 anova(boys.fit, boys.fit2, boys.fit3, boys.fit5)
 ```
-But the `boys.fit5` model is not better than the previous models
+But the `boys.fit5` model is better than the previous model with fewer parameters
 
 ## Stepwise regression
 We start with the full model, which contains all parameters for all columns. 
