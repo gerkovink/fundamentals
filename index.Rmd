@@ -343,13 +343,19 @@ You can find the [slides here](Wk5/Lecture_5_FTID.html)
 ### `R` exercise
 This week's `R` exercise is about getting familiar with the linear model.
 
-- Make [Exercise 7]() before Thursday's workgroup.
+- Make [Exercise 7](Wk5/Exercise/Exercise_7.html). 
 
-Hand in a markdown compiled `html` file for Exercise 7 to the [SurfDrive](https://surfdrive.surf.nl/files/index.php/s/yx5SsHz3haHLhqK) drop folder. Do this ***before the next lecture on Monday***.
+**No need to hand in any work; but make sure that you understand the contents, code and train ot thought of the document. If not, ask Gerko or Justin.**
+
 
 ### Useful Information and links
 
-Will appear here
+- Chapter XIV on regression in [this online book](http://onlinestatbook.com/2/regression/regression.html)
+- [This online page](https://www.dummies.com/education/math/statistics/using-linear-regression-to-predict-an-outcome/) details the relation between correlation and prediction
+- [This blog post by Jonathan Barlett](https://thestatsgeek.com/2014/01/25/r-squared-and-goodness-of-fit-in-linear-regression/) gives a nice detail about $R^2$ and how it is useless on a wrongly specified model
+- [This other blog post by Jonathan](https://thestatsgeek.com/2013/10/28/r-squared-and-adjusted-r-squared/) details the usefulness of adjusted $R^2$
+
+These readings are exam materials.
 
 <!-- # Week 6 -->
 
