@@ -1,0 +1,255 @@
+---
+title: "Logistic regression"
+author: "Gerko Vink"
+date: "Fundamental Techniques in Data Science with R"
+output:
+  ioslides_presentation:
+    smaller: yes
+    widescreen: no
+    logo: logo.png
+---
+
+## Packages and functions used
+```{r message=FALSE}
+library(magrittr) # pipes
+library(dplyr)    # data manipulation
+library(mice)     # data
+library(ggplot2)  # plotting
+library(DAAG)     # data sets and functions
+```
+
+# L2: Titanic data
+
+## Example: titanic data
+We start this lecture with a data set that logs the survival of passengers on board of the disastrous maiden voyage of the ocean liner Titanic
+```{r}
+titanic <- read.csv(file = "titanic.csv", header = TRUE)
+
+titanic %>% head
+```
+
+## What sources of information
+We have information on the following features.
+
+Our outcome/dependent variable
+- Survived: yes or no
+
+Some potential predictors
+- Sex: the passenger's gender coded as `c(male, female)`
+- Pclass: the class the passenger traveled in
+- Age: the passenger's age in years
+- Siblings.Spouses.Aboard: if siblings or spouses were also aboard
+- Parents.Children.Aboard: if the passenger's parents or children were aboard
+
+and more. 
+
+## Hypothetically
+
+We can start investigating if there are patterns in this data that are related to the survival probability. 
+
+For example, we could hypothesize based on the crede "women and children first" that 
+- `Age` relates to the probability of survival in that younger passengers have a higher probability of survival
+- `Sex` relates to survival in that females have a higher probability of survival
+
+Based on socio-economic status, we could hypothesize that 
+- `Pclass` relates to the probability of survival in that higher travel class leads to a higher probability of survival
+
+And so on. 
+
+## Is `Age` related?
+```{r fig.height = 3}
+titanic %>% ggplot(aes(x = Age, y = Survived)) + geom_point() +
+  geom_smooth(method = "glm", 
+    method.args = list(family = "binomial"), 
+    se = FALSE) + xlim(-1, 100)
+```
+
+Aanpassen: In bins van 5 of 10 jaar. 
+
+## Inspecting the data
+```{r}
+titanic %$% table(Pclass, Survived)
+```
+
+It seems that the higher the class (i.e. `1 > 2 > 3`), the higher the probability of survival.
+
+We can verify this
+```{r}
+titanic %$% table(Pclass, Survived) %>% prop.table(margin = 1) %>% round(digits = 2)
+```
+
+## Fitting the titanic models
+Let's fit these models and gradually build them up in the number of predictors. 
+```{r}
+fit1 <- titanic %$% 
+  glm(Survived ~ Age, family = binomial(link="logit"))
+
+fit2 <- titanic %$% 
+  glm(Survived ~ Sex, family = binomial(link="logit"))
+
+fit3 <- titanic %$% 
+  glm(Survived ~ Pclass, family = binomial(link="logit"))
+```
+
+## `Survived ~ Age`
+```{r fig.height=3}
+titanic %$% histogram(~ Age | Survived == 1)
+```
+
+The distribution of `Age` for the survivors (`TRUE`) is different from the distribution of `Age` for the non-survivors (`FALSE`). Especially at the younger end there is a point mass for the survivors, which indicates that However, it is not dramatically different. 
+
+## `Survived ~ Age`
+```{r fig.height=3}
+fit1 %>% summary %>% .$coefficients
+```
+We can see that there is a trend.  The log odds of `Survived` decreases with increasing `Age`. However, this decrease is not too convincing given the effect, the standard error and the size of the data. Hence, the p-value is a little on the larger side. 
+
+When we inspect the deviance
+```{r}
+c(fit1$null.deviance, fit1$deviance)
+```
+We see that there is almost no decrease in deviance between the empty model (i.e. the model with only an intercept) and the model with `Age` included. The difference in df is only 1 parameter.
+
+## `Survived ~ Sex`
+```{r fig.height=3}
+titanic %$% histogram(~ Sex | Survived == 1)
+```
+
+Wow! These distributions are very different! Females seem to have a much higher probability of survival. 
+
+## `Survived ~ Sex`
+```{r fig.height=3}
+fit2 %>% summary %>% .$coefficients
+```
+The coefficients confirm this. The log odds of `Survived` decreases for males, when compared to females. The decrease is quite pronounced, too: `r coef(fit2)[2]`. 
+
+When we inspect the deviance
+```{r}
+c(fit2$null.deviance, fit2$deviance)
+```
+We see that there is a massive gain in the deviance between the empty model (i.e. the model with only an intercept) and the model with `Sex` included. The difference in df is only 1 parameter.
+
+## `Survived ~ Pclass`
+```{r fig.height=3}
+titanic %$% histogram(~ Pclass | Survived == 1)
+```
+
+## `Survived ~ Pclass`
+```{r fig.height=3}
+fit3 %>% summary %>% .$coefficients
+```
+
+## Titanic
+```{r}
+titanic %$% glm(Survived ~ Age + Sex + Pclass, family = binomial(link="logit")) %>% 
+  summary
+```
+
+## Titanic
+```{r}
+titanic %$% glm(Survived ~ Age * Sex * Pclass, family = binomial(link="logit")) %>%
+  summary
+```
+
+## Slide over interpretatie interacties
+
+
+## Model comparison
+```{r}
+fit4 <- titanic %$% glm(Survived ~ Age + Sex + Pclass, family = binomial(link="logit"))
+anova(fit1, fit4) 
+```
+
+
+## Logistic multiple regression
+Always try to make the relation as linear as possible 
+
+- after all you are assessing a linear model. 
+
+Do not forget that you use transformations to "make" things more linear
+
+## An example
+```{r,  dev.args = list(bg = 'transparent'), echo=FALSE}
+with(frogs, pairs(cbind(distance, NoOfPools, NoOfSites, avrain, altitude, 
+                        meanmax+meanmin, meanmax-meanmin), 
+                  col = "gray", panel = panel.smooth, 
+                  labels = c("Distance", "NoOfPools", 
+                             "NoOfSites", "AvRainfall", "Altitude", 
+                             "meanmax + meanmin", "meanmax - meanmin"))) 
+```
+
+## Logistic multiple regression
+```{r,  dev.args = list(bg = 'transparent'), echo=FALSE}
+with(frogs, pairs(cbind(log(distance), log(NoOfPools), NoOfSites, avrain, altitude, 
+                        meanmax+meanmin, meanmax-meanmin), 
+                  col = "gray", panel = panel.smooth, 
+                  labels = c("log(Distance)", "log(NoOfPools)", 
+                             "NoOfSites", "AvRainfall", "Altitude", 
+                             "meanmax + meanmin", "meanmax - meanmin"))) 
+```
+
+## Logistic multiple regression
+```{r echo=FALSE,  dev.args = list(bg = 'transparent')}
+summary(frogs.glm0 <- glm(formula = pres.abs ~ log(distance) + log(NoOfPools) 
+                          + NoOfSites + avrain +  I(meanmax + meanmin) 
+                          + I(meanmax - meanmin), family = binomial, data = frogs)) 
+```
+
+## Logistic multiple regression
+```{r echo=FALSE,  dev.args = list(bg = 'transparent')}
+frogs.glm <- frogs %$% glm(pres.abs ~ log(distance) + log(NoOfPools) 
+                           + I(meanmax + meanmin) + I(meanmax - meanmin),  
+                           family = binomial)
+frogs.glm %>% summary()
+```
+
+## Fitted values
+```{r,  dev.args = list(bg = 'transparent')}
+frogs.glm <- frogs %$% glm(pres.abs ~ log(distance) + log(NoOfPools) 
+                           + I(meanmax + meanmin) + I(meanmax - meanmin),  
+                           family = binomial)
+frogs.glm %>% fitted() %>% head()
+frogs.glm %>% predict(type = "response") %>% head()
+frogs.glm %>% predict(type = "link") %>% head() # Scale of linear predictor 
+```
+
+## Fitted values with approximate SE's
+```{r,  dev.args = list(bg = 'transparent')}
+pred <- frogs.glm %>% 
+  predict(type = "link", se.fit = TRUE)
+data.frame(fit = pred$fit, se = pred$se.fit) %>% head()
+```
+
+## Confidence intervals for the $\beta$
+```{r}
+frogs.glm %>% confint()
+frogs.glm %>% coef()
+```
+
+## Cross validating predictive power
+```{r,  dev.args = list(bg = 'transparent')}
+set.seed(123)
+frogs.glm <- glm(pres.abs ~ log(distance) + log(NoOfPools), 
+                 family = binomial, data = frogs)
+cv <- CVbinary(frogs.glm)
+```
+
+The cross-validation measure is the proportion of predictions over the folds that are correct. 
+
+## Cross validating predictive power
+```{r,  dev.args = list(bg = 'transparent')}
+frogs.glm2 <- glm(pres.abs ~ log(distance) + log(NoOfPools) 
+                 + I(meanmax + meanmin) + I(meanmax - meanmin),
+                 family = binomial, data = frogs)
+cv <- CVbinary(frogs.glm2)
+```
+
+## Cross validating predictive power
+```{r,  dev.args = list(bg = 'transparent')}
+frogs.glm2 <- glm(pres.abs ~ log(distance) + log(NoOfPools) 
+                 + I(meanmax + meanmin) + I(meanmax - meanmin),
+                 family = binomial, data = frogs)
+cv <- CVbinary(frogs.glm2, nfolds = 5)
+```
+
+

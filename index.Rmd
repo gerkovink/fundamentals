@@ -341,7 +341,7 @@ You can find the [slides here](Wk5/Lecture_5_FTID.html)
 ## Column 2
 
 ### `R` exercise
-This week's `R` exercise is about getting familiar with the linear model.
+This week's `R` exercise is about getting more familiar with the linear model and its usefulness.
 
 - Make [Exercise 7](Wk5/Exercise/Exercise_7.html). 
 
@@ -357,20 +357,32 @@ This week's `R` exercise is about getting familiar with the linear model.
 
 These readings are exam materials.
 
-<!-- # Week 6 -->
+# Week 6
 
-<!-- ## Column 1 -->
+## Column 1
 
-<!-- ### Lecture (Monday) -->
+### Lecture (Monday)
+Today's lecture is about logistic regression. We explore the basics of this method today and continue with a more in-depth exploration in the next weeks. 
 
-<!-- ### Workgroup (Thursday) -->
-<!-- **Today's workgroup is in [BOL](https://www.uu.nl/bolognalaan-101) 1.055 from 9am - 10.45am** -->
+You can find the [slides here](Wk6/Lecture_6_FTID.html)
 
-<!-- ## Column 2 -->
+### Workgroup (Thursday)
+**Today's workgroup is in [BOL](https://www.uu.nl/bolognalaan-101) 1.055 from 9am - 10.45am**
 
-<!-- ### `R` exercise -->
+## Column 2
 
-<!-- ### Useful Information and links -->
+### `R` exercise
+This week's `R` exercise is about getting familiar with fitting the logistic regression model. 
+
+- Make [Exercise 8](Wk6/Exercise/Exercise_8.html). 
+
+**To allow you to enjoy the holidays, there is no need to hand in any work; but make sure that you understand the contents, code and train ot thought of the document. If not, ask Gerko or Justin.**
+
+### Useful Information and links
+
+- [Read this page on interpreting logistic regression](https://stats.idre.ucla.edu/other/mult-pkg/faq/general/faq-how-do-i-interpret-odds-ratios-in-logistic-regression/)
+
+These readings are exam materials.
 
 <!-- # Week 7 -->
 
