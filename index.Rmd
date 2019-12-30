@@ -316,6 +316,9 @@ This week's `R` exercise is about getting familiar with the linear model.
 
 Hand in a markdown compiled `html` file for Exercise 6 to the [SurfDrive](https://surfdrive.surf.nl/files/index.php/s/yx5SsHz3haHLhqK) drop folder. Do this ***before the next lecture on Monday***.
 
+### Solution to the exercise
+You can find the answers to this week's exercise [here](Wk4/Exercise/Exercise_6_answers.html).
+
 ### Useful Information and links
 
 - [These lecture notes](http://www.mit.edu/~6.s085/notes/lecture3.pdf) cover the essence of the coming two weeks. 
