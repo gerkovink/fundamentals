@@ -287,6 +287,8 @@ Hand in a markdown compiled `html` file for Exercise 5 to the [SurfDrive](https:
 ### Solution to the exercise
 You can find the answers to this week's exercise in [the exercise for next week](Wk4/Exercise/Exercise_6.html).
 
+- The video discussion can also be found in [next week's dashboard](https://www.gerkovink.com/fundamentals/#week-4)
+
 ### Required reading
 
 - From [Introduction to Statistical Learning](https://faculty.marshall.usc.edu/gareth-james/ISL/) read [Chapter 3 on Linear Regression](http://faculty.marshall.usc.edu/gareth-james/ISL/ISLR%20Seventh%20Printing.pdf) up to and including 3.1.1
@@ -318,6 +320,11 @@ Hand in a markdown compiled `html` file for Exercise 6 to the [SurfDrive](https:
 
 ### Solution to the exercise
 You can find the answers to this week's exercise [here](Wk4/Exercise/Exercise_6_answers.html).
+
+Video discussion of the exercises in two parts:
+
+ - [Part 1](https://www.dropbox.com/s/i47g1pinm0dpt2r/Exercise45_discussion.mp4?dl=0)
+ - [Part 2](https://www.dropbox.com/s/l1actd5o6si2tx1/Exercise45_discussion_part2.mp4?dl=0)
 
 ### Useful Information and links
 
@@ -353,6 +360,7 @@ This week's `R` exercise is about getting more familiar with the linear model an
 
 ### Useful Information and links
 
+- I have prepared [a document about interpreting cross validation results](Wk5/Exercise/Example_CVlm.pdf)
 - Chapter XIV on regression in [this online book](http://onlinestatbook.com/2/regression/regression.html)
 - [This online page](https://www.dummies.com/education/math/statistics/using-linear-regression-to-predict-an-outcome/) details the relation between correlation and prediction
 - [This blog post by Jonathan Barlett](https://thestatsgeek.com/2014/01/25/r-squared-and-goodness-of-fit-in-linear-regression/) gives a nice detail about $R^2$ and how it is useless on a wrongly specified model
