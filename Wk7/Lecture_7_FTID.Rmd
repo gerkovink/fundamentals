@@ -78,6 +78,8 @@ Based on socio-economic status, we could hypothesize that
 
 And so on. 
 
+# A quick investigation
+
 ## Is `Age` related?
 ```{r fig.height = 3}
 titanic %>% ggplot(aes(x = Age, y = Survived)) + geom_point() +
@@ -97,6 +99,8 @@ We can verify this
 ```{r}
 titanic %$% table(Pclass, Survived) %>% prop.table(margin = 1) %>% round(digits = 2)
 ```
+
+# A more thorough inspection
 
 ## Fitting the titanic models
 Let's fit these models and gradually build them up in the number of predictors. 
@@ -154,6 +158,8 @@ We see that there is a massive gain in the deviance between the empty model (i.e
 titanic %$% histogram(~ Pclass | Survived == 1)
 ```
 
+There is a very apparent difference between the distributions of the survivors and non-survivors over the classes. For example, we see that in 1st and 2nd class there are more survivors than non-survivors, while in the third class this relation is opposite. 
+
 ## `Survived ~ Pclass`
 ```{r fig.height=3}
 fit3 %>% summary %>% .$coefficients
@@ -170,10 +176,10 @@ titanic %<>%
 str(titanic)
 ```
 
-The `Pclass` column is now correctly coded as a factor.
+The `Pclass` column is now correctly coded as a factor. We ignore the ordering as this goes beyond the scope of the course.
 
 ## Titanic with main effects
-```{r}
+```{r echo=FALSE}
 titanic %$% glm(Survived ~ Age + Sex + Pclass, family = binomial(link="logit")) %>% 
   summary
 ```
@@ -188,8 +194,13 @@ fit.interaction %>% summary %>% .$coefficients
 Now none of the main effects are significant. The variance (differences) have flowed into the interaction effects. 
 
 ## Interactions
-An interaction occurs when the (causal) effect of one predictor depends on the level of the (causal) effect of another predictor.
+An interaction occurs when the (causal) effect of one predictor on the outcome depends on the level of the (causal) effect of another predictor.
 
+![](interaction.png)
+
+[Image Source](https://en.wikipedia.org/wiki/File:Interaction_plot_body_temp.svg)
+
+E.g. the relation between body temperature and air temperature depends on the species. 
 
 ## Visualizing the effects
 To illustrate, I will limit this investigation to `Age` and `Pclass` for males only.
@@ -246,7 +257,7 @@ new %>%
 new %>%
   ggplot(aes(x = Age, y = prob)) + 
   geom_ribbon(aes(ymin = lower, ymax = upper, fill = Pclass), alpha = .2) +
-  geom_line(aes(colour = Pclass), lwd = 1)
+  geom_line(aes(colour = Pclass), lwd = 1) + ylab("Probability of Survival")
 ```
 
 ## No interaction assumed
@@ -273,7 +284,7 @@ new2 %>%
 new2 %>%
   ggplot(aes(x = Age, y = prob)) + 
   geom_ribbon(aes(ymin = lower, ymax = upper, fill = Pclass), alpha = .2) +
-  geom_line(aes(colour = Pclass), lwd = 1)
+  geom_line(aes(colour = Pclass), lwd = 1) + ylab("Probability of Survival")
 ```
 
 ## Model comparison
