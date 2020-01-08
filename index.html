@@ -3242,11 +3242,8 @@ window.FlexDashboardComponents.push({
 <h2>Column 2</h2>
 <div id="r-exercise-6" class="section level3">
 <h3><code>R</code> exercise</h3>
-<p>This week’s exercise is to:</p>
-<ol style="list-style-type: decimal">
-<li>Recreate the plots from slides 26 and 27, but now for females</li>
-<li>For the model with the interactions:</li>
-</ol>
+<p><a href="data/titanic.csv">The titanic.csv data</a></p>
+<p>This week’s exercise is to: 1. Recreate the plots from slides 26 and 27, but now for females 2. For the model with the interactions:</p>
 <ul>
 <li>Create a confusion matrix for the model with the interactions</li>
 <li>Perform crossvalidation on the <code>titanic</code> model with the interactions</li>
@@ -3255,10 +3252,7 @@ window.FlexDashboardComponents.push({
 <li>See if a model with all variables included is a better fit than the model with the interactions presented in the slides.</li>
 </ol>
 <ul>
-<li>The model with all variables (excluding <code>Name</code>!) can be simply fit with
-<div class="knitr-options" data-fig-width="576" data-fig-height="460">
-
-</div></li>
+<li>The model with all variables (excluding <code>Name</code>!) can be simply fit with <code>glm(Survived ~ . * ., data = titanic[, -3])</code></li>
 <li>The <code>.</code> here implies all remaining columns in the data. <code>. * .</code> yields the full factorial model between all these columns.</li>
 </ul>
 <p>Hand in a markdown compiled <code>html</code> file for Exercise 9 to the <a href="https://surfdrive.surf.nl/files/index.php/s/yx5SsHz3haHLhqK">SurfDrive</a> drop folder. Do this <strong><em>before the next lecture on Monday</em></strong>.</p>

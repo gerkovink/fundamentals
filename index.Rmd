@@ -411,8 +411,10 @@ You can find the [slides here](Wk7/Lecture_7_FTID.html)
 ## Column 2
 
 ### `R` exercise
-This week's exercise is to:
 
+[The titanic.csv data](data/titanic.csv)
+
+This week's exercise is to:
 1. Recreate the plots from slides 26 and 27, but now for females
 2. For the model with the interactions:
   
@@ -420,10 +422,7 @@ This week's exercise is to:
   - Perform crossvalidation on the `titanic` model with the interactions
 
 3. See if a model with all variables included is a better fit than the model with the interactions presented in the slides. 
-  - The model with all variables (excluding `Name`!) can be simply fit with
-```{r eval=FALSE}
-glm(Survived ~ . * ., data = titanic[, -3]) # exclude 3rd column `Name`
-```
+  - The model with all variables (excluding `Name`!) can be simply fit with `glm(Survived ~ . * ., data = titanic[, -3])`
   - The `.` here implies all remaining columns in the data. `. * .` yields the full factorial model between all these columns. 
 
 Hand in a markdown compiled `html` file for Exercise 9 to the [SurfDrive](https://surfdrive.surf.nl/files/index.php/s/yx5SsHz3haHLhqK) drop folder. Do this ***before the next lecture on Monday***.
