@@ -362,12 +362,13 @@ This week's `R` exercise is about getting more familiar with the linear model an
 ### Useful Information and links
 
 - I have prepared [a document about interpreting cross validation results](Wk5/Exercise/Example_CVlm.pdf)
-- Chapter XIV on regression in [this online book](http://onlinestatbook.com/2/regression/regression.html)
 - [This online page](https://www.dummies.com/education/math/statistics/using-linear-regression-to-predict-an-outcome/) details the relation between correlation and prediction
 - [This blog post by Jonathan Barlett](https://thestatsgeek.com/2014/01/25/r-squared-and-goodness-of-fit-in-linear-regression/) gives a nice detail about $R^2$ and how it is useless on a wrongly specified model
 - [This other blog post by Jonathan](https://thestatsgeek.com/2013/10/28/r-squared-and-adjusted-r-squared/) details the usefulness of adjusted $R^2$
 
-These readings are exam materials.
+These readings are exam materials. Also useful, but not exam material is:
+
+- Chapter XIV on regression in [this online book](http://onlinestatbook.com/2/regression/regression.html)
 
 # Week 6
 
@@ -481,7 +482,6 @@ and the information in the following sources these lecture slides are based on:
   
 - [These lecture notes](http://www.mit.edu/~6.s085/notes/lecture3.pdf).
 - [This document](Wk5/Exercise/Example_CVlm.pdf) I prepared about interpreting cross validation results
-- Chapter XIV on regression in [this online book](http://onlinestatbook.com/2/regression/regression.html)
 - [This online page](https://www.dummies.com/education/math/statistics/using-linear-regression-to-predict-an-outcome/) that details the relation between correlation and prediction
 - [This blog post by Jonathan Barlett](https://thestatsgeek.com/2014/01/25/r-squared-and-goodness-of-fit-in-linear-regression/) that details $R^2$ and explains how it is useless on a wrongly specified model
 - [This other blog post by Jonathan](https://thestatsgeek.com/2013/10/28/r-squared-and-adjusted-r-squared/) about adjusted $R^2$
