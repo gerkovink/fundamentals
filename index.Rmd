@@ -486,7 +486,6 @@ and the information in the following sources these lecture slides are based on:
 - [This page](https://stats.idre.ucla.edu/other/mult-pkg/faq/general/faq-how-do-i-interpret-odds-ratios-in-logistic-regression/) on interpreting logistic regression
 - [This page](https://stats.idre.ucla.edu/r/dae/logit-regression/) on inspecting logistic regression
 
-
 ### **What about equations and formulae?**
 
 Your knowledge of matrix algebra will not be tested. So, there is no need to memorize that the regression estimates $\beta$ can be estimated as $\hat{\beta} = ({\bf X}^T{\bf X})^{-1}{\bf X}^Ty$. However, you will need to know, understand and apply equations such as: 
@@ -500,6 +499,6 @@ Your knowledge of matrix algebra will not be tested. So, there is no need to mem
 
 ### **What if you are in doubt?**
 
-If any of the course materials confuse you, drop me a line and I'd be more than happy to explain. 
+If any of the course materials confuse you, [drop me a line](mailto:G.Vink@uu.nl?subject=Question About Exam Materials) and I'd be more than happy to explain. 
 
 **The second half of the last lecture is dedicated to a Q&A**
