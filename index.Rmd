@@ -456,6 +456,8 @@ These readings are exam materials.
 
 ### **What can be tested**
 
+[This page as a pdf](Archive/Exam_materials_pdf.pdf)
+
 The information in the lecture slides:
 
 - [An archive of all lecture slides](Archive/Lectures_FTiD.zip). Or as seperate lectures:
