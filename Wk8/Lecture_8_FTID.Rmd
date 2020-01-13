@@ -151,6 +151,10 @@ fit <- titanic %$% glm(Survived ~ Age * Pclass,
                        family = binomial(link="logit"))
 summary(fit)
 ```
+## Confidence intervals
+```{r}
+confint(fit)
+```
 
 ## Predict a 40 year old in 2nd class
 ```{r}

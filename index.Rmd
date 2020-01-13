@@ -452,6 +452,8 @@ You can find the [slides here](Wk8/Lecture_8_FTID.html)
 ### `R` exercise
 No exercise for this week. I believe that you have been given the proper skillset to solve the assignments in this course. Use your time to improve your skills. 
 
+Do not forget to include the newly introduced concepts for this week in your Assignment 2. 
+
 # Exam material
 
 ## Column 1
