@@ -359,3 +359,4 @@ set.seed(123)
 CVbinary(fit, nfolds = 5)
 CVbinary(fit, nfolds = 2)
 ```
+

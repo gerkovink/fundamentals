@@ -435,21 +435,22 @@ Hand in a markdown compiled `html` file for Exercise 9 to the [SurfDrive](https:
 
 These readings are exam materials.
 
-<!-- # Week 8 -->
+# Week 8
 
-<!-- ## Column 1 -->
+## Column 1
 
-<!-- ### Lecture (Monday) -->
+### Lecture (Monday)
+Today we will wrap up this course. I'll give you an overview of the highlights and introduce only a few new concepts. 
 
-<!-- ### Workgroup (Thursday) -->
-<!-- **Today's workgroup is in [BOL](https://www.uu.nl/bolognalaan-101) 1.055 from 9am - 10.45am** -->
+You can find the [slides here](Wk8/Lecture_8_FTID.html)
 
+### Workgroup (Thursday)
+**Today's workgroup is in [BOL](https://www.uu.nl/bolognalaan-101) 1.055 from 9am - 10.45am**
 
-<!-- ## Column 2 -->
+## Column 2
 
-<!-- ### `R` exercise -->
-
-<!-- ### Useful Information and links -->
+### `R` exercise
+No exercise for this week. I believe that you have been given the proper skillset to solve the assignments in this course. Use your time to improve your skills. 
 
 # Exam material
 
@@ -470,7 +471,7 @@ The information in the lecture slides:
   - [Lecture 5](Wk5/Lecture_5_FTID.html)
   - [Lecture 6](Wk6/Lecture_6_FTID.html)
   - [Lecture 7](Wk7/Lecture_7_FTID.html)
-  - [Lecture 8](Wk8/)
+  - [Lecture 8](Wk8/Lecture_8_FTID.html)
 
 and the information in the following sources these lecture slides are based on:
 
