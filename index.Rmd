@@ -458,6 +458,9 @@ Do not forget to include the newly introduced concepts for this week in your Ass
 
 ## Column 1
 
+### **Practice exam**
+You can find the [practice exam here](https://gerkovink.shinyapps.io/Practice_Exam_FTiD)
+
 ### **What can be tested**
 
 [This page as a pdf](Archive/Exam_materials_pdf.pdf)
