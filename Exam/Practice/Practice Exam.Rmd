@@ -108,7 +108,7 @@ question("Would you consider the model y1 ~ x1 to be a good model?",
 ```{r q4, echo=FALSE}
 question("What is not an assumption for logistic regression",
    answer("The logodds of the outcome have a linear relation with the predictors"),
-  answer("The residuals are normally distributed"),
+  answer("The observations are independent of each other"),
   answer("The residuals have constant variance", correct = TRUE),
   answer("The predictors are not too highly correlated"),
   allow_retry = TRUE,
@@ -161,7 +161,7 @@ question("Why would we preferably avoid multicollinearity",
 - `wgt = 52` kg
 - `reg = "south"`
 
-```{r echo = FALSE}
+```{r echo = FALSE, message=FALSE}
 library(mice)
 fit <- boys %$% lm(bmi ~ age + hgt * wgt + reg)
 coef(fit) 
@@ -180,3 +180,5 @@ coef(fit)
 # You have to multiply all relevant estimates with the boy's value. For the 
 # interaction wgt * hgt you need to multiply both wgt and hgt
 ```
+
+For the exam you will not need a calculator. If you need to calculate some predictions, the regression estimates will be simple numbers that you can multiply by head. 
