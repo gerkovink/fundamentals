@@ -146,7 +146,7 @@ Execute the following lines of code in the console window:
 install.packages(c("ggplot2", "tidyverse", "magrittr", "micemd", "jomo", "pan", 
                  "lme4", "knitr", "rmarkdown", "plotly", "ggplot2", "shiny", 
                  "devtools", "boot", "class", "car", "MASS", "ggplot2movies", 
-                 "ISLR", "DAAG", "mice", "mitml", "miceadds"), 
+                 "ISLR", "DAAG", "mice"), 
                  dependencies = TRUE)
 ```
 
