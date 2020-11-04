@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 <meta name="author" content="Gerko Vink" />
@@ -1343,7 +1343,6 @@ code {
 }
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -1405,6 +1404,7 @@ summary {
   border: none;
   display: inline-block;
   border-radius: 4px;
+  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -1417,48 +1417,9 @@ summary {
 }
 </style>
 
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
-
 <!-- code folding -->
 
 
-
-<script>
-$(document).ready(function ()  {
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3,h4,h5",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
 
 <style type="text/css">
 
@@ -1472,6 +1433,12 @@ $(document).ready(function ()  {
 }
 }
 
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
 
 .toc-content {
   padding-left: 30px;
@@ -1686,10 +1653,10 @@ dat3b</code></pre>
 <pre><code>## [1] FALSE</code></pre>
 <p>The first column in matrix <code>dat3b</code> obtained from Question 5 is indeed not numeric. As a matter of fact, it is also not a character variable.</p>
 <pre class="r"><code>is.character(dat3b[, 1])</code></pre>
-<pre><code>## [1] FALSE</code></pre>
+<pre><code>## [1] TRUE</code></pre>
 <p>Rather tricky; the function <code>as.data.frame()</code> has converted the first variable to a factor.</p>
 <pre class="r"><code>is.factor(dat3b[, 1])</code></pre>
-<pre><code>## [1] TRUE</code></pre>
+<pre><code>## [1] FALSE</code></pre>
 <p>This is due to us not specifying the variable correctly in the matrix we used to create the dataframe. Factors are categorical variables that are depicted by numbers. Character vectors are converted to factors in data frames.</p>
 <hr />
 <ol start="8" style="list-style-type: decimal">
@@ -1699,21 +1666,18 @@ dat3b</code></pre>
 <pre><code>##   V1 V2
 ## 3  3  C</code></pre>
 <pre class="r"><code>dat3[, 2] #2nd column</code></pre>
-<pre><code>## [1] A B C D E F
-## Levels: A B C D E F</code></pre>
+<pre><code>## [1] &quot;A&quot; &quot;B&quot; &quot;C&quot; &quot;D&quot; &quot;E&quot; &quot;F&quot;</code></pre>
 <pre class="r"><code>dat3$V2   #also 2nd column</code></pre>
-<pre><code>## [1] A B C D E F
-## Levels: A B C D E F</code></pre>
+<pre><code>## [1] &quot;A&quot; &quot;B&quot; &quot;C&quot; &quot;D&quot; &quot;E&quot; &quot;F&quot;</code></pre>
 <pre class="r"><code>dat3[3,2] #intersection</code></pre>
-<pre><code>## [1] C
-## Levels: A B C D E F</code></pre>
+<pre><code>## [1] &quot;C&quot;</code></pre>
 <p>The <code>[3,2]</code> index is very useful in ‘R’. The first number (before the comma) represents the row and the second number (after the comma) represents the column. For a vector there are no two dimensions and only one dimension can be called. For example, <code>vec1[3]</code> would yield <code>3</code>. Try it.</p>
 <p>Columns can also be called by the <code>$</code> sign, but only if a name has been assigned. With dataframes assigning names happens automatically.</p>
 <p>Note that <code>R</code> automatically reports the values the character column can take. This means that the column is indeed a factor (a categorical variable - as it is supposed to be). A useful function to inspect the structure of a dataframe is <code>str()</code>. Try running it.</p>
 <pre class="r"><code>str(dat3)</code></pre>
-<pre><code>## 'data.frame':    6 obs. of  2 variables:
+<pre><code>## &#39;data.frame&#39;:    6 obs. of  2 variables:
 ##  $ V1: num  1 2 3 4 5 6
-##  $ V2: Factor w/ 6 levels &quot;A&quot;,&quot;B&quot;,&quot;C&quot;,&quot;D&quot;,..: 1 2 3 4 5 6</code></pre>
+##  $ V2: chr  &quot;A&quot; &quot;B&quot; &quot;C&quot; &quot;D&quot; ...</code></pre>
 <p>Inspecting the structure of your data is vital, as you probably have imported your data from some other source. If we, at a later stage, start analyzing our data without the correct measurement level, we may run into problems. One problem that often occurs is that categorical variables (factors in <code>R</code>) are not coded as such.</p>
 <hr />
 <ol start="9" style="list-style-type: decimal">
@@ -1736,7 +1700,7 @@ dat3</code></pre>
 <pre class="r"><code>load(&quot;boys.RData&quot;)</code></pre>
 <p>or double-click the <code>boys.RData</code> file on your machine (right-click and <code>open with RStudio</code> if it does not open by default in <code>RStudio</code>, but in <code>R</code>).</p>
 <p>Alternatively, you can import workspaces directly from the internet by running and loading the connection</p>
-<pre class="r"><code>con &lt;- url(&quot;https://www.gerkovink.com/fundamentals/data/Boys.RData&quot;)
+<pre class="r"><code>con &lt;- url(&quot;https://www.gerkovink.com/fundamentals/data/boys.RData&quot;)
 load(con)</code></pre>
 <p>In the above code we store the connection in object <code>con</code> and then load the connection with <code>load(con)</code>.</p>
 <p>The <code>boys</code> object will be added to your Global Environment. You can now use the <code>boys</code> data by running</p>
@@ -1809,7 +1773,7 @@ load(con)</code></pre>
 <li><strong>Inspect the <code>boys</code> dataset with <code>str()</code>. Use one or more functions to find distributional summary information (at least information about the minimum, the maximum, the mean and the median) for all of the variables. Give the standard deviation for <code>age</code> and <code>bmi</code>. </strong> Tip: make use of the help (?) and help search (??) functionality in <code>R</code>.</li>
 </ol>
 <pre class="r"><code>str(boys)</code></pre>
-<pre><code>## 'data.frame':    748 obs. of  9 variables:
+<pre><code>## &#39;data.frame&#39;:    748 obs. of  9 variables:
 ##  $ age: num  0.035 0.038 0.057 0.06 0.062 0.068 0.068 0.071 0.071 0.073 ...
 ##  $ hgt: num  50.1 53.5 50 54.5 57.5 55.5 52.5 53 55.1 54.5 ...
 ##  $ wgt: num  3.65 3.37 3.14 4.27 5.03 ...
@@ -1827,15 +1791,15 @@ load(con)</code></pre>
 ##  Mean   : 9.159   Mean   :132.15   Mean   : 37.15   Mean   :18.07  
 ##  3rd Qu.:15.267   3rd Qu.:175.22   3rd Qu.: 59.58   3rd Qu.:19.53  
 ##  Max.   :21.177   Max.   :198.00   Max.   :117.40   Max.   :31.74  
-##                   NA's   :20       NA's   :4        NA's   :21     
+##                   NA&#39;s   :20       NA&#39;s   :4        NA&#39;s   :21     
 ##        hc          gen        phb            tv           reg     
 ##  Min.   :33.70   G1  : 56   P1  : 63   Min.   : 1.00   north: 81  
 ##  1st Qu.:48.12   G2  : 50   P2  : 40   1st Qu.: 4.00   east :161  
 ##  Median :53.00   G3  : 22   P3  : 19   Median :12.00   west :239  
 ##  Mean   :51.51   G4  : 42   P4  : 32   Mean   :11.89   south:191  
 ##  3rd Qu.:56.00   G5  : 75   P5  : 50   3rd Qu.:20.00   city : 73  
-##  Max.   :65.00   NA's:503   P6  : 41   Max.   :25.00   NA's :  3  
-##  NA's   :46                 NA's:503   NA's   :522</code></pre>
+##  Max.   :65.00   NA&#39;s:503   P6  : 41   Max.   :25.00   NA&#39;s :  3  
+##  NA&#39;s   :46                 NA&#39;s:503   NA&#39;s   :522</code></pre>
 <pre class="r"><code>sd(boys$age) #standard deviation for age</code></pre>
 <pre><code>## [1] 6.894052</code></pre>
 <pre class="r"><code>sd(boys$bmi, na.rm = TRUE) #standard deviation for bmi</code></pre>
@@ -1904,6 +1868,49 @@ $(document).ready(function () {
 });
 
 
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3,h4,h5",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
 </script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->

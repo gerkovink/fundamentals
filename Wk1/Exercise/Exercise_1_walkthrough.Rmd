@@ -161,7 +161,7 @@ to a readable file where code and output are visible. There is, however, an even
 <p><a href="https://vimeo.com/178485416">What is R Markdown?</a> from <a href="https://vimeo.com/rstudioinc">RStudio, Inc.</a> on <a href="https://vimeo.com">Vimeo</a>.</p>
 </center>
 
-See also [this `rmarkdown` cheat sheet](Contents/Material/Part A - Introduction/rmarkdown-reference_sheet.pdf). 
+See also [this `rmarkdown` cheat sheet](https://rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf). 
 
 ---
 

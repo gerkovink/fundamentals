@@ -8,29 +8,29 @@ output:
 
 # Intro {.sidebar}
 
-This dashboard covers the course materials for the course [***Fundamental Techniques in Data Science with R***](https://osiris.uu.nl/osiris_student_uuprd/OnderwijsCatalogusSelect.do?selectie=cursus&cursus=201900026&collegejaar=2019&taal=en)
+This dashboard covers the course materials for the course [***Fundamental Techniques in Data Science with R***](https://osiris.uu.nl/osiris_student_uuprd/OnderwijsCatalogusSelect.do?selectie=cursus&cursus=201900026&collegejaar=2020&taal=en)
 
 ---
 
 Course leader: [Gerko Vink](https://www.gerkovink.com) <br>
-Workgroup instructor: [Justin Kraaijenbrink](https://www.uu.nl/medewerkers/JTKraaijenbrink) <br>
+Workgroup leader: [Laura Boeschoten](https://www.uu.nl/medewerkers/LBoeschoten) <br>
 Study load: 7.5 ECTS <br>
-Assessment: Final Assignment <br>
-[Course SurfDrive folder](https://surfdrive.surf.nl/files/index.php/s/yx5SsHz3haHLhqK)
+Assessment: Assignments and Exam <br>
+[Course SurfDrive folder](https://surfdrive.surf.nl/files/index.php/s/LqUCEt3MWVsW7DF)
 
 ---
 
 | When?  |         | Where?      |
 |--------|---------|-------------|
-| 11-Nov | 5.15 pm | [Ruppert](https://students.uu.nl/en/marinus-ruppert-building) A |
-| 18-Nov | 5.15 pm | [Ruppert](https://students.uu.nl/en/marinus-ruppert-building) A |
-| 25-Nov | 5.15 pm | [Ruppert](https://students.uu.nl/en/marinus-ruppert-building) A |
-| 02-Dec | 5.15 pm | [Ruppert](https://students.uu.nl/en/marinus-ruppert-building) A |
-| 09-Dec | 5.15 pm | [Ruppert](https://students.uu.nl/en/marinus-ruppert-building) A |
-| 16-Dec | 5.15 pm | [Ruppert](https://students.uu.nl/en/marinus-ruppert-building) A |
-| 06-Jan | 5.15 pm | [Ruppert](https://students.uu.nl/en/marinus-ruppert-building) A |
-| 13-Jan | 5.15 pm | [Ruppert](https://students.uu.nl/en/marinus-ruppert-building) A |
-| 20-Jan | 8.30 am | [Educ](https://www.uu.nl/en/educatorium) Beta                   |
+| 11-Nov | 5.15 pm | MS Teams |
+| 18-Nov | 5.15 pm | MS Teams |
+| 25-Nov | 5.15 pm | MS Teams |
+| 02-Dec | 5.15 pm | MS Teams |
+| 09-Dec | 5.15 pm | MS Teams |
+| 16-Dec | 5.15 pm | MS Teams |
+| 06-Jan | 5.15 pm | MS Teams |
+| 13-Jan | 5.15 pm | MS Teams |
+| 20-Jan | 8.30 am | pending  |
 
 
 
@@ -418,7 +418,7 @@ You can find the [slides here](Wk7/Lecture_7_FTID.html)
 [The titanic.csv data](data/titanic.csv)
 
 This week's exercise is to:
-1. Recreate the plots from slides 26 and 27, but now for females
+1. Recreate the plots from slides 28 and 29, but now for females
 2. For the model with the interactions:
   
   - Create a confusion matrix for the model with the interactions

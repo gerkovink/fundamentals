@@ -188,7 +188,7 @@ or double-click the `boys.RData` file on your machine (right-click and `open wit
 
 Alternatively, you can import workspaces directly from the internet by running and loading the connection
 ```{r eval = FALSE}
-con <- url("https://www.gerkovink.com/fundamentals/data/Boys.RData")
+con <- url("https://www.gerkovink.com/fundamentals/data/boys.RData")
 load(con)
 ```
 In the above code we store the connection in object `con` and then load the connection with `load(con)`.
