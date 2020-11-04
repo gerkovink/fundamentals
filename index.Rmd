@@ -83,7 +83,7 @@ Regression techniques are widely used to quantify the relationship between two o
 This course gives students a new set of tools to explore the issues and problems so many people care about. The course will help students get acquainted with the principles of analytical data science, linear and logistic regression and introduces the basics of statistical learning. These techniques will be presented in the context of estimation, testing and prediction. Students will learn to adapt these techniques in their way of thinking about statistical inference, which will help students to quantify the uncertainty and measure the accuracy of statistical estimates. Students will develop fundamental `R` programming skills and will gain experience with `tidyverse`, visualize data with `ggplot2` and perform basic data wrangling techniques with `dplyr`. This course makes students better equipped for a further career (e.g. junior researcher or research assistant) or education in research, such as a (research) Master program, or a PhD. 
 
 ### Assignment
-Students will form groups to choose work on two assigments. Students will need to perform calculations and program code for these assigments. All work needs to be combined in an easy understandable and insightful `R` project and must be submitted to the [Surfdrive file drop environment](https://surfdrive.surf.nl/files/index.php/s/yx5SsHz3haHLhqK). Each assigment will be graded will be graded on 
+Students will form groups to choose work on two assigments. Students will need to perform calculations and program code for these assigments. All work needs to be combined in an easy understandable and insightful `R` project and must be submitted to the [Surfdrive file drop environment]((https://surfdrive.surf.nl/files/index.php/s/LqUCEt3MWVsW7DF). Each assigment will be graded will be graded on 
 
 1. Quality of the methodological application
 2. Model evaluation and assumptions checking
@@ -212,12 +212,12 @@ The above links are useful references that connect to this week's materials.
 This week's `R` exercise is threefold. We need to cover a lot of ground this week to get you started for the rest of the course.
 
 - Make [Exercise 1](Wk1/Exercise/Exercise_1_walkthrough.html) before Thursday's workgroup. This exercise will get you started with `R` and `RStudio`.
-- Make [Exercise 2](Wk1/Exercise/Exercise_2_walkthrough.html) during Thursday's workgroup, where Justin will be available to help you.
+- Make [Exercise 2](Wk1/Exercise/Exercise_2_walkthrough.html) during Thursday's workgroup, where Laura will be available to help you.
 - Complete and hand in [Exercise 3](Wk1/Exercise/Exercise_3_walkthrough.html) before the next lecture. For this week it is sufficient if you present the code to the relevant exercises, e.g.:
 
 A video discussion of the exercises will be available below after the second lecture.  
 
-Hand in a markdown compiled `html` + `Rmd` file for exercise 3 to the [SurfDrive](https://surfdrive.surf.nl/files/index.php/s/yx5SsHz3haHLhqK) drop folder. Name the file `Yourname.Rmd`, where `Yourname` is your name. Do this ***before the next lecture on Monday***. 
+Hand in a markdown compiled `html` + `Rmd` file for exercise 3 to the [SurfDrive](https://surfdrive.surf.nl/files/index.php/s/LqUCEt3MWVsW7DF) drop folder. Name the file `Yourname.Rmd`, where `Yourname` is your name. Do this ***before the next lecture on Monday***. 
 
 ### Exercise discussion
 The videodiscussion for the practical exercises:
@@ -249,7 +249,7 @@ This week's `R` exercise is about getting familiar with pipes and exploring the 
 
 - Make [Exercise 4](Wk2/Exercise/Exercise_4_walkthrough.html) before Thursday's workgroup.
 
-Hand in a markdown compiled `html` + `Rmd` file for Exercise 4: Question 11 to the [SurfDrive](https://surfdrive.surf.nl/files/index.php/s/yx5SsHz3haHLhqK) drop folder. Name the file `Yourname.Rmd/html`, where `Yourname` is your name. Do this ***before the next lecture on Monday***.  
+Hand in a markdown compiled `html` + `Rmd` file for Exercise 4: Question 11 to the [SurfDrive](https://surfdrive.surf.nl/files/index.php/s/LqUCEt3MWVsW7DF) drop folder. Name the file `Yourname.Rmd/html`, where `Yourname` is your name. Do this ***before the next lecture on Monday***.  
 
 ### Useful References
 
@@ -258,10 +258,10 @@ Hand in a markdown compiled `html` + `Rmd` file for Exercise 4: Question 11 to t
 
 The above links are useful references that connect to this week's materials.
 
-### Exercise answers
-The answers to the fourth practical exercises:
+<!-- ### Exercise answers -->
+<!-- The answers to the fourth practical exercises: -->
 
-- [Exercise 4 answers](Wk2/Exercise/Exercise_4_answers.html)
+<!-- - [Exercise 4 answers](Wk2/Exercise/Exercise_4_answers.html) -->
 
 # Week 3
 
@@ -282,12 +282,12 @@ This week's `R` exercise is about getting familiar with the linear model.
 
 - Make [Exercise 5](Wk3/Exercise/Exercise_5.html) before Thursday's workgroup.
 
-Hand in a markdown compiled `html` file for Exercise 5 to the [SurfDrive](https://surfdrive.surf.nl/files/index.php/s/yx5SsHz3haHLhqK) drop folder. Do this ***before the next lecture on Monday***.
+Hand in a markdown compiled `html` file for Exercise 5 to the [SurfDrive](https://surfdrive.surf.nl/files/index.php/s/LqUCEt3MWVsW7DF) drop folder. Do this ***before the next lecture on Monday***.
 
-### Solution to the exercise
-You can find the answers to this week's exercise in [the exercise for next week](Wk4/Exercise/Exercise_6.html).
+<!-- ### Solution to the exercise -->
+<!-- You can find the answers to this week's exercise in [the exercise for next week](Wk4/Exercise/Exercise_6.html). -->
 
-- The video discussion can also be found in [next week's dashboard](https://www.gerkovink.com/fundamentals/#week-4)
+<!-- - The video discussion can also be found in [next week's dashboard](https://www.gerkovink.com/fundamentals/#week-4) -->
 
 ### Required reading
 
@@ -316,15 +316,15 @@ This week's `R` exercise is about getting familiar with the linear model.
 
 - Make [Exercise 6](Wk4/Exercise/Exercise_6.html) before Thursday's workgroup.
 
-Hand in a markdown compiled `html` file for Exercise 6 to the [SurfDrive](https://surfdrive.surf.nl/files/index.php/s/yx5SsHz3haHLhqK) drop folder. Do this ***before the next lecture on Monday***.
+Hand in a markdown compiled `html` file for Exercise 6 to the [SurfDrive](https://surfdrive.surf.nl/files/index.php/s/LqUCEt3MWVsW7DF) drop folder. Do this ***before the next lecture on Monday***.
 
-### Solution to the exercise
-You can find the answers to this week's exercise [here](Wk4/Exercise/Exercise_6_answers.html).
+<!-- ### Solution to the exercise -->
+<!-- You can find the answers to this week's exercise [here](Wk4/Exercise/Exercise_6_answers.html). -->
 
-Video discussion of the exercises in two parts:
+<!-- Video discussion of the exercises in two parts: -->
 
- - [Part 1](https://www.dropbox.com/s/i47g1pinm0dpt2r/Exercise45_discussion.mp4?dl=0)
- - [Part 2](https://www.dropbox.com/s/l1actd5o6si2tx1/Exercise45_discussion_part2.mp4?dl=0)
+<!--  - [Part 1](https://www.dropbox.com/s/i47g1pinm0dpt2r/Exercise45_discussion.mp4?dl=0) -->
+<!--  - [Part 2](https://www.dropbox.com/s/l1actd5o6si2tx1/Exercise45_discussion_part2.mp4?dl=0) -->
 
 ### Useful Information and links
 
@@ -356,7 +356,7 @@ This week's `R` exercise is about getting more familiar with the linear model an
 
 - Make [Exercise 7](Wk5/Exercise/Exercise_7.html). 
 
-**No need to hand in any work; but make sure that you understand the contents, code and train ot thought of the document. If not, ask Gerko or Justin.**
+**No need to hand in any work; but make sure that you understand the contents, code and train ot thought of the document. If not, ask Gerko or Laura.**
 
 
 ### Useful Information and links
@@ -389,7 +389,7 @@ This week's `R` exercise is about getting familiar with fitting the logistic reg
 
 - Make [Exercise 8](Wk6/Exercise/Exercise_8.html). 
 
-**To allow you to enjoy the holidays, there is no need to hand in any work; but make sure that you understand the contents, code and train ot thought of the document. If not, ask Gerko or Justin.**
+**To allow you to enjoy the holidays, there is no need to hand in any work; but make sure that you understand the contents, code and train ot thought of the document. If not, ask Gerko or Laura.**
 
 ### Useful Information and links
 
@@ -428,7 +428,7 @@ This week's exercise is to:
   - The model with all variables (excluding `Name`!) can be simply fit with `glm(Survived ~ . * ., data = titanic[, -3])`
   - The `.` here implies all remaining columns in the data. `. * .` yields the full factorial model between all these columns. 
 
-Hand in a markdown compiled `html` file for Exercise 9 to the [SurfDrive](https://surfdrive.surf.nl/files/index.php/s/yx5SsHz3haHLhqK) drop folder. Do this ***before the next lecture on Monday***.
+Hand in a markdown compiled `html` file for Exercise 9 to the [SurfDrive](https://surfdrive.surf.nl/files/index.php/s/LqUCEt3MWVsW7DF) drop folder. Do this ***before the next lecture on Monday***.
 
 ### Useful Information and links
 - [Study this page on inspecting logistic regression](https://stats.idre.ucla.edu/r/dae/logit-regression/)
