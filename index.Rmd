@@ -212,7 +212,7 @@ This week's `R` exercise is threefold. We need to cover a lot of ground this wee
 
 - Make [Exercise 1](Wk1/Exercise/Exercise_1_walkthrough.html) before Thursday's workgroup. This exercise will get you started with `R` and `RStudio`.
 - Make [Exercise 2](Wk1/Exercise/Exercise_2_walkthrough.html) during Thursday's workgroup timeslot. Laura will be available in the Teams channels and/or meeting to help you during that time. 
-- Complete and hand in [Exercise 3](Wk1/Exercise/Exercise_3_walkthrough.html) before the next lecture. For this week it is sufficient if you present the code to the relevant exercises, e.g.:
+- Complete and hand in [Exercise 3](Wk1/Exercise/Exercise_3_walkthrough.html) before the next lecture. For this week it is sufficient if you present the code to the relevant exercises.
 
 A video discussion of the exercises will be available below after the second lecture.  
 
