@@ -35,6 +35,7 @@ Assessment: Assignments and Exam <br>
 
 
 ---
+
 # Quick Overview
 
 ## Column 1
@@ -188,11 +189,9 @@ You can find the [slides here](Wk1/Lecture_1_FTID.html)
 
 ### Workgroup (Thursday)
 
-**Today's workgroup is in [BOL](https://www.uu.nl/bolognalaan-101) 1.075 from 9am - 10.45am**
+**Today's workgroup is online. See the Teams channel.**
 
-- The workgroup [slides can be found here](Wk1/Workgroup/Workgroup1_FTiD.html)
-
-Make sure that you attend all workgroup meetings: However today's meeting is vital. We will form groups and I will tell you all about the assignments and management of expectations. 
+Make sure that you attend all workgroup meetings: However **today's meeting is vital**. We will form groups and I will tell you all about the assignments and management of expectations. 
 
 **Please do not forget to complete [Exercise 1](Wk1/Exercise/Exercise_1_walkthrough.html) before the workgroup meeting!**
 
