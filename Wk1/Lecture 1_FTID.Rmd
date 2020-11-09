@@ -27,7 +27,69 @@ You can access the course materials quickly from
 
 $$\quad$$
 
-You can reach me at [G.Vink@uu.nl](mailto:g.vink@uu.nl)
+You can reach me at [G.Vink@uu.nl](mailto:g.vink@uu.nl) or via the MS Teams channels
+
+## Laura Boeschoten
+<div> 
+<center>
+<img src="figures/Laura.jpg" width="80%">
+</center>
+</div>
+
+## About me
+<div> 
+<center>
+<img src="figures/Gerko.png" width="40%">
+</center>
+</div>
+
+# A small primer
+
+## Election data from NY Times
+
+<div> 
+<center>
+<img src="figures/PA1.png" width="70%">
+</center>
+</div>
+
+## Distribution of votes
+<div> 
+<center>
+<img src="figures/PA2.png" width="70%">
+</center>
+</div>
+
+
+## Per county
+<div> 
+<center>
+<img src="figures/PA3.png" width="70%">
+</center>
+</div>
+
+
+## Population density
+<div> 
+<center>
+<img src="figures/PA_dens.png" width="70%">
+</center>
+</div>
+
+
+## Time of vote
+<div> 
+<center>
+<img src="figures/PA4.png" width="95%">
+</center>
+</div>
+
+## Absentee votes
+<div> 
+<center>
+<img src="figures/PA5.png" width="95%">
+</center>
+</div>
 
 # Goal of this course
 
@@ -36,7 +98,7 @@ You can reach me at [G.Vink@uu.nl](mailto:g.vink@uu.nl)
 We learn to use regression; a technique that is aimed at figuring out the strength of the relation between an outcome and a set of predictors. 
 
 It is basically one of the following three scenarios:
-```{r echo = FALSE}
+```{r echo = FALSE, message=FALSE}
 data.frame(x = 1:10) %>%
   mutate("positive" = x, 
          "negative" = rev(x), 
@@ -50,9 +112,7 @@ data.frame(x = 1:10) %>%
   geom_smooth(method = "lm")
 ```
 
-
-
-## An example
+## Another example
 ```{r echo=FALSE, warning=FALSE}
 set.seed(123)
 data <- mvtnorm::rmvnorm(n = 100, mean = c(20, 5.8), 
@@ -68,7 +128,7 @@ data %>%
 In general it holds that the more hours you spend on studying, the higher your grade. But this relation is not 1:1.
 
 ## What is the relation?
-```{r echo=FALSE}
+```{r echo=FALSE, message=FALSE}
 data %>% 
   ggplot(aes(x = Hours, y = Grade)) + 
   geom_point() + 
@@ -79,7 +139,7 @@ data %>%
 We will learn to identify the average conditional relation between outcome and predictors. 
 
 ## Who passed?
-```{r echo = FALSE}
+```{r echo = FALSE, message=FALSE}
 data %>% 
   mutate(Result = cut(Grade, breaks = c(0, 5.5, Inf), labels = c("passed", "failed"))) %>%
   ggplot(aes(x = Hours, y = Grade, color = Result)) + 
@@ -92,7 +152,7 @@ We will learn to differentiate our investigation between different groups. For e
 
 ## Who passed?
 
-```{r echo = FALSE, message=FALSE, }
+```{r echo = FALSE, message=FALSE}
 data %>% 
   mutate(Result = cut(Grade, breaks = c(0, 5.5, Inf), labels = c("passed", "failed")), 
          Prob = predict(glm(Result ~ Hours, family = binomial(link = "logit")), type = "response")) %>%
@@ -105,7 +165,7 @@ data %>%
 Finally, we will learn how to estimate the probability of `pass` or `fail`, based on the `Hours` studied. In other words, how many `Hours` should you study to pass?
 
 ## Real-world Example
-```{r echo=FALSE, warning=FALSE, background="transparent"}
+```{r echo=FALSE, warning=FALSE, background="transparent", message=FALSE}
 boys %>% 
   filter(age > 5) %>% 
   ggplot(aes(x = age, y = bmi)) + 
@@ -116,7 +176,7 @@ boys %>%
 What is the relation between `age` and `bmi`
 
 ## Real-world Example
-```{r echo=FALSE, warning=FALSE, background="transparent"}
+```{r echo=FALSE, warning=FALSE, background="transparent", message=FALSE}
 boys %>% 
   mutate(class = cut(bmi, breaks = c(0, 18, 25, 30, Inf), labels = c("underweight", "healthy", "overweight", "obese"))) %>%
   filter(age > 5, !is.na(bmi)) %>% 
@@ -128,7 +188,7 @@ boys %>%
 Can we infer the relation between `age` and `bmi`, but now for different levels of `bmi`
 
 ## Real-world Example
-```{r echo=FALSE, warning=FALSE, background="transparent"}
+```{r echo=FALSE, warning=FALSE, background="transparent", message=FALSE}
 boys %>% 
   filter(age > 5, !is.na(bmi)) %>%
   mutate(class = cut(bmi, breaks = c(0, 25, Inf), labels = c("not overweight", "overweight")),
