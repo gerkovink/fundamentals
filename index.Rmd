@@ -185,7 +185,7 @@ Naturally, you will need internet access for these services to be accessed.
 ### Lecture (Monday)
 Today's lecture is about the elemental building blocks of `R`. We discuss what the object-oriented programming language `R` is, why we use `RStudio`, how to 'speak' `S`, the scripting language that is used in `R` and how to work with objects and elements. 
 
-You can find the [slides here](Wk1/Lecture_1_FTID.html)
+You can find the [slides here](Wk1/Lecture-1_FTID.html)
 
 ### Workgroup (Thursday)
 
