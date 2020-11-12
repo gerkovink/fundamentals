@@ -123,7 +123,7 @@ dat3
 
 This is a tricky situation. At face value, everything may seem to be in order. But, be aware that the code
 ```{r}
-dat3b <- as.data.frame(mat3)
+dat3b <- as.data.frame(mat3, stringsAsFactors = TRUE)
 dat3b
 ```
 does not work properly (at least not as intended) as the matrix nature of `mat3` turned everything into a character value and you have lost the numerical nature of `vec1`. It may appear to be working, but if we check if column 1 is numerical, it turns out not to be the case. 
@@ -144,7 +144,7 @@ Rather tricky; the function `as.data.frame()` has converted the first variable t
 ```{r}
 is.factor(dat3b[, 1])
 ```
-This is due to us not specifying the variable correctly in the matrix we used to create the dataframe. Factors are categorical variables that are depicted by numbers. Character vectors are converted to factors in data frames. 
+This is due to us not specifying the variable correctly in the matrix we used to create the dataframe. Factors are categorical variables that are depicted by numbers. Character vectors are not converted to factors in data frames by default, but the argument `stringsAsFactors = TRUE` has resulted in this conversion. I forced this to prove a point: You now know that there is a distinction between characters and factors and you know hot to force this conversion to factors in a data frame. 
 
 ---
 

@@ -1681,7 +1681,7 @@ dat3</code></pre>
 <li><strong>Again, make a dataframe called <code>dat3b</code> where <code>vec1</code> and <code>vec2</code> are both columns. Name the columns <code>V1</code> and <code>V2</code>, respectively. Use function <code>as.data.frame()</code> on the matrix obtained from <code>Question 4</code>. </strong></li>
 </ol>
 <p>This is a tricky situation. At face value, everything may seem to be in order. But, be aware that the code</p>
-<pre class="r"><code>dat3b &lt;- as.data.frame(mat3)
+<pre class="r"><code>dat3b &lt;- as.data.frame(mat3, stringsAsFactors = TRUE)
 dat3b</code></pre>
 <pre><code>##   V1 V2
 ## 1  1  A
@@ -1701,11 +1701,11 @@ dat3b</code></pre>
 <pre><code>## [1] FALSE</code></pre>
 <p>The first column in matrix <code>dat3b</code> obtained from Question 5 is indeed not numeric. As a matter of fact, it is also not a character variable.</p>
 <pre class="r"><code>is.character(dat3b[, 1])</code></pre>
-<pre><code>## [1] TRUE</code></pre>
+<pre><code>## [1] FALSE</code></pre>
 <p>Rather tricky; the function <code>as.data.frame()</code> has converted the first variable to a factor.</p>
 <pre class="r"><code>is.factor(dat3b[, 1])</code></pre>
-<pre><code>## [1] FALSE</code></pre>
-<p>This is due to us not specifying the variable correctly in the matrix we used to create the dataframe. Factors are categorical variables that are depicted by numbers. Character vectors are converted to factors in data frames.</p>
+<pre><code>## [1] TRUE</code></pre>
+<p>This is due to us not specifying the variable correctly in the matrix we used to create the dataframe. Factors are categorical variables that are depicted by numbers. Character vectors are not converted to factors in data frames by default, but the argument <code>stringsAsFactors = TRUE</code> has resulted in this conversion. I forced this to prove a point: You now know that there is a distinction between characters and factors and you know hot to force this conversion to factors in a data frame.</p>
 <hr />
 <ol start="8" style="list-style-type: decimal">
 <li><strong>Select 1) the third row, 2) the second column and 3) the intersection of these two in the dataframe <code>dat3</code> that you have created in Question 4. </strong></li>
