@@ -13,7 +13,7 @@ output:
 
 ## This lecture
 
-- Leftover slides from last week
+- Issues from last week
 
 - Data manipulation
 
@@ -23,104 +23,13 @@ output:
 
 - Deviations and modeling
 
-## Some programming tips:
-- keep your code tidy
-- use comments (text preceded by `#`) to clarify what you are doing
-    - If you look at your code again, one month from now: you will not know what you did --> unless you use comments 
+## Issues from last week
 
-- when working with functions, use the TAB key to quickly access the help for the function's components
-- work with logically named `R`-scripts
-    - indicate the sequential nature of your work
-- work with `RStudio` projects
-- if allowed, place your project folders in some cloud-based environment
-
-## Functions
-
-Functions have parentheses `()`. Names directly followed by parentheses always indicate functions. For example; 
-
- - `matrix()` is a function
- - `c()` is a function
- - but `(1 - 2) * 5` is a calculation, not a function
-
-## Packages
-Packages give additional functionality to `R`. 
-
-By default, some packages are included. These packages allow you to do mainstream statistical analyses and data manipulation. Installing additional packages allow you to perform the state of the art in statistical programming and estimation. 
-
-The cool thing is that these packages are all developed by users. The throughput process is therefore very timely:
-
-  - newly developed functions and software are readily available
-  - this is different from other mainstream software, like SPSS, where new methodology may take years to be implemented. 
-
-A list of available packages can be found on [CRAN](https://cran.r-project.org)
-
-## Loading packages
-
-There are two ways to load a package in `R`
-```{r}
-library(stats)
-``` 
-and
-```{r}
-require(stats)
-```
-
-## Installing packages
-The easiest way to install e.g. package `mice` is to use
-```{r eval=FALSE}
-install.packages("mice")
-```
-
-Alternatively, you can also do it in `RStudio` through 
-
-`Tools --> Install Packages`
-
-# `R` in depth
-
-## Workspaces and why you should sometimes save them
-A workspace contains all changes you made to `R`. 
-
-A saved workspace contains everything at the time of the state wherein it was saved. 
-
-You do not need to run all the previous code again if you would like to continue working at a later time. 
-
-- You can save the workspace and continue exactly where you left. 
-
-Workspaces are compressed and require relatively little memory when stored. The compression is very efficient and beats reloading large datasets. 
-
-## History and why it is useful
-`R` by default saves (part of) the code history and `RStudio` expands this functionality greatly. 
-
-Most often it may be useful to look back at the code history for various reasons.
-
-- There are multiple ways to access the code history.
-  
-    1. Use arrow up in the console. This allows you to go back in time, one codeline by one. Extremely useful to go back to previous lines for minor alterations to the code.
-    2. Use the history tab in the environment pane. The complete project history can be found here and the history can be searched. This is particularly convenient when you know what code you are looking for. 
-    
-## Working in projects in `RStudio`
-- Every project has its own history
-- Every research project has its own project
-- Every project can have its own folder, which also serves as a research archive
-- Every project can have its own version control system
-- R-studio projects can relate to Git (or other online) repositories
-
-## In general...
-- Use common sense and BE CONSISTENT.
-
-- Browse through [the tidyverse style guide](https://style.tidyverse.org)
-
-  - The point of having style guidelines is to have a common vocabulary of coding 
-  - so people can concentrate on what you are saying, rather than on how you are saying it. 
-
-- If code you add to a file looks drastically different from the existing code around it, the discontinuity will throw readers and collaborators out of their rhythm when they go to read it. Try to avoid this.
-
-- Intentional spacing makes your code easier to interpret
-
-  - `a<-c(1,2,3,4,5)` vs;
-  - `a <- c(1, 2, 3, 4, 5)`
- 
- - at least put a space after every comma!
+- `View()`
+- `rmarkdown`
+- Navigating `RStudio`
+- R/RStudio/CRAN ecosystem
+- console vs `R`-script vs `rmarkdown`
 
 ## New packages we use
 ```{r warning=FALSE, message=FALSE}
@@ -310,7 +219,7 @@ boys %>% cor(use = "pairwise.complete.obs")
 boys %>% subset(select = wgt) %>% na.omit() %>% max()
 ```
 
-## Useful: outlier filtering
+## Example outlier filtering
 ```{r}
 nrow(cats)
 
@@ -325,12 +234,16 @@ cats %>%
   filter(Hwt > mean(Hwt) + 3 * sd(Hwt))
 ```
 
+Disclaimer: I don't like outlier filtering! 
+
 # More pipe stuff
 
 ## The standard `%>%` pipe
 <center>
 <img src="flow_pipe.png" alt="HTML5 Icon" width = 75%>
 </center>
+<br>
+Key combo: Ctrl+shift+m or cmd+shift+m (Mac) will insert a `%>%` pipe
 
 ## The `%$%` pipe
 <center>
@@ -526,7 +439,7 @@ plotdata %>%
 ```
 
 ## Least squares solution
-```{r echo=FALSE}
+```{r echo=FALSE, message=FALSE}
 fit <- plotdata %$%
   lm(Y~X)
 
@@ -545,7 +458,7 @@ plotdata %>%
 ```
 
 ## Least squares solution
-```{r echo=FALSE}
+```{r echo=FALSE, message=FALSE}
 plotdata2 <- data.frame(X = rnorm(100, 167.5, 10)) %>%
   mutate(Y = rnorm(100, 0, 10) - X + 335)
 
