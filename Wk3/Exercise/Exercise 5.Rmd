@@ -120,21 +120,21 @@ output
 
 4. **Plot the pair `(x1, y1)` such that `y1` is on the Y-axis and make the color of the points blue**
 This is quite simple to do with `ggplot2`
-```{r}
+```{r, message=FALSE}
 anscombe %>%
   ggplot(aes(x = x1, y = y1)) + 
   geom_point(color = "blue")
 ```
 
 In the above code we put the aesthetics `aes(x = x1, y = y1)` in the `ggplot()` function. This way, the aesthetics hold for the whole graph (i.e. all `geoms` we specify), unless otherwise specified. Alternatively, we could specify aesthetics for individual `geom`'s, such as in
-```{r}
+```{r, message=FALSE}
 anscombe %>%
   ggplot() + 
   geom_point(aes(x = x1, y = y1), color = "blue")
 ```
 
 We can also override the `aes(x = x1, y = y1)` specified in `ggplot()` by specifying a different `aes(x = x2, y = y2)` under `geom_point()`. 
-```{r}
+```{r, message=FALSE}
 anscombe %>%
   ggplot(aes(x = x1, y = y1)) + 
   geom_point(aes(x = x2, y = y2), color = "blue")
@@ -145,7 +145,7 @@ anscombe %>%
 5. **Plot the four pairs of variables from Exercise 1 in a single plotting window. Make the points in the plots `blue`, `gray`, `orange` and `purple`, respectively. **
 
 In other words, create the following plot:
-```{r echo = printAnswers}
+```{r echo = printAnswers, message=FALSE}
 gg <- anscombe %>%
   ggplot() + 
   geom_point(aes(x = x1, y = y1), color = "blue") + 
@@ -161,7 +161,7 @@ gg
 
 6. **Add a regression line to the plot for only the pairs `(y3, x3)` and `(y4, x4)` where the line inherits the colour from the respective points.**
 Hint: use `geom_smooth()`.
-```{r echo = printAnswers}
+```{r echo = printAnswers, message=FALSE}
 gg + # take the plot under #5 as the starting point 
   geom_smooth(aes(x = x3, y = y3), method = "lm", se = FALSE, color = "orange") + 
   geom_smooth(aes(x = x4, y = y4), method = "lm", se = FALSE, color = "purple")
@@ -170,7 +170,8 @@ gg + # take the plot under #5 as the starting point
 ---
 
 7. **Now add a loess line to the plot from `Exercise 5` for *all pairs but* `(y4, x4)` where the line inherits the colour from the respective points.**
-```{r echo = printAnswers}
+
+```{r echo = printAnswers, message=FALSE}
 gg + # take the plot under #5 as the starting point 
   geom_smooth(aes(x = x1, y = y1), method = "loess", se = FALSE, color = "blue") + 
   geom_smooth(aes(x = x2, y = y2), method = "loess", se = FALSE, color = "grey") +

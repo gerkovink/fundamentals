@@ -257,10 +257,10 @@ Hand in a markdown compiled `html` + `Rmd` file for Exercise 4: Question 11 to t
 
 The above links are useful references that connect to this week's materials.
 
-<!-- ### Exercise answers -->
-<!-- The answers to the fourth practical exercises: -->
+### Exercise answers
+The answers to the fourth practical exercises:
 
-<!-- - [Exercise 4 answers](Wk2/Exercise/Exercise_4_answers.html) -->
+- [Exercise 4 answers](Wk2/Exercise/Exercise_4_answers.html)
 
 # Week 3
 
@@ -279,7 +279,7 @@ You can find the [slides here](Wk3/Lecture_3_FTID.html)
 ### `R` exercise
 This week's `R` exercise is about getting familiar with the linear model.
 
-- Make [Exercise 5](Wk3/Exercise/Exercise_5.html) before Thursday's workgroup.
+- Make [Exercise 5](Wk3/Exercise/Exercise-5.html) before Thursday's workgroup.
 
 Hand in a markdown compiled `html` file for Exercise 5 to the [SurfDrive](https://surfdrive.surf.nl/files/index.php/s/LqUCEt3MWVsW7DF) drop folder. Do this ***before the next lecture on Monday***.
 
