@@ -317,13 +317,13 @@ This week's `R` exercise is about getting familiar with the linear model.
 
 Hand in a markdown compiled `html` file for Exercise 6 to the [SurfDrive](https://surfdrive.surf.nl/files/index.php/s/LqUCEt3MWVsW7DF) drop folder. Do this ***before the next lecture on Monday***.
 
-<!-- ### Solution to the exercise -->
-<!-- You can find the answers to this week's exercise [here](Wk4/Exercise/Exercise_6_answers.html). -->
+### Solution to the exercise
+You can find the answers to this week's exercise and to the previous week's exercise [here](Wk4/Exercise/Exercise_6_answers.html). Use these answers only when you are stuck. 
 
-<!-- Video discussion of the exercises in two parts: -->
+Video discussion of the exercises in two parts:
 
-<!--  - [Part 1](https://www.dropbox.com/s/i47g1pinm0dpt2r/Exercise45_discussion.mp4?dl=0) -->
-<!--  - [Part 2](https://www.dropbox.com/s/l1actd5o6si2tx1/Exercise45_discussion_part2.mp4?dl=0) -->
+ - [Part 1](https://www.dropbox.com/s/i47g1pinm0dpt2r/Exercise45_discussion.mp4?dl=0)
+ - [Part 2](https://www.dropbox.com/s/l1actd5o6si2tx1/Exercise45_discussion_part2.mp4?dl=0)
 
 ### Useful Information and links
 
