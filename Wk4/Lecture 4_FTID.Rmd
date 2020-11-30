@@ -11,7 +11,7 @@ output:
 
 ## Last week
 
-Last week we started with linear modeling, but time did not permit us to finish the lecture. Today we start with the leftover part of last-week's lecture. 
+Last week we started with linear modeling. Today we revisit parts of last-week's lecture. 
 
 ## Today
 - Assumptions
@@ -72,7 +72,7 @@ data.frame(y1 = anscombe$y1,
 ```
 
 ## An example
-```{r echo=FALSE}
+```{r echo=FALSE, warning = FALSE, message=FALSE}
 set.seed(123)
 plotdata2 <- data.frame(X = rnorm(100, 167.5, 10)) %>%
   mutate(Y = rnorm(100, 0, 10) - X + 335)
@@ -101,7 +101,7 @@ fit$residuals %>% as.data.frame %>% ggplot(aes(x = .)) + geom_histogram(aes(y=..
 ```
 
 ## Violated assumptions #1
-```{r echo=FALSE, warning = FALSE}
+```{r echo=FALSE, warning = FALSE, message=FALSE}
 set.seed(123)
 plotdata2 <- data.frame(X = rnorm(100, 167.5, 10)) %>%
   mutate(Y = rnorm(100, 0, 10) - X + 335)
@@ -133,7 +133,7 @@ Here the residuals are not independent, and the residual variance is not constan
 ```
 
 ## Violated assumptions #2
-```{r echo=FALSE, warning = FALSE}
+```{r echo=FALSE, warning = FALSE, message=FALSE}
 set.seed(123)
 plotdata2 <- data.frame(X = rnorm(100, 167.5, 10)) %>%
   mutate(Y = rnorm(100, 0, 10) - X + 335)
@@ -165,7 +165,7 @@ Here the residuals do not have mean zero.
 ```
 
 ## Violated assumptions #3
-```{r echo=FALSE, warning = FALSE}
+```{r echo=FALSE, warning = FALSE, message=FALSE}
 set.seed(123)
 plotdata2 <- data.frame(X = rnorm(100, 0, 1)) %>%
   mutate(Y = X^2)
@@ -196,105 +196,8 @@ Here the residual variance is not constant, the residuals are not normally distr
 fit$residuals %>% as.data.frame %>% ggplot(aes(x = .)) + geom_histogram(aes(y=..density..)) + geom_density() + xlab("Residuals")
 ```
 
-# Checking assumptions
 
-##  `anscombe` example {.smaller}
-```{r message=FALSE, warning = FALSE}
-fit <- anscombe %$%
-  lm(y1 ~ x1)
-
-fit %>% summary
-```
-
-## Checking assumptions
-
-1. linearity
-    - scatterplot $y$ and $x$ 
-    - include loess curve when in doubt
-    - does a squared term improve fit?
-    - plot predicted against observed
-2. normality residuals
-    -  normal probability plots `qqnorm()`
-    -  if sample is small; `qqnorm` with simulated errors cf. `rnorm(n, 0, s)` 
-3. constant error variance 
-    -  residual plot
-    -  scale-location plot
-
-## Linearity {.smaller}
-```{r eval = FALSE, message = FALSE}
-anscombe %>%
-  ggplot(aes(x1, y1)) + 
-  geom_point() + 
-  geom_smooth(method = "loess", col = "blue") + 
-  geom_smooth(method = "lm", col = "orange")
-```
-
-## Linearity {.smaller}
-```{r echo=FALSE, message = FALSE}
-anscombe %>%
-  ggplot(aes(x1, y1)) + 
-  geom_point() + 
-  geom_smooth(method = "loess", col = "blue") + 
-  geom_smooth(method = "lm", col = "orange")
-```
-
-The loess curve suggests slight non-linearity
-
-## Linearity {.smaller}
-Does adding a squared term improve fit?
-```{r message=FALSE, warning = FALSE}
-anscombe %$%
-  lm(y1 ~ x1 + I(x1^2)) %>%
-  summary()
-```
-
-## Linearity {.smaller}
-```{r fig.height=3, dev.args = list(bg = 'transparent')}
-data.frame(y1 = anscombe$y1, y1.hat = predict(fit)) %>%
-  ggplot(aes(x=y1.hat, y=y1)) + geom_point() + geom_abline(intercept = 0, slope = 1)
-```
-
-Plot predicted `y1`  against observed `y1`. This is a useful technique to investigate linearity for models with multiple predictors.
-
-## Violation of linearity {.smaller}
-```{r fig.height=3, dev.args = list(bg = 'transparent')}
-data.frame(y2 = anscombe$y2, y1.hat = predict(fit)) %>%
-  ggplot(aes(x=y1.hat, y=y2)) + geom_point() + geom_abline(intercept = 0, slope = 1)
-```
-
-When we substitute observed `y1` with observed `y2`, it is apparent that the relation `(y2, x1)` is not linear.
-
-## Plots in class `lm`
-```{r, fig.height=4, dev.args = list(bg = 'transparent')}
-par(mfrow = c(2, 3))
-fit %>%
-  plot(which = c(1:6), cex = .6)
-```
-
-## Constant error variance? {.smaller}
-```{r, fig.height=4, dev.args = list(bg = 'transparent')}
-par(mfrow = c(1, 2))
-fit %>%
-  plot(which = c(1, 3), cex = .6)
-```
-
-## No constant error variance! {.smaller}
-```{r, fig.height=4, dev.args = list(bg = 'transparent')}
-par(mfrow = c(1, 2))
-boys %$%
-  lm(bmi ~ age) %>%
-  plot(which = c(1, 3), cex = .6)
-```
-
-## Normality of errors {.smaller}
-```{r, fig.height=4, dev.args = list(bg = 'transparent')}
-fit %>%
-  plot(which = 2, cex = .6)
-```
-
-The QQplot shows some divergence from normality at the tails
-
-# Outliers, influence and robust regression
+# Leverage and influence revisited
 
 ## Outliers and influential cases {.smaller}
 
@@ -360,13 +263,13 @@ plot(lm(outcome4 ~ pred4), which = 5)
 ```
 
 ## Outliers and influential cases
-Outliers are cases with large $e_z$  (standardized residuals).
+Outliers are cases with large $\epsilon_z$  (standardized residuals).
 
 If the model is ***correct***  we expect:
   
-  -  5\% of standardized residuals $|e_z|>1.96$ 
-  -  1\% of standardized residuals $|e_z|>2.58$
-  -  0\% of standardized residuals $|e_z|>3.3$ 
+  -  5\% of standardized residuals $|\epsilon_z|>1.96$ 
+  -  1\% of standardized residuals $|\epsilon_z|>2.58$
+  -  0\% of standardized residuals $|\epsilon_z|>3.3$ 
 
 Influential cases are cases with large influence on parameter estimates
   
