@@ -282,7 +282,7 @@ par(mfrow = c(1, 2), cex = .6)
 fit %>% plot(which = c(4, 5))
 ```
 
-There are no cases with $|e_z|>2$, so no outliers (right plot). There are no cases with Cook's Distance $>1$, but case 3 stands out 
+These are the plots for the `Violated Assumptions #3` scenario. There are many cases with unrealistically large $|e_z|$, so these could be labeled as outliers. There are no cases with Cook's Distance $>1$, but case 72 stands out. Of course this model should have never been fit. 
 
 # Generating data
 
@@ -400,7 +400,7 @@ When an `R` instance is started, there is initially no seed. In that case, `R` w
 
 We can draw data from a standard normal distribution
 ```{r}
-hist(rnorm(1000, mean = 5, sd = 1))
+hist(rnorm(1000, mean = 0, sd = 1))
 ```
 
 ## Drawing data
