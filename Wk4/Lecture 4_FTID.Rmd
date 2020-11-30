@@ -583,7 +583,7 @@ Confidence intervals are frequently misunderstood, even well-established researc
 4. A particular confidence interval of 95% calculated from an experiment does not mean that there is a 95% probability of a sample mean from a repeat of the experiment falling within this interval.
 
 ## Confidence intervals
-```{r fig.height = 4, echo=FALSE, message=FALSE}
+```{r fig.height = 4, echo=FALSE, message=FALSE, message=FALSE, warning = FALSE}
 set.seed(1234)
 library(plyr)
 samples <- rlply(100, rnorm(5000, mean = 0, sd = 1))
