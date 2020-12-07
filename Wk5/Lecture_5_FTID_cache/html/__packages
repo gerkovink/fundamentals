@@ -3,8 +3,8 @@ MASS
 dplyr
 magrittr
 ggplot2
-lattice
 mice
+lattice
 DAAG
 carData
 car

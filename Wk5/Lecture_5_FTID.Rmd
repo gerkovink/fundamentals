@@ -27,12 +27,14 @@ library(ggplot2)
 library(mice)
 library(DAAG)
 library(car)
+
+set.seed(123)
 ```
 
 # Model fit
 
 ## A simple model
-```{r cache = TRUE}
+```{r cache = FALSE}
 boys.fit <- 
   na.omit(boys) %$% # Extremely wasteful
   lm(age ~ reg)
@@ -51,13 +53,13 @@ ggplot(na.omit(boys), aes(x = reg, y = age)) +
 
 
 ## Model parameters
-```{r cache = TRUE}
+```{r cache = FALSE}
 boys.fit %>%
   summary()
 ```
 
 ## Is it a good model? {.smaller}
-```{r cache = TRUE}
+```{r cache = FALSE}
 boys.fit %>%
   anova()
 ```
@@ -67,7 +69,7 @@ It is not a very informative model. The `anova` is not significant, indicating t
 The outcome `age` does not change significantly when `reg` is varied. 
 
 ## Model factors
-```{r cache = TRUE}
+```{r cache = FALSE}
 boys.fit %>%
   model.matrix() %>%
   head(n = 10)
@@ -78,20 +80,20 @@ boys.fit %>%
   - it dummy-codes the `5` categories into `4` dummies (and an intercept). 
 
 ## Post hoc comparisons
-```{r cache = TRUE}
+```{r cache = FALSE}
 coef <- boys.fit %>% aov() %>% summary.lm()
 coef
 ```
 
 ## Post hoc comparisons
 Without adjustments for the p-value
-```{r cache = TRUE}
+```{r cache = FALSE}
 na.omit(boys) %$% pairwise.t.test(age, reg, p.adj = "none")
 ```
 
 ## Post hoc comparisons
 With adjusted p-values cf. Bonferoni correction
-```{r cache = TRUE}
+```{r cache = FALSE}
 na.omit(boys) %$% pairwise.t.test(age, reg, p.adj = "bonf")
 ```
 
@@ -113,7 +115,7 @@ $$000000000000000000000000000000005077098$$
 
 ## AIC
 Akaike's *An Information Criterion* 
-```{r cache = TRUE}
+```{r cache = FALSE}
 boys.fit %>% 
   AIC()
 ```
@@ -131,7 +133,7 @@ AIC comes from information theory and can be used for model selection. The AIC q
 
 ## A new model
 Let's add predictor `hgt` to the model:
-```{r cache = TRUE}
+```{r cache = FALSE}
 boys.fit2 <- 
   na.omit(boys) %$%
   lm(age ~ reg + hgt)
@@ -142,7 +144,7 @@ boys.fit2 %>% AIC()
 
 ## Another model
 Let's add `wgt` to the model
-```{r cache = TRUE}
+```{r cache = FALSE}
 boys.fit3 <- 
   na.omit(boys) %$%
   lm(age ~ reg + hgt + wgt)
@@ -150,7 +152,7 @@ boys.fit3 <-
 
 ## And another model
 Let's add `wgt` and the interaction between `wgt` and `hgt` to the model
-```{r cache = TRUE}
+```{r cache = FALSE}
 boys.fit4 <- 
   na.omit(boys) %$%
   lm(age ~ reg + hgt * wgt)
@@ -163,7 +165,7 @@ boys.fit4 <-
 ```
 
 ## Model comparison
-```{r cache = TRUE}
+```{r cache = FALSE}
 boys.fit %>% AIC()
 boys.fit2 %>% AIC()
 boys.fit3 %>% AIC()
@@ -171,17 +173,17 @@ boys.fit4 %>% AIC()
 ```
 
 ## Another form of model comparison
-```{r cache = TRUE}
+```{r cache = FALSE}
 anova(boys.fit, boys.fit2, boys.fit3, boys.fit4)
 ```
 
 ## Inspect `boys.fit3`
-```{r cache = TRUE}
+```{r cache = FALSE}
 boys.fit3 %>% anova()
 ```
 
 ## Inspect `boys.fit4`
-```{r cache = TRUE}
+```{r cache = FALSE}
 boys.fit4 %>% anova()
 ```
 It seems that `reg` and the interaction `hgt:wgt` are redundant
@@ -235,7 +237,7 @@ step.model
 
 ## Influence of cases
 DfBeta calculates the change in coefficients depicted as deviation in SE's.
-```{r cache = TRUE}
+```{r cache = FALSE}
 step.model %>%
   dfbeta() %>%
   head(n = 7)
@@ -245,7 +247,7 @@ step.model %>%
 
 ## Fitted values
 Let's use the simpler `anscombe` data example
-```{r cache = TRUE}
+```{r cache = FALSE}
 fit <- anscombe %$% lm(y1 ~ x1)
 
 y_hat <- 
@@ -253,13 +255,13 @@ y_hat <-
   fitted.values()
 ```
 The residual is then calculated as
-```{r cache = TRUE}
+```{r cache = FALSE}
 y_hat - anscombe$y1
 ```
 
 ## Predict new values
 If we introduce new values for the predictor `x1`, we can generate predicted values from the model
-```{r cache = TRUE, warning=FALSE}
+```{r cache = FALSE, warning=FALSE}
 new.x1 <- data.frame(x1 = 1:20)
 fit %>% predict(newdata = new.x1)
 ```
