@@ -308,8 +308,8 @@ DAAG::CVlm(anscombe, fit, plotit=F, printit=T)
 ## K-fold cross-validation `anscombe` data {.smaller}
 
   -  residual variance sample is $1.24^2 \approx 1.53$
-  -  residual variance cross-validation is 1.93 
-  -  regression lines in the 3 folds are similar
+  -  residual variance cross-validation is 2.04 
+  -  regression lines in the 3 folds are not the same, but similar
 
 ```{r echo=F, fig.height=4, dev.args = list(bg = 'transparent')}
 par(mar=c(5,4,4,2)+.1,cex=.8,cex.lab=1.5,cex.axis=1.2,cex.main=1.5)
@@ -327,8 +327,8 @@ DAAG::CVlm(anscombe, fit, plotit="Residual", printit=F)
 
 ## K-fold cross-validation `boys` data {.smaller}
 
-  -  residual variance sample is 2
-  -  residual variance cross-validation is 2.38
+  -  residual variance sample is 1.37
+  -  residual variance cross-validation is 1.46
   -  regression lines in the 3 folds almost identical
 
 ```{r echo=F, fig.height=4, dev.args = list(bg = 'transparent')}
