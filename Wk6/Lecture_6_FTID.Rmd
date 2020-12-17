@@ -181,7 +181,7 @@ There is a very general way of addressing this type of problem in regression. Th
 Every generalized linear model has the following three characteristics:
 
 1. A probability distribution that describes the outcome
-2. A linear predictor model in the form
+2. A linear predictor model
 3. A link function that relates the linear predictor to the the parameter of the outcome's probability distribution. 
 
 The linear predictor model in (2) is 
@@ -246,7 +246,7 @@ In logistic regression we assume that the true data generating model for the out
 ### How
 We specify a reasonable link that connects $\eta$ to $p$. Most common in logistic regression is the *logit* link
 
-$$logit(p)=\text{log}(\frac{p}{1−p}) , \text{ for } 0 \leq p \geq 1$$
+$$logit(p)=\text{log}(\frac{p}{1−p}) , \text{ for } 0 \leq p \leq 1$$
 We might recognize $\frac{p}{1−p}$ as the odds.
 
 ## Logit
@@ -303,7 +303,7 @@ plot(simulated$continuous, linpred, xlab = "predictor", ylab = "log(odds)")
 ## $\log(\text{odds})$ explained
 And the relation between our predictor and the probability
 ```{r  dev.args = list(bg = 'transparent')}
-plot(simulated$continuous, response, xlab = "predictor", ylab = "log(odds)")
+plot(simulated$continuous, response, xlab = "predictor", ylab = "probability")
 ```
 
 ## logit$^{-1}$ explained
@@ -341,7 +341,7 @@ In normally distributed data: $\text{SS}=\text{D}$.
 Remember the three characteristics for every generalized linear model:
 
 1. A probability distribution that describes the outcome
-2. A linear predictor model in the form
+2. A linear predictor model
 3. A link function that relates the linear predictor to the the parameter of the outcome's probability distribution. 
 
 For the logistic model this gives us:
@@ -410,17 +410,19 @@ anestot$total <- apply(anestot[, c("move","nomove")], 1 , sum)
 anestot
 ```
 
+## Calculating the proportion
 We can add the proportion to this table
 ```{r}
 anestot$prop <- anestot$nomove / anestot$total 
-anestot %>% head(n = 3)
+anestot
 ```
 
 ## A different approach
 We can then calculate the same model on the frequency table, by specifying the number of times each scenario (row) is observed (`total`) as the `weights` argument in `glm`:
 ```{r,  dev.args = list(bg = 'transparent')}
 anestot %$% glm(prop ~ conc, family = binomial(link="logit"), weights = total) %>% 
-  summary() %>% .$coefficients
+  summary() %>% 
+  .$coefficients
 ```
 We now model the proportion. Naturally, the proportion multiplied with the total equals the observation. So in this case, the `glm` function performs these calculations and its expansion to cases internally. 
 

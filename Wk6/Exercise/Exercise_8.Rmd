@@ -163,7 +163,7 @@ Many models are built around the assumption of normality. Even in cases when thi
 
 ---
 
-8. **`conc` is somewhat skewed. Plot the density of the `conc` column three times:**
+8. **`conc` is somewhat skewed. Plot the density of the `conc` column twice:**
 
 - once as observed
 - once with a log-tranformation
