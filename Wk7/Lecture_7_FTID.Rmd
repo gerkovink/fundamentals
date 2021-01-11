@@ -14,6 +14,7 @@ output:
 library(magrittr) # pipes
 library(dplyr)    # data manipulation
 library(mice)     # data
+library(lattice)  # plotting - used for conditional plotting
 library(ggplot2)  # plotting
 library(DAAG)     # data sets and functions
 library(caret)    # confusion matrices
@@ -37,7 +38,7 @@ Because the linear probability model violates its assumptions when performed on 
 ## Example: titanic data
 We start this lecture with a data set that logs the survival of passengers on board of the disastrous maiden voyage of the ocean liner Titanic
 ```{r}
-titanic <- read.csv(file = "titanic.csv", header = TRUE, )
+titanic <- read.csv(file = "titanic.csv", header = TRUE, stringsAsFactors = TRUE)
 titanic %>% head
 ```
 
@@ -81,7 +82,7 @@ And so on.
 # A quick investigation
 
 ## Is `Age` related?
-```{r fig.height = 3}
+```{r fig.height = 3, warning=FALSE, message=FALSE}
 titanic %>% ggplot(aes(x = Age, y = Survived)) + geom_point() +
   geom_smooth(method = "glm", 
     method.args = list(family = "binomial"), 
@@ -143,7 +144,7 @@ Wow! These distributions are very different! Females seem to have a much higher 
 
 ## `Survived ~ Sex`
 ```{r fig.height=3}
-fit2 %>% summary %>% .$coefficients
+fit2 %>% summary %>% coef
 ```
 The coefficients confirm this. The log odds of `Survived` decreases for males, when compared to females. The decrease is quite pronounced, too: `r coef(fit2)[2]`. 
 
@@ -151,7 +152,7 @@ When we inspect the deviance
 ```{r}
 c(fit2$null.deviance, fit2$deviance)
 ```
-We see that there is a massive gain in the deviance between the empty model (i.e. the model with only an intercept) and the model with `Sex` included. The difference in df is only 1 parameter.
+We see that there is a massive gain in the deviance between the empty model (i.e. the model with only an intercept - represented by `null.deviance`) and the model with `Sex` included. The difference in df is only 1 parameter.
 
 ## `Survived ~ Pclass`
 ```{r fig.height=3}
@@ -162,7 +163,7 @@ There is a very apparent difference between the distributions of the survivors a
 
 ## `Survived ~ Pclass`
 ```{r fig.height=3}
-fit3 %>% summary %>% .$coefficients
+fit3 %>% summary %>% coef
 ```
 Here, there is something wrong! Class is an ordered categorical variable, not a continuous variable. In other words, we cannot simply increase the log odds of `Survived` with `r fit3 %>% summary %>% .$coefficients %>% .[2, 1]` for every unit increase in `Pclass`.
 
