@@ -17,6 +17,7 @@ library(ggplot2)  # plotting
 library(mice)     # for boys data
 library(GGally)   # correlation and distribution matrixplot
 library(mctest)   # multicollinearity test
+library(DAAG)     # now for vif() function
 ```
 
 ```{r}
@@ -219,48 +220,66 @@ ggpairs(anscombe, progress = FALSE)
 ```
 
 ## How to inspect
+A variance inflation factor (VIF) detects multicollinearity in regression analyses. 
+
+Multicollinearity happens when two or more predictors explain the same variance in the model. 
+
+Due to multicollinearity it is challenging to pinpoint a predictor's contribution to explaining the variance in the outcome. 
+
+A VIF estimates how much the variance of a regression estimate is inflated because of multicollinearity in your model. 
+
+## VIF example
 ```{r}
 fit <- anscombe %$% lm(y1 ~ x1 + x2)
+vif(fit)
 ```
 
-## Overall diagnostics
-```{r warning = FALSE}
-anscombe %$% omcdiag(cbind(x1, x2), y1)
-```
+## VIF calculation
+In a regression modeling effort where 
+$$\hat{y} = \beta X,$$
+the variance inflation factor can be calculated as 
+$$\text{VIF}_i = \frac{1}{1-R_i^2},$$
 
-## individual diagnostics
-```{r warning = FALSE}
-anscombe %$% imcdiag(cbind(x1, x2), y1)
-```
+where $R_i^2$ would be the coefficient of determination (proportion explained variance) for a regression model of all other predictors $X$ on predictor $X_i$.
 
-## Which regressors
-```{r warning = FALSE}
-anscombe %$% imcdiag(cbind(x1, x2), y1, method = "VIF")
-```
+A rule of thumb is that if $\text{VIF}_i > 10$ then multicollinearity is high.
 
-## Another example
-```{r warning = FALSE}
-boys %$% omcdiag(cbind(bmi, wgt, hgt), age)
-```
-
-## Individual diagnostics
+## In `R`
 ```{r}
-boys %$% imcdiag(cbind(bmi, wgt, hgt), age)
+fit <- boys %$% lm(age ~ wgt + hgt)
+vif(fit)
+r.sq <- boys %$% lm(wgt ~ hgt) %>% summary %>% .$r.squared
+r.sq
+1 / (1 - r.sq)
 ```
+So we can see that the rule of thumb $\text{VIF}_i > 10$ corresponds to an $R^2 \geq .9$. 
 
-## Overall diagnostics
-```{r}
-boys %$% imcdiag(cbind(bmi, wgt, hgt), age, method = "VIF")
-```
-
-## Example without MC
+## More sophisticated 
+The `omcdiag()` function from the `mctest` package calculates a suite of overall statistics.  
 ```{r warning = FALSE}
-boys %$% omcdiag(cbind(wgt, hgt), age, method = "VIF")
+fit <- boys %$% lm(age ~ bmi + wgt + hgt) 
+fit %>% omcdiag
 ```
 
-## Example without MC
+## individual diagnostics 
+The `imcdiag()` function calculates a suite of individual statistics. 
+```{r warning = FALSE}
+fit %>% imcdiag
+```
+
+## Which regressors with VIF
+```{r warning = FALSE}
+fit %>% imcdiag(method = "VIF")
+```
+
+## Example without VIF based MC
+```{r warning = FALSE}
+boys %$% lm(age ~ wgt + hgt) %>% omcdiag()
+```
+
+## Example without VIF based MC
 ```{r}
-boys %$% imcdiag(cbind(wgt, hgt), age, method = "VIF")
+boys %$% lm(age ~ wgt + hgt) %>% imcdiag(method = "VIF")
 ```
 
 ## The actual correlation
