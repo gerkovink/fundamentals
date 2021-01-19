@@ -290,7 +290,7 @@ Hand in a markdown compiled `html` file for Exercise 5 to the [SurfDrive](https:
 
 ### Required reading
 
-- From [Introduction to Statistical Learning](https://statlearning.com) read [Chapter 3 on Linear Regression](http://faculty.marshall.usc.edu/gareth-james/ISL/ISLR%20Seventh%20Printing.pdf) up to and including 3.1.1
+- From [Introduction to Statistical Learning](https://statlearning.com) read [Chapter 3 on Linear Regression](https://statlearning.com/ISLR%20Seventh%20Printing.pdf) up to and including 3.1.1
 
 These readings are exam materials.
 
@@ -328,7 +328,7 @@ Video discussion of the exercises in two parts:
 ### Useful Information and links
 
 - [These lecture notes](http://www.mit.edu/~6.s085/notes/lecture3.pdf) cover the essence of the coming two weeks. 
-- From [Introduction to Statistical Learning](https://statlearning.com) read [Chapter 3 on Linear Regression](http://faculty.marshall.usc.edu/gareth-james/ISL/ISLR%20Seventh%20Printing.pdf) up to and including 3.4
+- From [Introduction to Statistical Learning](https://statlearning.com) read [Chapter 3 on Linear Regression](https://statlearning.com/ISLR%20Seventh%20Printing.pdf) up to and including 3.4
 
 These readings are exam materials.
 
@@ -393,7 +393,7 @@ This week's `R` exercise is about getting familiar with fitting the logistic reg
 ### Useful Information and links
 
 - [Read this page on interpreting logistic regression](https://stats.idre.ucla.edu/other/mult-pkg/faq/general/faq-how-do-i-interpret-odds-ratios-in-logistic-regression/)
-- From [Introduction to Statistical Learning](https://statlearning.com) read [Chapter 4 on Logistic Regression](http://faculty.marshall.usc.edu/gareth-james/ISL/ISLR%20Seventh%20Printing.pdf) up to and including 4.3.4
+- From [Introduction to Statistical Learning](https://statlearning.com) read [Chapter 4 on Logistic Regression](https://statlearning.com/ISLR%20Seventh%20Printing.pdf) up to and including 4.3.4
 
 These readings are exam materials.
 
