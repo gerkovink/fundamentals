@@ -466,7 +466,7 @@ You can find the [practice exam here](https://gerkovink.shinyapps.io/Practice_Ex
 
 The information in the lecture slides:
 
-- [An archive of all lecture slides](Archive/Lectures_FTiD.zip). Or as seperate lectures:
+- The lectures:
 
   - [Lecture 1](Wk1/Lecture_1_FTID.html)
   - [Lecture 2](Wk2/Lecture_2_FTID.html)
@@ -479,7 +479,7 @@ The information in the lecture slides:
 
 and the information in the following sources these lecture slides are based on:
 
-- [Introduction to Statistical Learning](http://faculty.marshall.usc.edu/gareth-james/ISL/)
+- [Introduction to Statistical Learning](https://statlearning.com/ISLR%20Seventh%20Printing.pdf)
   - Chapter 2: up to and including 2.2.2
   - Chapter 3: up to and including 3.4
   - Chapter 4: up to and including 4.3.4
