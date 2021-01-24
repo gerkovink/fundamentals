@@ -468,10 +468,10 @@ The information in the lecture slides:
 
 - The lectures:
 
-  - [Lecture 1](Wk1/Lecture_1_FTID.html)
+  - [Lecture 1](Wk1/Lecture-1_FTID.html)
   - [Lecture 2](Wk2/Lecture_2_FTID.html)
   - [Lecture 3](Wk3/Lecture_3_FTID.html)
-  - [Lecture 4](Wk4/Lecture_4_FTID.html)
+  - [Lecture 4](Wk4/Lecture-4_FTID.html)
   - [Lecture 5](Wk5/Lecture_5_FTID.html)
   - [Lecture 6](Wk6/Lecture_6_FTID.html)
   - [Lecture 7](Wk7/Lecture_7_FTID.html)
